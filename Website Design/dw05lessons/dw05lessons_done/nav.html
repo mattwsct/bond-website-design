@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Untitled Document</title>
+
+<style type="text/css">
+
+#navContainer {
+	background-color: #88B036;
+	height: 24px;
+	width: 760px;
+}
+
+/* The outermost container of the Menu Bar, an auto width box with no margin or padding */
+ul.MenuBarHorizontal
+{
+	margin: 0;
+	padding: 0;
+	padding-left:10px;
+	list-style-type: none;
+	font-size: 11px;
+	cursor: default;
+	width: auto;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+/* Set the active Menu Bar with this class, currently setting z-index to accomodate IE rendering bug: http://therealcrisp.xs4all.nl/meuk/IE-zindexbug.html */
+ul.MenuBarActive
+{
+	z-index: 1000;
+}
+/* Menu item containers, position children relative to this container and are a fixed width */
+ul.MenuBarHorizontal li
+{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	font-size: 100%;
+	position: relative;
+	text-align: left;
+	cursor: pointer;
+	width: 8em;
+	float: left;
+}
+
+/* Menu item containers are same fixed width as parent */
+ul.MenuBarHorizontal ul li
+{
+	width: 8.2em;
+}
+
+
+</style>
+</head>
+
+<body>
+<div id="navContainer">
+    <ul id="MenuBar1" class="MenuBarHorizontal">
+      <li><a class="MenuBarItemSubmenu" href="#">products</a>      </li>
+      <li><a href="#">about us</a></li>
+      <li><a href="#">contact us</a></li>
+  </ul>
+</div>
+</body>
+</html>

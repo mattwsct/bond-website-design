@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<!-- TemplateBeginEditable name="doctitle" -->
+	<title>OrganicUtopia Home Page</title>
+	<!-- TemplateEndEditable -->
+	<style type="text/css">
+	<!--
+
+	-->
+    </style>
+	<link href="../styles.css" rel="stylesheet" type="text/css" />
+	<!-- TemplateBeginEditable name="head" -->
+	<!-- TemplateEndEditable -->
+	</head>
+<body>
+<div id="container">
+  
+  <div id="main">
+    <h1><!-- TemplateBeginEditable name="ProductCategory" -->Product Category<!-- TemplateEndEditable --></h1>
+
+    <p><!-- TemplateBeginEditable name="ProductName" --><strong>Product Name</strong><!-- TemplateEndEditable --></p>
+    <p>&nbsp;</p>
+    
+    <p><!-- TemplateBeginEditable name="ProductImage" --><img src="" alt="" name="Product_image" width="250" height="250" id="Product_image" /><br />
+    <!-- TemplateEndEditable --></p>
+    <p>&nbsp;</p>
+    <!-- TemplateBeginEditable name="inseason" -->
+    <p>This vegetable is in season</p>
+    <!-- TemplateEndEditable --></div>
+  <div id="header"><img src="../images/ou_logo.gif" width="210" height="41" alt="OrganicUtopia Logo" /><!-- #BeginLibraryItem "/Library/GlobalNav.lbi" -->
+  <div id="GlobalNav">Site Map | <a href="../GlobalNav/login.html">Your Account</a></div>
+  <!-- #EndLibraryItem --></div>
+  <div id="sidebar"><!-- TemplateBeginEditable name="ProductDescription" -->
+    <p><strong>Product Description</strong><br />
+      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Suspendisse in lectus. Pithy text that strikes a balance between organic humbleness and pragmatic capitalism. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
+  <!-- TemplateEndEditable --></div>
+  <div id="footer"></div>
+</div>
+</body>
+</html>

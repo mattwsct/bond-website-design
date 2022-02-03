@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- TemplateBeginEditable name="doctitle" -->
+<title>Rebel FM</title>
+<!-- TemplateEndEditable -->
+<style type="text/css">
+<!--
+-->
+</style>
+<link href="../styles.css" rel="stylesheet" type="text/css" />
+<!-- TemplateBeginEditable name="head" -->
+<!-- TemplateEndEditable -->
+<style type="text/css">
+<!--
+-->
+</style>
+</head>
+
+<body>
+<div id="container">
+  <div id="header"><a href="../index.html"><img src="../logo-grey.jpg" width="405" height="109" alt="Rebel FM Logo" /></a></div>
+  
+  <!-- TemplateBeginEditable name="Main" -->
+  <div id="main"></div>
+  <!-- TemplateEndEditable -->
+  <div id="sidebar">
+    <p><a href="../gameclub.html">Game Club</a></p>
+    <p><a href="../subscribe.html">Subscribe</a></p>
+<p><a href="../photoalbum.html">Photo Album</a></p>
+    <p><a href="../contactus.html">Contact Us</a></p>
+    <p>&nbsp;</p>
+  </div>
+<div id="footer">
+  <p>Matt Westcott &copy; 2010</p>
+  <p> <strong>This website is for educational purposes only.</strong></p>
+</div>
+</div>
+</body>
+</html>

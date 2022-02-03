@@ -1,0 +1,50 @@
+body {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#container {
+	width:770px;
+	background-color: #E1FFB7;
+}
+
+h1 {
+	font-size: 24px;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	color: #CEE870;
+}
+
+h2 {
+	font-size: 18px;
+	color: #FF0;
+	font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.footer {
+	font-size: 10px;
+	color: #666;
+	font-family: "Courier New", Courier, monospace;
+	line-height: 85%;
+}
+p {
+	line-height: 140%;
+}
+ul {
+	line-height: 140%;
+}
+ul li strong {
+	color: #900;
+}
+a:link {
+	color: #090;
+}
+a:hover {
+	color: #900;
+	text-decoration: none;
+	border-bottom-color: #666;
+}
+a:visited {
+	color: #666;
+}
+a:active {
+	color: #FC3;
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<!-- TemplateBeginEditable name="doctitle" -->
+	<title>OrganicUtopia Home Page</title>
+	<!-- TemplateEndEditable -->
+	<style type="text/css">
+	<!--
+
+	-->
+    </style>
+	<link href="../styles.css" rel="stylesheet" type="text/css" />
+	<!-- TemplateBeginEditable name="head" -->
+	<!-- TemplateEndEditable -->
+	</head>
+<body>
+<div id="container">
+  
+  <div id="main">
+    <h1>Category Name</h1>
+    <p>&nbsp;</p>
+    <table width="100%" border="0" cellpadding="2" class="styledtable">
+      <!-- TemplateBeginRepeat name="Products" -->
+      <tr>
+        <td width="50%" height="50" align="center"><!-- TemplateBeginEditable name="Product Name" -->
+          <p>{Product}</p>
+        <!-- TemplateEndEditable -->
+          <p>&nbsp;</p>
+          <p><!-- TemplateBeginEditable name="Product Image" --><img src="" alt="" name="veg_thumb" width="75" height="75" id="veg_thumb" /><!-- TemplateEndEditable --></p></td>
+        <td height="50" align="center"><!-- TemplateBeginEditable name="Product Name2" -->
+          <p>{Product}</p>
+        <!-- TemplateEndEditable -->
+          <p>&nbsp;</p>
+          <p><!-- TemplateBeginEditable name="Product Image2" --><img src="" alt="" name="veg_thumb" width="75" height="75" id="veg_thumb2" /><!-- TemplateEndEditable --></p></td>
+      </tr>
+      <!-- TemplateEndRepeat -->
+    </table>
+    <p>&nbsp;</p>
+  </div>
+  <div id="header"><img src="../images/ou_logo.gif" width="210" height="41" alt="OrganicUtopia Logo" /></div>
+  <div id="sidebar">
+    <p><strong>April 1, 2008</strong><br />
+      April Fool's blowout sale. Lots of great deals on clothing, food, green accessories and more.</p>
+    <p><strong>April 24,2008</strong><br />
+      Green exhibition day at Trader Moe's, Long Beach NY. OU will be hosting an exhibition day at Long Beach's Trader Moe's store on Long Beach road.</p>
+    <p><strong>May 10,2008</strong><br />
+      Pre-Memorial Day Sale..receive an additional 10-30% off of our already low daily prices.</p>
+    <p><strong>May 28, 2008</strong><br />
+      Big Memorial Day Sale - big savings on all of our products before our Fall inventory arrives!</p>
+</div>
+  <div id="footer"></div>
+</div>
+</body>
+</html>

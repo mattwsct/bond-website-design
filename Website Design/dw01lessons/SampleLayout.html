@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Untitled Document</title>
+<style type="text/css"> 
+<!-- 
+body  {
+	font: 100% Verdana, Arial, Helvetica, sans-serif;
+	background: #cccccc;
+	margin: 0; /* it's good practice to zero the margin and padding of the body element to account for differing browser defaults */
+	padding: 0;
+	text-align: center; /* this centers the container in IE 5* browsers. The text is then set to the left aligned default in the #container selector */
+	color: #000000;
+}
+.thrColLiqHdr #container { 
+	width: 80%;  /* this will create a container 80% of the browser width */
+	background: #FFFFFF;
+	margin: 0 auto; /* the auto margins (in conjunction with a width) center the page */
+	border: 1px solid #000000;
+	text-align: left; /* this overrides the text-align: center on the body element. */
+} 
+.thrColLiqHdr #header {
+	background: #000000;
+	padding: 0 10px;  /* this padding matches the left alignment of the elements in the divs that appear beneath it. If an image is used in the #header instead of text, you may want to remove the padding. */
+	color: white;
+} 
+.thrColLiqHdr #header h1 {
+	margin: 0; /* zeroing the margin of the last element in the #header div will avoid margin collapse - an unexplainable space between divs. If the div has a border around it, this is not necessary as that also avoids the margin collapse */
+	padding: 10px 0; /* using padding instead of margin will allow you to keep the element away from the edges of the div */
+}
+
+/* Tips for sidebars:
+1. Since we are working in percentages, it's best not to use side padding on the sidebars. It will be added to the width for standards compliant browsers creating an unknown actual width. 
+2. Space between the side of the div and the elements within it can be created by placing a left and right margin on those elements as seen in the ".thrColLiqHdr #sidebar1 p" rule.
+3. Since Explorer calculates widths after the parent element is rendered, you may occasionally run into unexplained bugs with percentage-based columns. If you need more predictable results, you may choose to change to pixel sized columns.
+*/
+.thrColLiqHdr #sidebar1 {
+	float: left; /* this element must precede in the source order any element you would like it be positioned next to */
+	width: 22%; /* the background color will be displayed for the length of the content in the column, but no further */
+	padding: 15px 0; /* top and bottom padding create visual space within this div  */
+}
+.thrColLiqHdr #sidebar2 {
+	float: right; /* this element must precede in the source order any element you would like it be positioned next to */
+	width: 23%; /* since this element is floated, a width must be given */
+	background: #ffffff; /* the background color will be displayed for the length of the content in the column, but no further */
+	padding: 15px 0; /* top and bottom padding create visual space within this div */
+}
+.thrColLiqHdr #sidebar1 p, .thrColLiqHdr #sidebar1 h3, .thrColLiqHdr #sidebar2 p, .thrColLiqHdr #sidebar2 h3 {
+	margin-left: 10px; /* the left and right margin should be given to every element that will be placed in the side columns */
+	margin-right: 10px;
+}
+
+/* Tips for mainContent:
+1. the space between the mainContent and sidebars is created with the left and right margins on the mainContent div.
+2. to avoid float drop at a supported minimum 800 x 600 resolution, elements within the mainContent div should be 300px or smaller (this includes images).
+3. in the Internet Explorer Conditional Comment below, the zoom property is used to give the mainContent "hasLayout." This avoids several IE-specific bugs.
+*/
+.thrColLiqHdr #mainContent { 
+	margin: 0 24% 0 23.5%; /* the right and left margins on this div element creates the two outer columns on the sides of the page. No matter how much content the sidebar divs contain, the column space will remain. You can remove this margin if you want the #mainContent div's text to fill the sidebar spaces when the content in each sidebar ends. */
+}
+
+.thrColLiqHdr #footer { 
+	padding: 0 10px; /* this padding matches the left alignment of the elements in the divs that appear above it. */
+	background:#DDDDDD;
+} 
+.thrColLiqHdr #footer p {
+	margin: 0; /* zeroing the margins of the first element in the footer will avoid the possibility of margin collapse - a space between divs */
+	padding: 10px 0; /* padding on this element will create space, just as the the margin would have, without the margin collapse issue */
+}
+
+/* Miscellaneous classes for reuse */
+.fltrt { /* this class can be used to float an element right in your page. The floated element must precede the element it should be next to on the page. */
+	float: right;
+	margin-left: 8px;
+}
+.fltlft { /* this class can be used to float an element left in your page The floated element must precede the element it should be next to on the page. */
+	float: left;
+	margin-right: 8px;
+}
+.clearfloat { /* this class should be placed on a div or break element and should be the final element before the close of a container that should fully contain its child floats */
+	clear:both;
+    height:0;
+    font-size: 1px;
+    line-height: 0px;
+}
+--> 
+</style><!--[if IE]>
+<style type="text/css"> 
+/* place css fixes for all versions of IE in this conditional comment */
+.thrColLiqHdr #sidebar2, .thrColLiqHdr #sidebar1 { padding-top: 30px; }
+.thrColLiqHdr #mainContent { zoom: 1; padding-top: 15px; }
+/* the above proprietary zoom property gives IE the hasLayout it needs to avoid several bugs */
+</style>
+<![endif]-->
+<link href="dwlessons/dw01lessons/CSSstyles.css" rel="stylesheet" type="text/css" />
+<script src="dwlessons/dw01lessons/SpryAssets/SpryMenuBar.js" type="text/javascript"></script>
+<link href="dwlessons/dw01lessons/SpryAssets/SpryMenuBarVertical.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="thrColLiqHdr">
+
+<div id="container">
+ <div id="header">
+    <h1>The McKnight Institute</h1>
+  <!-- end #header --></div>
+  <div id="sidebar1">
+    <ul id="MenuBar1" class="MenuBarVertical">
+      <li><a class="MenuBarItemSubmenu" href="#">Discover</a>
+          <ul>
+            <li><a href="#">Exhibits</a></li>
+            <li><a href="#">Family Packages</a></li>
+            <li><a href="#">Spring 2007 Events</a></li>
+          </ul>
+      </li>
+      <li><a href="#">Learn</a></li>
+      <li><a class="MenuBarItemSubmenu" href="#">Shop</a>
+          <ul>
+            <li><a class="MenuBarItemSubmenu" href="#">MKI Wear</a>
+                <ul>
+                  <li><a href="#">T-Shirts</a></li>
+                  <li><a href="#">Jerseys</a></li>
+                  <li><a href="#">Hats</a></li>
+              </ul>
+            </li>
+            <li><a href="#">Tech Toys</a></li>
+            <li><a href="#">Books &amp; Videos</a></li>
+          </ul>
+      </li>
+      <li><a href="#">Contact Us</a></li>
+    </ul>
+    <!-- end #sidebar1 -->
+  </div>
+  <div id="sidebar2">
+    <table width="100%" border="0" cellspacing="2" cellpadding="2">
+      <tr>
+        <td class="sidebarTitle">Discover</td>
+      </tr>
+      <tr>
+        <td class="sidebarBody">The Fungo exhibit is here, but only for the Spring season, so don't miss it! Bring a friend or two!</td>
+      </tr>
+      <tr>
+        <td class="sidebarTitle">Learn</td>
+      </tr>
+      <tr>
+        <td class="sidebarBody">Some random text that talks about another
+          topic like an exhibit or whatever.. Lots of good stuff hapenning
+          her</td>
+      </tr>
+    </table>
+    <h3>&nbsp;</h3>
+<!-- end #sidebar2 --></div>
+  <div class="bodytext_main" id="mainContent">
+    <h1 class="header_main"> Discover</h1>
+    <p class="bodytext_main"><img src="dwlessons/dw01lessons/images/gears.jpg" alt="Gears" width="100" height="100" hspace="5" vspace="5" align="left" />The Fungo exhibit is here because spring time is around the corner.  That means baseball season is back and the Aeronautics Through Sports exhibit has the MKI fungo team ready to swing the bat!  Always wonder why the ball leaps into the air off the bat? Or why the ball skids across the dirt to the infielders?  Live demonstrations will happen on the half-hours.  Bring your glove and try it out!</p>
+    <h2 class="header_sub">Learn</h2>
+    <p>It's not slime, ooze or goo that keeps that gecko on the wall.  How does it work?  Go to the Science of Sticky exhibit and crawl around on our incline wall and find out.</p>
+    <p><span class="header_main">Welcome to MKI</span><br />
+    Welcome to The McKnight Institute.  When youÕre visiting MKI, you' ll loose track of time.  Hours and hours of visual and tactile experiences await! </p>
+    <p><span class="header_sub">Exhibits</span><br />
+      At MKI, it's not just learning about how things are, it's about learning how things work.  We donÕt show you an image with lots of text to demonstrate our exhibits.  You actively participate inside the exhibits!  Whether it's learning about aerodynamics through hitting golf balls or throwing baseballs, driving an experimental spaceship around the solar system, playing with steam pressure to power a factory, creating new adhesives, or driving a train up a mountain pass, your creativity is helping to run the exhibit.<br />
+      Domino Garden Opens in May<br />
+    Once the weather is warmer outside, MKI will open up its famous Domino Garden.  Grab racks of dominos on pre-hinged tracks and set up your own pattern. Combine all the curves, straight paths you can get your hands on and make the shape as complex or as simple as you want.  Then head up to the observation deck, pull the trip cord and watch your pattern unfold in front of you.</p>
+  <!-- end #mainContent --></div>
+	<!-- This clearing element should immediately follow the #mainContent div in order to force the #container div to contain all child floats --><br class="clearfloat" />
+  <div id="footer">
+    <p>Footer</p>
+  <!-- end #footer --></div>
+<!-- end #container --></div>
+<script type="text/javascript">
+<!--
+var MenuBar1 = new Spry.Widget.MenuBar("MenuBar1", {imgRight:"../../SpryAssets/SpryMenuBarRightHover.gif"});
+//-->
+</script>
+</body>
+</html>
