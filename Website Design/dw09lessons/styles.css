@@ -1,160 +1,159 @@
 @charset "UTF-8";
 h1 {
-	font-family: Arial, Helvetica, sans-serif;
-	color: #9C3;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #9c3;
 }
 
 h2 {
-	
 }
 
 a:link {
-	color: #030;
+  color: #030;
 }
 a:hover {
-	color: #C60;
-	text-decoration: none;
+  color: #c60;
+  text-decoration: none;
 }
 body {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	color: #333;
-	background-color: #739112;
-	text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  color: #333;
+  background-color: #739112;
+  text-align: center;
 }
 #main {
-	position:absolute;
-	left:12px;
-	top:97px;
-	width:480px;
-	height:600px;
-	z-index:10;
-	background-color: #FFFFFF;
-	overflow: auto;
-	text-align: left;
+  position: absolute;
+  left: 12px;
+  top: 97px;
+  width: 480px;
+  height: 600px;
+  z-index: 10;
+  background-color: #ffffff;
+  overflow: auto;
+  text-align: left;
 }
 #container {
-	background-color: #FFF;
-	height: 1200px;
-	width: 750px;
-	margin-right: auto;
-	margin-left: auto;
-	position: relative;
-	text-align: left;
+  background-color: #fff;
+  height: 1200px;
+  width: 750px;
+  margin-right: auto;
+  margin-left: auto;
+  position: relative;
+  text-align: left;
 }
 #header {
-	position:absolute;
-	width:750px;
-	height:90px;
-	z-index:2;
-	left: 0px;
-	top: 0px;
-	background-color: #9FCC41;
-	background-image: url(images/veggies.jpg);
-	background-repeat: no-repeat;
-	background-position: right;
+  position: absolute;
+  width: 750px;
+  height: 90px;
+  z-index: 2;
+  left: 0px;
+  top: 0px;
+  background-color: #9fcc41;
+  background-image: url(images/veggies.jpg);
+  background-repeat: no-repeat;
+  background-position: right;
 }
 #GlobalNav {
-	background-image: url(images/globalnav_bg.png);
-	background-repeat: no-repeat;
-	height: 20px;
-	width: 190px;
-	position: absolute;
-	right: 50px;
-	bottom: 10px;
-	text-align: center;
+  background-image: url(images/globalnav_bg.png);
+  background-repeat: no-repeat;
+  height: 20px;
+  width: 190px;
+  position: absolute;
+  right: 50px;
+  bottom: 10px;
+  text-align: center;
 }
 
 #GlobalNav a:link {
-	color: #FFF;
+  color: #fff;
 }
 #GlobalNav a:visited {
-	color: #CCFF66;
+  color: #ccff66;
 }
 #GlobalNav a:hover {
-	color: #CCFF66;
-	text-decoration: none;
+  color: #ccff66;
+  text-decoration: none;
 }
 #GlobalNav a:active {
-	color: #FFF;
-	text-decoration: none;
+  color: #fff;
+  text-decoration: none;
 }
 #sidebar {
-	position:absolute;
-	width:230px;
-	height:600px;
-	z-index:1;
-	left: 500px;
-	top: 100px;
-	background-color: #FFFFFF;
+  position: absolute;
+  width: 230px;
+  height: 600px;
+  z-index: 1;
+  left: 500px;
+  top: 100px;
+  background-color: #ffffff;
 }
 #footer {
-	position:absolute;
-	width:750px;
-	height:100px;
-	z-index:3;
-	left: 0px;
-	top: 750px;
-	background-color: #CCCCCC;
+  position: absolute;
+  width: 750px;
+  height: 100px;
+  z-index: 3;
+  left: 0px;
+  top: 750px;
+  background-color: #cccccc;
 }
 #container #header img {
-	margin-top: 40px;
-	margin-left: 15px;
+  margin-top: 40px;
+  margin-left: 15px;
 }
 #container #main h1 {
-	margin-left: 15px;
-	margin-bottom: 0px;
-	text-align: left;
+  margin-left: 15px;
+  margin-bottom: 0px;
+  text-align: left;
 }
 #container #main p {
-	margin-right: 15px;
-	margin-left: 15px;
-	margin-top: 0px;
-	margin-bottom: 0px;
-	text-align: left;
+  margin-right: 15px;
+  margin-left: 15px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  text-align: left;
 }
 #container #sidebar p {
-	font-family: Verdana, Geneva, sans-serif;
-	font-size: 11px;
-	line-height: 18px;
-	color: #FFF;
-	background-color: #9FCC41;
-	border: 1px dotted #5A710D;
-	margin-top: 0px;
-	margin-bottom: 20px;
-	padding: 5px;
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 11px;
+  line-height: 18px;
+  color: #fff;
+  background-color: #9fcc41;
+  border: 1px dotted #5a710d;
+  margin-top: 0px;
+  margin-bottom: 20px;
+  padding: 5px;
 }
 .styledtable {
-	background-color: #FFF;
-	font-family: Verdana, Geneva, sans-serif;
-	font-size: 10px;
-	color: #006;
-	border: 1px solid #006;
+  background-color: #fff;
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 10px;
+  color: #006;
+  border: 1px solid #006;
 }
 .styledtable tr th {
-	background-image: url(bg_header.jpg);
-	background-repeat: repeat-x;
-	border-bottom-width: 2px;
-	border-bottom-style: solid;
-	border-bottom-color: #006;
-	text-transform: capitalize;
-	font-size: 14px;
+  background-image: url(bg_header.jpg);
+  background-repeat: repeat-x;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  border-bottom-color: #006;
+  text-transform: capitalize;
+  font-size: 14px;
 }
 .styledtable tr td {
-	text-align: center;
-	padding-top: 10px;
-	padding-right: 5px;
-	padding-bottom: 5px;
-	padding-left: 2px;
+  text-align: center;
+  padding-top: 10px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+  padding-left: 2px;
 }
 .styledtable tr td {
-	text-align: center;
-	padding-top: 5px;
-	padding-right: 5px;
-	padding-bottom: 5px;
-	padding-left: 2px;
-	border: 1px dashed #9AA8BD;
+  text-align: center;
+  padding-top: 5px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+  padding-left: 2px;
+  border: 1px dashed #9aa8bd;
 }
 .oddrow {
-	background-color: #EAF1F4;
+  background-color: #eaf1f4;
 }

@@ -1,78 +1,78 @@
 @charset "utf-8";
 body {
-	background-color: #CCC;
-	background-image: url(background.jpg);
-	background-repeat: repeat;
+  background-color: #ccc;
+  background-image: url(background.jpg);
+  background-repeat: repeat;
 }
 #container {
-	position:absolute;
-	left:10%;
-	top:10px;
-	width:800px;
-	height:1100px;
-	z-index:1;
-	right: 10%;
+  position: absolute;
+  left: 10%;
+  top: 10px;
+  width: 800px;
+  height: 1100px;
+  z-index: 1;
+  right: 10%;
 }
-#header{
-	position:relative;
-	left:0px;
-	top:0px;
-	width:800px;
-	height:110px;
-	z-index:2;
-	background-color: #999;
-	margin: 0px;
-	padding: 10px;
+#header {
+  position: relative;
+  left: 0px;
+  top: 0px;
+  width: 800px;
+  height: 110px;
+  z-index: 2;
+  background-color: #999;
+  margin: 0px;
+  padding: 10px;
 }
 #main {
-	position:relative;
-	left:0px;
-	top:20px;
-	width:560px;
-	height:800px;
-	z-index:3;
-	background-color: #999;
-	font-family: Tahoma, Geneva, sans-serif;
-	padding: 10px;
-	overflow: auto;
+  position: relative;
+  left: 0px;
+  top: 20px;
+  width: 560px;
+  height: 800px;
+  z-index: 3;
+  background-color: #999;
+  font-family: Tahoma, Geneva, sans-serif;
+  padding: 10px;
+  overflow: auto;
 }
 #sidebar {
-	position:absolute;
-	left:600px;
-	top:150px;
-	width:200px;
-	height:800px;
-	z-index:4;
-	background-color: #999;
-	padding: 10px;
-	font-family: Tahoma, Geneva, sans-serif;
-	font-weight: bold;
+  position: absolute;
+  left: 600px;
+  top: 150px;
+  width: 200px;
+  height: 800px;
+  z-index: 4;
+  background-color: #999;
+  padding: 10px;
+  font-family: Tahoma, Geneva, sans-serif;
+  font-weight: bold;
 }
 #footer {
-	position:relative;
-	left:0px;
-	top:40px;
-	width:800px;
-	height:60px;
-	z-index:5;
-	background-color: #999;
-	padding: 10px;
-	font-family: Tahoma, Geneva, sans-serif;
-	font-size: 9px;
+  position: relative;
+  left: 0px;
+  top: 40px;
+  width: 800px;
+  height: 60px;
+  z-index: 5;
+  background-color: #999;
+  padding: 10px;
+  font-family: Tahoma, Geneva, sans-serif;
+  font-size: 9px;
 }
 
 a:link {
-	color: #F00;
+  color: #f00;
 }
 a:visited {
-	color: #F00;
+  color: #f00;
 }
 a:hover {
-	color: #000;
+  color: #000;
 }
 a:active {
-	color: #000;
+  color: #000;
 }
 #container #footer p {
-	font-size: 10px;
+  font-size: 10px;
 }
