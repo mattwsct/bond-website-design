@@ -61,14 +61,14 @@ Spry.Widget.BrowserSniff = function () {
   this.windows = this.mac = this.linux = false;
 
   this.Platform = ua.match(/windows/i)
-    ? "windows"
+    ? 'windows'
     : ua.match(/linux/i)
-    ? "linux"
-    : ua.match(/mac/i)
-    ? "mac"
-    : ua.match(/unix/i)
-    ? "unix"
-    : "unknown";
+      ? 'linux'
+      : ua.match(/mac/i)
+        ? 'mac'
+        : ua.match(/unix/i)
+          ? 'unix'
+          : 'unknown';
   this[this.Platform] = true;
   this.v = this.version;
 
@@ -80,18 +80,18 @@ Spry.Widget.BrowserSniff = function () {
 Spry.is = new Spry.Widget.BrowserSniff();
 
 Spry.Widget.ValidationTextField = function (element, type, options) {
-  type = Spry.Widget.Utils.firstValid(type, "none");
-  if (typeof type !== "string") {
+  type = Spry.Widget.Utils.firstValid(type, 'none');
+  if (typeof type !== 'string') {
     this.showError(
-      "The second parameter in the constructor should be the validation type, the options are the third parameter."
+      'The second parameter in the constructor should be the validation type, the options are the third parameter.',
     );
     return;
   }
   if (
-    typeof Spry.Widget.ValidationTextField.ValidationDescriptors[type] ===
-    "undefined"
+    typeof Spry.Widget.ValidationTextField.ValidationDescriptors[type]
+    === 'undefined'
   ) {
-    this.showError("Unknown validation type received as the second parameter.");
+    this.showError('Unknown validation type received as the second parameter.');
     return;
   }
   options = Spry.Widget.Utils.firstValid(options, {});
@@ -103,22 +103,22 @@ Spry.Widget.ValidationTextField = function (element, type, options) {
   this.init(element, options);
 
   // make sure we validate at least on submit
-  let validateOn = ["submit"].concat(
-    Spry.Widget.Utils.firstValid(this.options.validateOn, [])
+  let validateOn = ['submit'].concat(
+    Spry.Widget.Utils.firstValid(this.options.validateOn, []),
   );
-  validateOn = validateOn.join(",");
+  validateOn = validateOn.join(',');
 
   this.validateOn = 0;
-  this.validateOn |=
-    validateOn.indexOf("submit") != -1
+  this.validateOn
+    |= validateOn.indexOf('submit') != -1
       ? Spry.Widget.ValidationTextField.ONSUBMIT
       : 0;
-  this.validateOn |=
-    validateOn.indexOf("blur") != -1
+  this.validateOn
+    |= validateOn.indexOf('blur') != -1
       ? Spry.Widget.ValidationTextField.ONBLUR
       : 0;
-  this.validateOn |=
-    validateOn.indexOf("change") != -1
+  this.validateOn
+    |= validateOn.indexOf('change') != -1
       ? Spry.Widget.ValidationTextField.ONCHANGE
       : 0;
 
@@ -154,7 +154,7 @@ Spry.Widget.ValidationTextField.ValidationDescriptors = {
     characterMasking: /[\-\+\d]/,
     regExpFilter: /^[\-\+]?\d*$/,
     validation(value, options) {
-      if (value == "" || value == "-" || value == "+") {
+      if (value == '' || value == '-' || value == '+') {
         return false;
       }
       const regExp = /^[\-\+]?\d*$/;
@@ -166,8 +166,8 @@ Spry.Widget.ValidationTextField.ValidationDescriptors = {
       if (!isNaN(ret)) {
         let allowNegative = true;
         if (
-          typeof options.allowNegative !== "undefined" &&
-          options.allowNegative == false
+          typeof options.allowNegative !== 'undefined'
+          && options.allowNegative == false
         ) {
           allowNegative = false;
         }
@@ -204,10 +204,10 @@ Spry.Widget.ValidationTextField.ValidationDescriptors = {
           let ret = false;
           // 2 or no digits after the comma
           if (
-            /^(\-|\+)?\d{1,3}(?:\.\d{3})*(?:\,\d{2}|)$/.test(value) ||
-            /^(\-|\+)?\d+(?:\,\d{2}|)$/.test(value)
+            /^(\-|\+)?\d{1,3}(?:\.\d{3})*(?:\,\d{2}|)$/.test(value)
+            || /^(\-|\+)?\d+(?:\,\d{2}|)$/.test(value)
           ) {
-            value = value.toString().replace(/\./gi, "").replace(/\,/, ".");
+            value = value.toString().replace(/\./gi, '').replace(/\,/, '.');
             ret = parseFloat(value);
           }
           return ret;
@@ -220,10 +220,10 @@ Spry.Widget.ValidationTextField.ValidationDescriptors = {
           let ret = false;
           // 2 or no digits after the comma
           if (
-            /^(\-|\+)?\d{1,3}(?:\,\d{3})*(?:\.\d{2}|)$/.test(value) ||
-            /^(\-|\+)?\d+(?:\.\d{2}|)$/.test(value)
+            /^(\-|\+)?\d{1,3}(?:\,\d{3})*(?:\.\d{2}|)$/.test(value)
+            || /^(\-|\+)?\d+(?:\.\d{2}|)$/.test(value)
           ) {
-            value = value.toString().replace(/\,/gi, "");
+            value = value.toString().replace(/\,/gi, '');
             ret = parseFloat(value);
           }
           return ret;
@@ -240,8 +240,7 @@ Spry.Widget.ValidationTextField.ValidationDescriptors = {
   },
   date: {
     validation(value, options) {
-      const formatRegExp =
-        /^([mdy]+)[\.\-\/\\\s]+([mdy]+)[\.\-\/\\\s]+([mdy]+)$/i;
+      const formatRegExp = /^([mdy]+)[\.\-\/\\\s]+([mdy]+)[\.\-\/\\\s]+([mdy]+)$/i;
       const valueRegExp = this.dateValidationPattern;
       const formatGroups = options.format.match(formatRegExp);
       const valueGroups = value.match(valueRegExp);
@@ -251,14 +250,14 @@ Spry.Widget.ValidationTextField.ValidationDescriptors = {
         let yearIndex = -1;
         for (let i = 1; i < formatGroups.length; i++) {
           switch (formatGroups[i].toLowerCase()) {
-            case "dd":
+            case 'dd':
               dayIndex = i;
               break;
-            case "mm":
+            case 'mm':
               monthIndex = i;
               break;
-            case "yy":
-            case "yyyy":
+            case 'yy':
+            case 'yyyy':
               yearIndex = i;
               break;
           }
@@ -293,8 +292,8 @@ Spry.Widget.ValidationTextField.ValidationDescriptors = {
               break;
             case 2: // February
               if (
-                parseInt(theYear / 4, 10) * 4 == theYear &&
-                (theYear % 100 != 0 || theYear % 400 == 0)
+                parseInt(theYear / 4, 10) * 4 == theYear
+                && (theYear % 100 != 0 || theYear % 400 == 0)
               ) {
                 maxDay = 29;
               } else {
@@ -337,20 +336,20 @@ Spry.Widget.ValidationTextField.ValidationDescriptors = {
         var theHour = 0;
         var theMinute = 0;
         var theSecond = 0;
-        var theT = "AM";
+        var theT = 'AM';
         for (let i = 0; i < formatGroups.length; i++) {
           switch (formatGroups[i].toLowerCase()) {
-            case "hh":
+            case 'hh':
               hourIndex = i;
               break;
-            case "mm":
+            case 'mm':
               minuteIndex = i;
               break;
-            case "ss":
+            case 'ss':
               secondIndex = i;
               break;
-            case "t":
-            case "tt":
+            case 't':
+            case 'tt':
               tIndex = i;
               break;
           }
@@ -358,8 +357,8 @@ Spry.Widget.ValidationTextField.ValidationDescriptors = {
         if (hourIndex != -1) {
           var theHour = parseInt(valueGroups[hourIndex], 10);
           if (
-            isNaN(theHour) ||
-            theHour > (formatGroups[hourIndex] == "HH" ? 23 : 12)
+            isNaN(theHour)
+            || theHour > (formatGroups[hourIndex] == 'HH' ? 23 : 12)
           ) {
             return false;
           }
@@ -379,9 +378,9 @@ Spry.Widget.ValidationTextField.ValidationDescriptors = {
         if (tIndex != -1) {
           var theT = valueGroups[tIndex].toUpperCase();
           if (
-            (formatGroups[tIndex].toUpperCase() == "TT" &&
-              !/^a|pm$/i.test(theT)) ||
-            (formatGroups[tIndex].toUpperCase() == "T" && !/^a|p$/i.test(theT))
+            (formatGroups[tIndex].toUpperCase() == 'TT'
+              && !/^a|pm$/i.test(theT))
+            || (formatGroups[tIndex].toUpperCase() == 'T' && !/^a|p$/i.test(theT))
           ) {
             return false;
           }
@@ -390,9 +389,9 @@ Spry.Widget.ValidationTextField.ValidationDescriptors = {
           2000,
           0,
           1,
-          theHour + (theT.charAt(0) == "P" ? 12 : 0),
+          theHour + (theT.charAt(0) == 'P' ? 12 : 0),
           theMinute,
-          theSecond
+          theSecond,
         );
         return date;
       }
@@ -403,24 +402,24 @@ Spry.Widget.ValidationTextField.ValidationDescriptors = {
     characterMasking: /\d/,
     validation(value, options) {
       let regExp = null;
-      options.format = options.format || "ALL";
+      options.format = options.format || 'ALL';
       switch (options.format.toUpperCase()) {
-        case "ALL":
+        case 'ALL':
           regExp = /^[3-6]{1}[0-9]{12,18}$/;
           break;
-        case "VISA":
+        case 'VISA':
           regExp = /^4(?:[0-9]{12}|[0-9]{15})$/;
           break;
-        case "MASTERCARD":
+        case 'MASTERCARD':
           regExp = /^5[1-5]{1}[0-9]{14}$/;
           break;
-        case "AMEX":
+        case 'AMEX':
           regExp = /^3(4|7){1}[0-9]{13}$/;
           break;
-        case "DISCOVER":
+        case 'DISCOVER':
           regExp = /^6011[0-9]{12}$/;
           break;
-        case "DINERSCLUB":
+        case 'DINERSCLUB':
           regExp = /^3(?:(0[0-5]{1}[0-9]{11})|(6[0-9]{12})|(8[0-9]{12}))$/;
           break;
       }
@@ -429,7 +428,7 @@ Spry.Widget.ValidationTextField.ValidationDescriptors = {
       }
       const digits = [];
       let j = 1;
-      let digit = "";
+      let digit = '';
       for (var i = value.length - 1; i >= 0; i--) {
         if (j % 2 == 0) {
           digit = parseInt(value.charAt(i), 10) * 2;
@@ -456,10 +455,10 @@ Spry.Widget.ValidationTextField.ValidationDescriptors = {
   zip_code: {
     formats: {
       zip_us9: {
-        pattern: "00000-0000",
+        pattern: '00000-0000',
       },
       zip_us5: {
-        pattern: "00000",
+        pattern: '00000',
       },
       zip_uk: {
         characterMasking: /[\dA-Z\s]/,
@@ -471,7 +470,7 @@ Spry.Widget.ValidationTextField.ValidationDescriptors = {
       },
       zip_canada: {
         characterMasking: /[\dA-Z\s]/,
-        pattern: "A0A 0A0",
+        pattern: 'A0A 0A0',
       },
       zip_custom: {},
     },
@@ -480,13 +479,13 @@ Spry.Widget.ValidationTextField.ValidationDescriptors = {
     formats: {
       // US phone number; 10 digits
       phone_us: {
-        pattern: "(000) 000-0000",
+        pattern: '(000) 000-0000',
       },
       phone_custom: {},
     },
   },
   social_security_number: {
-    pattern: "000-00-0000",
+    pattern: '000-00-0000',
   },
   ip: {
     characterMaskingFormats: {
@@ -510,13 +509,12 @@ Spry.Widget.ValidationTextField.ValidationDescriptors = {
 				query     = $7
 				fragment  = $9
 			*/
-      const URI_spliter =
-        /^(([^:\/?#]+):)?(\/\/([^\/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?/;
+      const URI_spliter = /^(([^:\/?#]+):)?(\/\/([^\/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?/;
       const parts = value.match(URI_spliter);
       if (parts && parts[4]) {
         // encode each component of the domain name using Punycode encoding scheme: http://tools.ietf.org/html/rfc3492
-        let host = parts[4].split(".");
-        let punyencoded = "";
+        let host = parts[4].split('.');
+        let punyencoded = '';
         for (let i = 0; i < host.length; i++) {
           punyencoded = Spry.Widget.Utils.punycode_encode(host[i], 64);
           if (!punyencoded) {
@@ -526,7 +524,7 @@ Spry.Widget.ValidationTextField.ValidationDescriptors = {
             host[i] = `xn--${punyencoded}`;
           }
         }
-        host = host.join(".");
+        host = host.join('.');
         // the encoded domain name is replaced into the original URL to be validated again later as URL
         value = value.replace(URI_spliter, `$1//${host}$5$6$8`);
       }
@@ -541,8 +539,7 @@ Spry.Widget.ValidationTextField.ValidationDescriptors = {
        * query=			(?:\?(?:[a-z0-9\-\._~\!\$\&\'\(\)\*\+\,\;\=\:\@\/\?]|%[0-9a-f]{2,2})*)?
        * anchor=		(?:\#(?:[a-z0-9\-\._~\!\$\&\'\(\)\*\+\,\;\=\:\@\/\?]|%[0-9a-f]{2,2})*)?
        */
-      const regExp =
-        /^(?:https?|ftp)\:\/\/(?:(?:[a-z0-9\-\._~\!\$\&\'\(\)\*\+\,\;\=:]|%[0-9a-f]{2,2})*\@)?(?:((?:(?:[a-z0-9][a-z0-9\-]*[a-z0-9]|[a-z0-9])\.)*(?:[a-z][a-z0-9\-]*[a-z0-9]|[a-z])|(?:\[[^\]]*\]))(?:\:[0-9]*)?)(?:\/(?:[a-z0-9\-\._~\!\$\&\'\(\)\*\+\,\;\=\:\@]|%[0-9a-f]{2,2})*)*(?:\?(?:[a-z0-9\-\._~\!\$\&\'\(\)\*\+\,\;\=\:\@\/\?]|%[0-9a-f]{2,2})*)?(?:\#(?:[a-z0-9\-\._~\!\$\&\'\(\)\*\+\,\;\=\:\@\/\?]|%[0-9a-f]{2,2})*)?$/i;
+      const regExp = /^(?:https?|ftp)\:\/\/(?:(?:[a-z0-9\-\._~\!\$\&\'\(\)\*\+\,\;\=:]|%[0-9a-f]{2,2})*\@)?(?:((?:(?:[a-z0-9][a-z0-9\-]*[a-z0-9]|[a-z0-9])\.)*(?:[a-z][a-z0-9\-]*[a-z0-9]|[a-z])|(?:\[[^\]]*\]))(?:\:[0-9]*)?)(?:\/(?:[a-z0-9\-\._~\!\$\&\'\(\)\*\+\,\;\=\:\@]|%[0-9a-f]{2,2})*)*(?:\?(?:[a-z0-9\-\._~\!\$\&\'\(\)\*\+\,\;\=\:\@\/\?]|%[0-9a-f]{2,2})*)?(?:\#(?:[a-z0-9\-\._~\!\$\&\'\(\)\*\+\,\;\=\:\@\/\?]|%[0-9a-f]{2,2})*)?$/i;
 
       const valid = value.match(regExp);
       if (valid) {
@@ -550,22 +547,22 @@ Spry.Widget.ValidationTextField.ValidationDescriptors = {
         let address = valid[1];
 
         if (address) {
-          if (address == "[]") {
+          if (address == '[]') {
             return false;
           }
-          if (address.charAt(0) == "[") {
+          if (address.charAt(0) == '[') {
             // IPv6 address or IPv4 enclosed in square brackets
-            address = address.replace(/^\[|\]$/gi, "");
+            address = address.replace(/^\[|\]$/gi, '');
             return Spry.Widget.ValidationTextField.validateIP(
               address,
-              "ipv6_ipv4"
+              'ipv6_ipv4',
             );
           }
           if (/[^0-9\.]/.test(address)) {
             return true;
           }
           // check if hostname is all digits and dots and then check for IPv4
-          return Spry.Widget.ValidationTextField.validateIP(address, "ipv4");
+          return Spry.Widget.ValidationTextField.validateIP(address, 'ipv4');
         }
         return true;
       }
@@ -640,10 +637,10 @@ Spry.Widget.ValidationTextField.validateIP = function (value, format) {
     /^(\d{1,3}\.){3}\d{1,3}$/i,
   ];
   let validAddresses = [];
-  if (format == "ipv6" || format == "ipv6_ipv4") {
+  if (format == 'ipv6' || format == 'ipv6_ipv4') {
     validAddresses = validAddresses.concat(validIPv6Addresses);
   }
-  if (format == "ipv4" || format == "ipv6_ipv4") {
+  if (format == 'ipv4' || format == 'ipv6_ipv4') {
     validAddresses = validAddresses.concat(validIPv4Addresses);
   }
 
@@ -655,39 +652,39 @@ Spry.Widget.ValidationTextField.validateIP = function (value, format) {
     }
   }
 
-  if (ret && value.indexOf(".") != -1) {
+  if (ret && value.indexOf('.') != -1) {
     // if address contains IPv4 fragment, it must be valid; all 4 groups must be less than 256
     let ipv4 = value.match(/:?(?:\d{1,3}\.){3}\d{1,3}/i);
     if (!ipv4) {
       return false;
     }
-    ipv4 = ipv4[0].replace(/^:/, "");
-    const pieces = ipv4.split(".");
+    ipv4 = ipv4[0].replace(/^:/, '');
+    const pieces = ipv4.split('.');
     if (pieces.length != 4) {
       return false;
     }
     const regExp = /^[\-\+]?\d*$/;
     for (var i = 0; i < pieces.length; i++) {
-      if (pieces[i] == "") {
+      if (pieces[i] == '') {
         return false;
       }
       const piece = parseInt(pieces[i], 10);
       if (
-        isNaN(piece) ||
-        piece > 255 ||
-        !regExp.test(pieces[i]) ||
-        pieces[i].length > 3 ||
-        /^0{2,3}$/.test(pieces[i])
+        isNaN(piece)
+        || piece > 255
+        || !regExp.test(pieces[i])
+        || pieces[i].length > 3
+        || /^0{2,3}$/.test(pieces[i])
       ) {
         return false;
       }
     }
   }
-  if (ret && value.indexOf("/") != -1) {
+  if (ret && value.indexOf('/') != -1) {
     // if prefix-length is specified must be in [1-128]
     const prefLen = value.match(/\/\d{1,3}$/);
     if (!prefLen) return false;
-    const prefLenVal = parseInt(prefLen[0].replace(/^\//, ""), 10);
+    const prefLenVal = parseInt(prefLen[0].replace(/^\//, ''), 10);
     if (isNaN(prefLenVal) || prefLenVal > 128 || prefLenVal < 1) {
       return false;
     }
@@ -700,10 +697,10 @@ Spry.Widget.ValidationTextField.loadQueue = [];
 
 Spry.Widget.ValidationTextField.prototype.isBrowserSupported = function () {
   return (
-    (Spry.is.ie && Spry.is.v >= 5 && Spry.is.windows) ||
-    (Spry.is.mozilla && Spry.is.v >= 1.4) ||
-    Spry.is.safari ||
-    (Spry.is.opera && Spry.is.v >= 9)
+    (Spry.is.ie && Spry.is.v >= 5 && Spry.is.windows)
+    || (Spry.is.mozilla && Spry.is.v >= 1.4)
+    || Spry.is.safari
+    || (Spry.is.opera && Spry.is.v >= 9)
   );
 };
 
@@ -714,49 +711,48 @@ Spry.Widget.ValidationTextField.prototype.init = function (element, options) {
   this.options = {};
   this.event_handlers = [];
 
-  this.validClass = "textfieldValidState";
-  this.focusClass = "textfieldFocusState";
-  this.requiredClass = "textfieldRequiredState";
-  this.hintClass = "textfieldHintState";
-  this.invalidFormatClass = "textfieldInvalidFormatState";
-  this.invalidRangeMinClass = "textfieldMinValueState";
-  this.invalidRangeMaxClass = "textfieldMaxValueState";
-  this.invalidCharsMinClass = "textfieldMinCharsState";
-  this.invalidCharsMaxClass = "textfieldMaxCharsState";
-  this.textfieldFlashTextClass = "textfieldFlashText";
+  this.validClass = 'textfieldValidState';
+  this.focusClass = 'textfieldFocusState';
+  this.requiredClass = 'textfieldRequiredState';
+  this.hintClass = 'textfieldHintState';
+  this.invalidFormatClass = 'textfieldInvalidFormatState';
+  this.invalidRangeMinClass = 'textfieldMinValueState';
+  this.invalidRangeMaxClass = 'textfieldMaxValueState';
+  this.invalidCharsMinClass = 'textfieldMinCharsState';
+  this.invalidCharsMaxClass = 'textfieldMaxCharsState';
+  this.textfieldFlashTextClass = 'textfieldFlashText';
   if (Spry.is.safari) {
     this.flags.lastKeyPressedTimeStamp = 0;
   }
 
   switch (this.type) {
-    case "phone_number":
-      options.format = Spry.Widget.Utils.firstValid(options.format, "phone_us");
+    case 'phone_number':
+      options.format = Spry.Widget.Utils.firstValid(options.format, 'phone_us');
       break;
-    case "currency":
+    case 'currency':
       options.format = Spry.Widget.Utils.firstValid(
         options.format,
-        "comma_dot"
+        'comma_dot',
       );
       break;
-    case "zip_code":
-      options.format = Spry.Widget.Utils.firstValid(options.format, "zip_us5");
+    case 'zip_code':
+      options.format = Spry.Widget.Utils.firstValid(options.format, 'zip_us5');
       break;
-    case "date":
-      options.format = Spry.Widget.Utils.firstValid(options.format, "mm/dd/yy");
+    case 'date':
+      options.format = Spry.Widget.Utils.firstValid(options.format, 'mm/dd/yy');
       break;
-    case "time":
-      options.format = Spry.Widget.Utils.firstValid(options.format, "HH:mm");
+    case 'time':
+      options.format = Spry.Widget.Utils.firstValid(options.format, 'HH:mm');
       options.pattern = options.format
-        .replace(/[hms]/gi, "0")
-        .replace(/TT/gi, "AM")
-        .replace(/T/gi, "A");
+        .replace(/[hms]/gi, '0')
+        .replace(/TT/gi, 'AM')
+        .replace(/T/gi, 'A');
       break;
-    case "ip":
-      options.format = Spry.Widget.Utils.firstValid(options.format, "ipv4");
-      options.characterMasking =
-        Spry.Widget.ValidationTextField.ValidationDescriptors[
-          this.type
-        ].characterMaskingFormats[options.format];
+    case 'ip':
+      options.format = Spry.Widget.Utils.firstValid(options.format, 'ipv4');
+      options.characterMasking = Spry.Widget.ValidationTextField.ValidationDescriptors[
+        this.type
+      ].characterMaskingFormats[options.format];
       break;
   }
 
@@ -764,8 +760,8 @@ Spry.Widget.ValidationTextField.prototype.init = function (element, options) {
   // widgets may have different validations depending on format (like zip_code with formats)
   const validationDescriptor = {};
   if (
-    options.format &&
-    Spry.Widget.ValidationTextField.ValidationDescriptors[this.type].formats
+    options.format
+    && Spry.Widget.ValidationTextField.ValidationDescriptors[this.type].formats
   ) {
     if (
       Spry.Widget.ValidationTextField.ValidationDescriptors[this.type].formats[
@@ -775,69 +771,68 @@ Spry.Widget.ValidationTextField.prototype.init = function (element, options) {
       Spry.Widget.Utils.setOptions(
         validationDescriptor,
         Spry.Widget.ValidationTextField.ValidationDescriptors[this.type]
-          .formats[options.format]
+          .formats[options.format],
       );
     }
   } else {
     Spry.Widget.Utils.setOptions(
       validationDescriptor,
-      Spry.Widget.ValidationTextField.ValidationDescriptors[this.type]
+      Spry.Widget.ValidationTextField.ValidationDescriptors[this.type],
     );
   }
 
   // set default values for some parameters which were not aspecified
   options.useCharacterMasking = Spry.Widget.Utils.firstValid(
     options.useCharacterMasking,
-    false
+    false,
   );
-  options.hint = Spry.Widget.Utils.firstValid(options.hint, "");
+  options.hint = Spry.Widget.Utils.firstValid(options.hint, '');
   options.isRequired = Spry.Widget.Utils.firstValid(options.isRequired, true);
   options.additionalError = Spry.Widget.Utils.firstValid(
     options.additionalError,
-    false
+    false,
   );
-  if (options.additionalError)
-    options.additionalError = this.getElement(options.additionalError);
+  if (options.additionalError) options.additionalError = this.getElement(options.additionalError);
 
   // set widget validation parameters
   // get values from validation type descriptor
   // use the user specified values, if defined
   options.characterMasking = Spry.Widget.Utils.firstValid(
     options.characterMasking,
-    validationDescriptor.characterMasking
+    validationDescriptor.characterMasking,
   );
   options.regExpFilter = Spry.Widget.Utils.firstValid(
     options.regExpFilter,
-    validationDescriptor.regExpFilter
+    validationDescriptor.regExpFilter,
   );
   options.pattern = Spry.Widget.Utils.firstValid(
     options.pattern,
-    validationDescriptor.pattern
+    validationDescriptor.pattern,
   );
   options.validation = Spry.Widget.Utils.firstValid(
     options.validation,
-    validationDescriptor.validation
+    validationDescriptor.validation,
   );
-  if (typeof options.validation === "string") {
+  if (typeof options.validation === 'string') {
     options.validation = eval(options.validation);
   }
 
   options.minValue = Spry.Widget.Utils.firstValid(
     options.minValue,
-    validationDescriptor.minValue
+    validationDescriptor.minValue,
   );
   options.maxValue = Spry.Widget.Utils.firstValid(
     options.maxValue,
-    validationDescriptor.maxValue
+    validationDescriptor.maxValue,
   );
 
   options.minChars = Spry.Widget.Utils.firstValid(
     options.minChars,
-    validationDescriptor.minChars
+    validationDescriptor.minChars,
   );
   options.maxChars = Spry.Widget.Utils.firstValid(
     options.maxChars,
-    validationDescriptor.maxChars
+    validationDescriptor.maxChars,
   );
 
   Spry.Widget.Utils.setOptions(this, options);
@@ -851,7 +846,7 @@ Spry.Widget.ValidationTextField.prototype.destroy = function () {
         this.event_handlers[i][0],
         this.event_handlers[i][1],
         this.event_handlers[i][2],
-        false
+        false,
       );
     }
   }
@@ -886,26 +881,26 @@ Spry.Widget.ValidationTextField.prototype.destroy = function () {
 
 Spry.Widget.ValidationTextField.prototype.attachBehaviors = function () {
   if (this.element) {
-    if (this.element.nodeName == "INPUT") {
+    if (this.element.nodeName == 'INPUT') {
       this.input = this.element;
     } else {
       this.input = Spry.Widget.Utils.getFirstChildWithNodeNameAtAnyLevel(
         this.element,
-        "INPUT"
+        'INPUT',
       );
     }
   }
 
   if (this.input) {
     if (this.maxChars) {
-      this.input.removeAttribute("maxLength");
+      this.input.removeAttribute('maxLength');
     }
     this.putHint();
     this.compilePattern();
-    if (this.type == "date") {
+    if (this.type == 'date') {
       this.compileDatePattern();
     }
-    this.input.setAttribute("AutoComplete", "off");
+    this.input.setAttribute('AutoComplete', 'off');
     this.selection = new Spry.Widget.SelectionDescriptor(this.input);
     this.oldValue = this.input.value;
 
@@ -914,7 +909,7 @@ Spry.Widget.ValidationTextField.prototype.attachBehaviors = function () {
 
     this.event_handlers.push([
       this.input,
-      "keydown",
+      'keydown',
       function (e) {
         if (self.isDisabled()) return true;
         return self.onKeyDown(e || event);
@@ -922,7 +917,7 @@ Spry.Widget.ValidationTextField.prototype.attachBehaviors = function () {
     ]);
     this.event_handlers.push([
       this.input,
-      "keypress",
+      'keypress',
       function (e) {
         if (self.isDisabled()) return true;
         return self.onKeyPress(e || event);
@@ -931,7 +926,7 @@ Spry.Widget.ValidationTextField.prototype.attachBehaviors = function () {
     if (Spry.is.opera) {
       this.event_handlers.push([
         this.input,
-        "keyup",
+        'keyup',
         function (e) {
           if (self.isDisabled()) return true;
           return self.onKeyUp(e || event);
@@ -941,7 +936,7 @@ Spry.Widget.ValidationTextField.prototype.attachBehaviors = function () {
 
     this.event_handlers.push([
       this.input,
-      "focus",
+      'focus',
       function (e) {
         if (self.isDisabled()) return true;
         return self.onFocus(e || event);
@@ -949,7 +944,7 @@ Spry.Widget.ValidationTextField.prototype.attachBehaviors = function () {
     ]);
     this.event_handlers.push([
       this.input,
-      "blur",
+      'blur',
       function (e) {
         if (self.isDisabled()) return true;
         return self.onBlur(e || event);
@@ -958,19 +953,18 @@ Spry.Widget.ValidationTextField.prototype.attachBehaviors = function () {
 
     this.event_handlers.push([
       this.input,
-      "mousedown",
+      'mousedown',
       function (e) {
         if (self.isDisabled()) return true;
         return self.onMouseDown(e || event);
       },
     ]);
 
-    const changeEvent =
-      Spry.is.mozilla || Spry.is.opera || Spry.is.safari
-        ? "input"
-        : Spry.is.ie
-        ? "propertychange"
-        : "change";
+    const changeEvent = Spry.is.mozilla || Spry.is.opera || Spry.is.safari
+      ? 'input'
+      : Spry.is.ie
+        ? 'propertychange'
+        : 'change';
     this.event_handlers.push([
       this.input,
       changeEvent,
@@ -984,7 +978,7 @@ Spry.Widget.ValidationTextField.prototype.attachBehaviors = function () {
       // oninput event on mozilla does not fire ondragdrop
       this.event_handlers.push([
         this.input,
-        "dragdrop",
+        'dragdrop',
         function (e) {
           if (self.isDisabled()) return true;
           self.removeHint();
@@ -995,7 +989,7 @@ Spry.Widget.ValidationTextField.prototype.attachBehaviors = function () {
       // ondrop&onpropertychange crash on IE
       this.event_handlers.push([
         this.input,
-        "drop",
+        'drop',
         function (e) {
           if (self.isDisabled()) return true;
           return self.onDrop(e || event);
@@ -1008,14 +1002,14 @@ Spry.Widget.ValidationTextField.prototype.attachBehaviors = function () {
         this.event_handlers[i][0],
         this.event_handlers[i][1],
         this.event_handlers[i][2],
-        false
+        false,
       );
     }
 
     // submit
     this.form = Spry.Widget.Utils.getFirstParentWithNodeName(
       this.input,
-      "FORM"
+      'FORM',
     );
     if (this.form) {
       // if no "onSubmit" handler has been attached to the current form, attach one
@@ -1029,12 +1023,12 @@ Spry.Widget.ValidationTextField.prototype.attachBehaviors = function () {
       if (!this.form.attachedResetHandler) {
         Spry.Widget.Utils.addEventListener(
           this.form,
-          "reset",
+          'reset',
           (e) => {
             e = e || event;
             return Spry.Widget.Form.onReset(e, e.srcElement || e.currentTarget);
           },
-          false
+          false,
         );
         this.form.attachedResetHandler = true;
       }
@@ -1051,17 +1045,14 @@ Spry.Widget.ValidationTextField.prototype.isDisabled = function () {
 };
 
 Spry.Widget.ValidationTextField.prototype.getElement = function (ele) {
-  if (ele && typeof ele === "string") return document.getElementById(ele);
+  if (ele && typeof ele === 'string') return document.getElementById(ele);
   return ele;
 };
 
 Spry.Widget.ValidationTextField.addLoadListener = function (handler) {
-  if (typeof window.addEventListener !== "undefined")
-    window.addEventListener("load", handler, false);
-  else if (typeof document.addEventListener !== "undefined")
-    document.addEventListener("load", handler, false);
-  else if (typeof window.attachEvent !== "undefined")
-    window.attachEvent("onload", handler);
+  if (typeof window.addEventListener !== 'undefined') window.addEventListener('load', handler, false);
+  else if (typeof document.addEventListener !== 'undefined') document.addEventListener('load', handler, false);
+  else if (typeof window.attachEvent !== 'undefined') window.attachEvent('onload', handler);
 };
 
 Spry.Widget.ValidationTextField.processLoadQueue = function (handler) {
@@ -1072,14 +1063,14 @@ Spry.Widget.ValidationTextField.processLoadQueue = function (handler) {
 };
 
 Spry.Widget.ValidationTextField.addLoadListener(
-  Spry.Widget.ValidationTextField.processLoadQueue
+  Spry.Widget.ValidationTextField.processLoadQueue,
 );
 Spry.Widget.ValidationTextField.addLoadListener(() => {
   Spry.Widget.Utils.addEventListener(
     window,
-    "unload",
+    'unload',
     Spry.Widget.Form.destroyAll,
-    false
+    false,
   );
 });
 
@@ -1120,7 +1111,7 @@ Spry.Widget.ValidationTextField.prototype.revertState = function (revertValue) {
 
 Spry.Widget.ValidationTextField.prototype.removeHint = function () {
   if (this.flags.hintOn) {
-    this.input.value = "";
+    this.input.value = '';
     this.flags.hintOn = false;
     this.removeClassName(this.element, this.hintClass);
     this.removeClassName(this.additionalError, this.hintClass);
@@ -1129,10 +1120,10 @@ Spry.Widget.ValidationTextField.prototype.removeHint = function () {
 
 Spry.Widget.ValidationTextField.prototype.putHint = function () {
   if (
-    this.hint &&
-    this.input &&
-    this.input.type == "text" &&
-    this.input.value == ""
+    this.hint
+    && this.input
+    && this.input.type == 'text'
+    && this.input.value == ''
   ) {
     this.flags.hintOn = true;
     this.input.value = this.hint;
@@ -1151,7 +1142,7 @@ Spry.Widget.ValidationTextField.prototype.redTextFlash = function () {
 
 Spry.Widget.ValidationTextField.prototype.doValidations = function (
   testValue,
-  revertValue
+  revertValue,
 ) {
   if (this.isDisabled()) return false;
 
@@ -1207,7 +1198,7 @@ Spry.Widget.ValidationTextField.prototype.doValidations = function (
     }
   }
 
-  if (fixedValue == "") {
+  if (fixedValue == '') {
     errors |= Spry.Widget.ValidationTextField.ERROR_REQUIRED;
   }
 
@@ -1244,10 +1235,10 @@ Spry.Widget.ValidationTextField.prototype.doValidations = function (
   }
 
   if (
-    !mustRevert &&
-    this.validation &&
-    this.minValue !== null &&
-    continueValidations
+    !mustRevert
+    && this.validation
+    && this.minValue !== null
+    && continueValidations
   ) {
     const minValue = this.validation(this.minValue.toString(), this.options);
     if (minValue !== false) {
@@ -1259,10 +1250,10 @@ Spry.Widget.ValidationTextField.prototype.doValidations = function (
   }
 
   if (
-    !mustRevert &&
-    this.validation &&
-    this.maxValue !== null &&
-    continueValidations
+    !mustRevert
+    && this.validation
+    && this.maxValue !== null
+    && continueValidations
   ) {
     const maxValue = this.validation(this.maxValue.toString(), this.options);
     if (maxValue !== false) {
@@ -1290,7 +1281,7 @@ Spry.Widget.ValidationTextField.prototype.onChange = function (e) {
   if (Spry.is.opera && this.flags.operaRevertOnKeyUp) {
     return true;
   }
-  if (Spry.is.ie && e && e.propertyName != "value") {
+  if (Spry.is.ie && e && e.propertyName != 'value') {
     return true;
   }
 
@@ -1312,8 +1303,8 @@ Spry.Widget.ValidationTextField.prototype.onChange = function (e) {
     var mustRevert = this.doValidations(this.input.value, this.input.value);
     this.oldValue = this.input.value;
     if (
-      (mustRevert || this.errors) &&
-      this.validateOn & Spry.Widget.ValidationTextField.ONCHANGE
+      (mustRevert || this.errors)
+      && this.validateOn & Spry.Widget.ValidationTextField.ONCHANGE
     ) {
       var self = this;
       setTimeout(() => {
@@ -1325,8 +1316,8 @@ Spry.Widget.ValidationTextField.prototype.onChange = function (e) {
 
   var mustRevert = this.doValidations(this.input.value, this.oldValue);
   if (
-    (!mustRevert || this.errors) &&
-    this.validateOn & Spry.Widget.ValidationTextField.ONCHANGE
+    (!mustRevert || this.errors)
+    && this.validateOn & Spry.Widget.ValidationTextField.ONCHANGE
   ) {
     var self = this;
     setTimeout(() => {
@@ -1363,44 +1354,42 @@ Spry.Widget.ValidationTextField.prototype.operaPasteMonitor = function () {
 };
 
 Spry.Widget.ValidationTextField.prototype.compileDatePattern = function () {
-  let dateValidationPatternString = "";
+  let dateValidationPatternString = '';
   const groupPatterns = [];
   const fullGroupPatterns = [];
   const autocompleteCharacters = [];
 
-  const formatRegExp =
-    /^([mdy]+)([\.\-\/\\\s]+)([mdy]+)([\.\-\/\\\s]+)([mdy]+)$/i;
+  const formatRegExp = /^([mdy]+)([\.\-\/\\\s]+)([mdy]+)([\.\-\/\\\s]+)([mdy]+)$/i;
   const formatGroups = this.options.format.match(formatRegExp);
   if (formatGroups !== null) {
     for (let i = 1; i < formatGroups.length; i++) {
       switch (formatGroups[i].toLowerCase()) {
-        case "dd":
-          groupPatterns[i - 1] = "\\d{1,2}";
-          fullGroupPatterns[i - 1] = "\\d\\d";
+        case 'dd':
+          groupPatterns[i - 1] = '\\d{1,2}';
+          fullGroupPatterns[i - 1] = '\\d\\d';
           dateValidationPatternString += `(${groupPatterns[i - 1]})`;
           autocompleteCharacters[i - 1] = null;
           break;
-        case "mm":
-          groupPatterns[i - 1] = "\\d{1,2}";
-          fullGroupPatterns[i - 1] = "\\d\\d";
+        case 'mm':
+          groupPatterns[i - 1] = '\\d{1,2}';
+          fullGroupPatterns[i - 1] = '\\d\\d';
           dateValidationPatternString += `(${groupPatterns[i - 1]})`;
           autocompleteCharacters[i - 1] = null;
           break;
-        case "yy":
-          groupPatterns[i - 1] = "\\d{1,2}";
-          fullGroupPatterns[i - 1] = "\\d\\d";
-          dateValidationPatternString += "(\\d\\d)";
+        case 'yy':
+          groupPatterns[i - 1] = '\\d{1,2}';
+          fullGroupPatterns[i - 1] = '\\d\\d';
+          dateValidationPatternString += '(\\d\\d)';
           autocompleteCharacters[i - 1] = null;
           break;
-        case "yyyy":
-          groupPatterns[i - 1] = "\\d{1,4}";
-          fullGroupPatterns[i - 1] = "\\d\\d\\d\\d";
-          dateValidationPatternString += "(\\d\\d\\d\\d)";
+        case 'yyyy':
+          groupPatterns[i - 1] = '\\d{1,4}';
+          fullGroupPatterns[i - 1] = '\\d\\d\\d\\d';
+          dateValidationPatternString += '(\\d\\d\\d\\d)';
           autocompleteCharacters[i - 1] = null;
           break;
         default:
-          groupPatterns[i - 1] = fullGroupPatterns[i - 1] =
-            Spry.Widget.ValidationTextField.regExpFromChars(formatGroups[i]);
+          groupPatterns[i - 1] = fullGroupPatterns[i - 1] = Spry.Widget.ValidationTextField.regExpFromChars(formatGroups[i]);
           dateValidationPatternString += `[${groupPatterns[i - 1]}]`;
           autocompleteCharacters[i - 1] = formatGroups[i];
       }
@@ -1408,7 +1397,7 @@ Spry.Widget.ValidationTextField.prototype.compileDatePattern = function () {
   }
   this.dateValidationPattern = new RegExp(
     `^${dateValidationPatternString}$`,
-    ""
+    '',
   );
   this.dateAutocompleteCharacters = autocompleteCharacters;
   this.dateGroupPatterns = groupPatterns;
@@ -1417,32 +1406,31 @@ Spry.Widget.ValidationTextField.prototype.compileDatePattern = function () {
 };
 
 Spry.Widget.ValidationTextField.prototype.getRegExpForGroup = function (group) {
-  let ret = "^";
+  let ret = '^';
   for (let j = 0; j <= group; j++) ret += this.dateGroupPatterns[j];
-  ret += "$";
-  return new RegExp(ret, "");
+  ret += '$';
+  return new RegExp(ret, '');
 };
 
 Spry.Widget.ValidationTextField.prototype.getRegExpForFullGroup = function (
-  group
+  group,
 ) {
-  let ret = "^";
+  let ret = '^';
   for (let j = 0; j < group; j++) ret += this.dateGroupPatterns[j];
   ret += this.dateFullGroupPatterns[group];
-  return new RegExp(ret, "");
+  return new RegExp(ret, '');
 };
 
 Spry.Widget.ValidationTextField.prototype.getDateGroup = function (value, pos) {
   if (pos == 0) return 0;
   const test_value = value.substring(0, pos);
-  for (let i = 0; i <= this.lastDateGroup; i++)
-    if (this.getRegExpForGroup(i).test(test_value)) return i;
+  for (let i = 0; i <= this.lastDateGroup; i++) if (this.getRegExpForGroup(i).test(test_value)) return i;
   return -1;
 };
 
 Spry.Widget.ValidationTextField.prototype.isDateGroupFull = function (
   value,
-  group
+  group,
 ) {
   return this.getRegExpForFullGroup(group).test(value);
 };
@@ -1450,7 +1438,7 @@ Spry.Widget.ValidationTextField.prototype.isDateGroupFull = function (
 Spry.Widget.ValidationTextField.prototype.isValueValid = function (
   value,
   pos,
-  group
+  group,
 ) {
   const test_value = value.substring(0, pos);
   return this.getRegExpForGroup(group).test(test_value);
@@ -1459,7 +1447,7 @@ Spry.Widget.ValidationTextField.prototype.isValueValid = function (
 Spry.Widget.ValidationTextField.prototype.isPositionAtEndOfGroup = function (
   value,
   pos,
-  group
+  group,
 ) {
   const test_value = value.substring(0, pos);
   return this.getRegExpForFullGroup(group).test(test_value);
@@ -1468,7 +1456,7 @@ Spry.Widget.ValidationTextField.prototype.isPositionAtEndOfGroup = function (
 Spry.Widget.ValidationTextField.prototype.nextDateDelimiterExists = function (
   value,
   pos,
-  group
+  group,
 ) {
   const autocomplete = this.dateAutocompleteCharacters[group + 1];
   if (value.length < pos + autocomplete.length) return false;
@@ -1535,24 +1523,23 @@ Spry.Widget.ValidationTextField.prototype.onKeyPress = function (e) {
       if (this.oldValue.length < this.patternLength) {
         if (autocomplete) {
           Spry.Widget.Utils.stopEvent(e);
-          var futureValue =
-            this.oldValue.substring(0, this.selection.start) +
-            autocomplete +
-            pressed;
+          var futureValue = this.oldValue.substring(0, this.selection.start)
+            + autocomplete
+            + pressed;
           var mustRevert = this.doValidations(futureValue, this.oldValue);
           if (!mustRevert) {
             this.setValue(this.fixedValue);
             this.selection.moveTo(
               this.fixedValue.length,
-              this.fixedValue.length
+              this.fixedValue.length,
             );
           } else {
             this.setValue(
-              this.oldValue.substring(0, this.selection.start) + autocomplete
+              this.oldValue.substring(0, this.selection.start) + autocomplete,
             );
             this.selection.moveTo(
               this.selection.start + autocomplete.length,
-              this.selection.start + autocomplete.length
+              this.selection.start + autocomplete.length,
             );
           }
           return false;
@@ -1566,17 +1553,16 @@ Spry.Widget.ValidationTextField.prototype.onKeyPress = function (e) {
       Spry.Widget.Utils.stopEvent(e);
       this.selection.moveTo(
         this.selection.start + autocomplete.length,
-        this.selection.start + autocomplete.length
+        this.selection.start + autocomplete.length,
       );
       return false;
     }
 
     Spry.Widget.Utils.stopEvent(e);
 
-    var futureValue =
-      this.oldValue.substring(0, this.selection.start) +
-      pressed +
-      this.oldValue.substring(this.selection.start + 1);
+    var futureValue = this.oldValue.substring(0, this.selection.start)
+      + pressed
+      + this.oldValue.substring(this.selection.start + 1);
     var mustRevert = this.doValidations(futureValue, this.oldValue);
 
     if (!mustRevert) {
@@ -1584,7 +1570,7 @@ Spry.Widget.ValidationTextField.prototype.onKeyPress = function (e) {
       this.setValue(this.fixedValue);
       this.selection.moveTo(
         this.selection.start + 1 + autocomplete.length,
-        this.selection.start + 1 + autocomplete.length
+        this.selection.start + 1 + autocomplete.length,
       );
     } else {
       this.selection.moveTo(this.selection.start, this.selection.start);
@@ -1593,7 +1579,7 @@ Spry.Widget.ValidationTextField.prototype.onKeyPress = function (e) {
     return false;
   }
 
-  if (pressed && this.type == "date" && this.useCharacterMasking) {
+  if (pressed && this.type == 'date' && this.useCharacterMasking) {
     let group = this.getDateGroup(this.oldValue, this.selection.start);
     if (group != -1) {
       Spry.Widget.Utils.stopEvent(e);
@@ -1604,7 +1590,7 @@ Spry.Widget.ValidationTextField.prototype.onKeyPress = function (e) {
           this.isPositionAtEndOfGroup(
             this.oldValue,
             this.selection.start,
-            group
+            group,
           )
         ) {
           if (group == this.lastDateGroup) {
@@ -1618,35 +1604,33 @@ Spry.Widget.ValidationTextField.prototype.onKeyPress = function (e) {
             this.nextDateDelimiterExists(
               this.oldValue,
               this.selection.start,
-              group
+              group,
             )
           ) {
             var autocomplete = this.dateAutocompleteCharacters[group + 1];
 
             this.selection.moveTo(
               this.selection.start + autocomplete.length,
-              this.selection.start + autocomplete.length
+              this.selection.start + autocomplete.length,
             );
             if (pressed == autocomplete) return false;
 
             if (this.isDateGroupFull(this.oldValue, group + 2)) {
               // need to overwrite first char in the next digit group
-              futureValue =
-                this.oldValue.substring(0, this.selection.start) +
-                pressed +
-                this.oldValue.substring(this.selection.start + 1);
+              futureValue = this.oldValue.substring(0, this.selection.start)
+                + pressed
+                + this.oldValue.substring(this.selection.start + 1);
             } else {
-              futureValue =
-                this.oldValue.substring(0, this.selection.start) +
-                pressed +
-                this.oldValue.substring(this.selection.start);
+              futureValue = this.oldValue.substring(0, this.selection.start)
+                + pressed
+                + this.oldValue.substring(this.selection.start);
             }
 
             if (
               !this.isValueValid(
                 futureValue,
                 this.selection.start + 1,
-                group + 2
+                group + 2,
               )
             ) {
               this.redTextFlash();
@@ -1655,7 +1639,7 @@ Spry.Widget.ValidationTextField.prototype.onKeyPress = function (e) {
             this.setValue(futureValue);
             this.selection.moveTo(
               this.selection.start + 1,
-              this.selection.start + 1
+              this.selection.start + 1,
             );
 
             return false;
@@ -1663,27 +1647,25 @@ Spry.Widget.ValidationTextField.prototype.onKeyPress = function (e) {
           var autocomplete = this.dateAutocompleteCharacters[group + 1];
 
           let insertedValue = autocomplete + pressed;
-          futureValue =
-            this.oldValue.substring(0, this.selection.start) +
-            insertedValue +
-            this.oldValue.substring(this.selection.start);
+          futureValue = this.oldValue.substring(0, this.selection.start)
+            + insertedValue
+            + this.oldValue.substring(this.selection.start);
           if (
             !this.isValueValid(
               futureValue,
               this.selection.start + insertedValue.length,
-              group + 2
+              group + 2,
             )
           ) {
             // block this type
             insertedValue = autocomplete;
-            futureValue =
-              this.oldValue.substring(0, this.selection.start) +
-              insertedValue +
-              this.oldValue.substring(this.selection.start);
+            futureValue = this.oldValue.substring(0, this.selection.start)
+              + insertedValue
+              + this.oldValue.substring(this.selection.start);
             this.setValue(futureValue);
             this.selection.moveTo(
               this.selection.start + insertedValue.length,
-              this.selection.start + insertedValue.length
+              this.selection.start + insertedValue.length,
             );
             this.redTextFlash();
             return false;
@@ -1691,7 +1673,7 @@ Spry.Widget.ValidationTextField.prototype.onKeyPress = function (e) {
           this.setValue(futureValue);
           this.selection.moveTo(
             this.selection.start + insertedValue.length,
-            this.selection.start + insertedValue.length
+            this.selection.start + insertedValue.length,
           );
           return false;
         }
@@ -1699,10 +1681,9 @@ Spry.Widget.ValidationTextField.prototype.onKeyPress = function (e) {
 
         // overwrite
         var movePosition = 1;
-        futureValue =
-          this.oldValue.substring(0, this.selection.start) +
-          pressed +
-          this.oldValue.substring(this.selection.start + 1);
+        futureValue = this.oldValue.substring(0, this.selection.start)
+          + pressed
+          + this.oldValue.substring(this.selection.start + 1);
         if (!this.isValueValid(futureValue, this.selection.start + 1, group)) {
           this.redTextFlash();
           return false;
@@ -1711,7 +1692,7 @@ Spry.Widget.ValidationTextField.prototype.onKeyPress = function (e) {
           this.isPositionAtEndOfGroup(
             futureValue,
             this.selection.start + 1,
-            group
+            group,
           )
         ) {
           if (group != this.lastDateGroup) {
@@ -1719,18 +1700,17 @@ Spry.Widget.ValidationTextField.prototype.onKeyPress = function (e) {
               this.nextDateDelimiterExists(
                 futureValue,
                 this.selection.start + 1,
-                group
+                group,
               )
             ) {
               var autocomplete = this.dateAutocompleteCharacters[group + 1];
               movePosition = 1 + autocomplete.length;
             } else {
               var autocomplete = this.dateAutocompleteCharacters[group + 1];
-              futureValue =
-                this.oldValue.substring(0, this.selection.start) +
-                pressed +
-                autocomplete +
-                this.oldValue.substring(this.selection.start + 1);
+              futureValue = this.oldValue.substring(0, this.selection.start)
+                + pressed
+                + autocomplete
+                + this.oldValue.substring(this.selection.start + 1);
               movePosition = 1 + autocomplete.length;
             }
           }
@@ -1738,20 +1718,19 @@ Spry.Widget.ValidationTextField.prototype.onKeyPress = function (e) {
         this.setValue(futureValue);
         this.selection.moveTo(
           this.selection.start + movePosition,
-          this.selection.start + movePosition
+          this.selection.start + movePosition,
         );
         return false;
       }
       // date group is not full
       // insert
-      futureValue =
-        this.oldValue.substring(0, this.selection.start) +
-        pressed +
-        this.oldValue.substring(this.selection.start);
+      futureValue = this.oldValue.substring(0, this.selection.start)
+        + pressed
+        + this.oldValue.substring(this.selection.start);
       var movePosition = 1;
       if (
-        !this.isValueValid(futureValue, this.selection.start + 1, group) &&
-        !this.isValueValid(futureValue, this.selection.start + 1, group + 1)
+        !this.isValueValid(futureValue, this.selection.start + 1, group)
+        && !this.isValueValid(futureValue, this.selection.start + 1, group + 1)
       ) {
         this.redTextFlash();
         return false;
@@ -1762,7 +1741,7 @@ Spry.Widget.ValidationTextField.prototype.onKeyPress = function (e) {
           this.nextDateDelimiterExists(
             this.oldValue,
             this.selection.start,
-            group
+            group,
           )
         ) {
           futureValue = this.oldValue;
@@ -1772,7 +1751,7 @@ Spry.Widget.ValidationTextField.prototype.onKeyPress = function (e) {
         this.isPositionAtEndOfGroup(
           futureValue,
           this.selection.start + 1,
-          group
+          group,
         )
       ) {
         if (group != this.lastDateGroup) {
@@ -1780,18 +1759,17 @@ Spry.Widget.ValidationTextField.prototype.onKeyPress = function (e) {
             this.nextDateDelimiterExists(
               futureValue,
               this.selection.start + 1,
-              group
+              group,
             )
           ) {
             var autocomplete = this.dateAutocompleteCharacters[group + 1];
             movePosition = 1 + autocomplete.length;
           } else {
             var autocomplete = this.dateAutocompleteCharacters[group + 1];
-            futureValue =
-              this.oldValue.substring(0, this.selection.start) +
-              pressed +
-              autocomplete +
-              this.oldValue.substring(this.selection.start + 1);
+            futureValue = this.oldValue.substring(0, this.selection.start)
+              + pressed
+              + autocomplete
+              + this.oldValue.substring(this.selection.start + 1);
             movePosition = 1 + autocomplete.length;
           }
         }
@@ -1799,7 +1777,7 @@ Spry.Widget.ValidationTextField.prototype.onKeyPress = function (e) {
       this.setValue(futureValue);
       this.selection.moveTo(
         this.selection.start + movePosition,
-        this.selection.start + movePosition
+        this.selection.start + movePosition,
       );
       return false;
     }
@@ -1818,7 +1796,7 @@ Spry.Widget.ValidationTextField.prototype.onKeyDown = function (e) {
     }
     if (e.ctrlKey) {
       const pressed = Spry.Widget.Utils.getCharacterFromEvent(e);
-      if (pressed && "vx".indexOf(pressed.toLowerCase()) != -1) {
+      if (pressed && 'vx'.indexOf(pressed.toLowerCase()) != -1) {
         const self = this;
         this.flags.operaPasteOperation = window.setInterval(() => {
           self.operaPasteMonitor();
@@ -1829,9 +1807,9 @@ Spry.Widget.ValidationTextField.prototype.onKeyDown = function (e) {
   }
 
   if (
-    this.keyCode != 8 &&
-    this.keyCode != 46 &&
-    Spry.Widget.Utils.isSpecialKey(e)
+    this.keyCode != 8
+    && this.keyCode != 46
+    && Spry.Widget.Utils.isSpecialKey(e)
   ) {
     return true;
   }
@@ -1848,8 +1826,8 @@ Spry.Widget.ValidationTextField.prototype.onKeyDown = function (e) {
       // delete from selection until end
       this.setValue(this.input.value.substring(0, this.selection.start));
     } else if (
-      this.selection.end == this.input.value.length ||
-      this.selection.start == this.input.value.length - 1
+      this.selection.end == this.input.value.length
+      || this.selection.start == this.input.value.length - 1
     ) {
       // allow key if selection is at end (will delete selection)
       return true;
@@ -1865,10 +1843,10 @@ Spry.Widget.ValidationTextField.prototype.onKeyDown = function (e) {
 
   // BACKSPACE
   if (
-    this.useCharacterMasking &&
-    this.pattern &&
-    !e.ctrlKey &&
-    this.keyCode == 8
+    this.useCharacterMasking
+    && this.pattern
+    && !e.ctrlKey
+    && this.keyCode == 8
   ) {
     if (this.selection.start == this.input.value.length) {
       // delete with BACKSPACE from the end of the input value only
@@ -1876,8 +1854,8 @@ Spry.Widget.ValidationTextField.prototype.onKeyDown = function (e) {
       this.setValue(
         this.input.value.substring(
           0,
-          this.input.value.length - (Spry.is.opera ? 0 : 1) - n.length
-        )
+          this.input.value.length - (Spry.is.opera ? 0 : 1) - n.length,
+        ),
       );
       if (Spry.is.opera) {
         // cant stop the event on Opera, we'll just preserve the selection so delete will act on it
@@ -1964,11 +1942,11 @@ Spry.Widget.ValidationTextField.prototype.compilePattern = function () {
   const regexps = [];
   const patternCharacters = [];
   let idx = 0;
-  let c = "";
-  let p = "";
+  let c = '';
+  let p = '';
   for (let i = 0; i < this.pattern.length; i++) {
     c = this.pattern.charAt(i);
-    if (p == "\\") {
+    if (p == '\\') {
       if (/[0ABXY\?]/i.test(c)) {
         regexps[idx - 1] = c;
       } else {
@@ -1976,16 +1954,16 @@ Spry.Widget.ValidationTextField.prototype.compilePattern = function () {
       }
       compiled[idx - 1] = c;
       patternCharacters[idx - 1] = null;
-      p = "";
+      p = '';
       continue;
     }
     regexps[idx] = Spry.Widget.ValidationTextField.regExpFromChars(c);
     if (/[0ABXY\?]/i.test(c)) {
       compiled[idx] = null;
       patternCharacters[idx] = c;
-    } else if (c == "\\") {
+    } else if (c == '\\') {
       compiled[idx] = c;
-      patternCharacters[idx] = "\\";
+      patternCharacters[idx] = '\\';
     } else {
       compiled[idx] = c;
       patternCharacters[idx] = null;
@@ -2002,18 +1980,18 @@ Spry.Widget.ValidationTextField.prototype.compilePattern = function () {
 
 Spry.Widget.ValidationTextField.prototype.getAutoComplete = function (
   from,
-  direction
+  direction,
 ) {
   if (direction == -1) {
-    let n = "";
-    let m = "";
+    let n = '';
+    let m = '';
     while (from && (n = this.getAutoComplete(--from))) {
       m = n;
     }
     return m;
   }
-  let ret = "";
-  let c = "";
+  let ret = '';
+  let c = '';
   for (let i = from; i < this.autoCompleteCharacters.length; i++) {
     c = this.autoCompleteCharacters[i];
     if (c) {
@@ -2027,66 +2005,66 @@ Spry.Widget.ValidationTextField.prototype.getAutoComplete = function (
 
 Spry.Widget.ValidationTextField.regExpFromChars = function (string) {
   // string contains pattern characters
-  let ret = "";
-  let character = "";
+  let ret = '';
+  let character = '';
   for (let i = 0; i < string.length; i++) {
     character = string.charAt(i);
     switch (character) {
-      case "0":
-        ret += "\\d";
+      case '0':
+        ret += '\\d';
         break;
-      case "A":
-        ret += "[A-Z]";
+      case 'A':
+        ret += '[A-Z]';
         break;
       //			case 'A': ret += '[\u0041-\u005A\u0061-\u007A\u0100-\u017E\u0180-\u0233\u0391-\u03CE\u0410-\u044F\u05D0-\u05EA\u0621-\u063A\u0641-\u064A\u0661-\u06D3\u06F1-\u06FE]';break;
-      case "a":
-        ret += "[a-z]";
+      case 'a':
+        ret += '[a-z]';
         break;
       //			case 'a': ret += '[\u0080-\u00FF]';break;
-      case "B":
-      case "b":
-        ret += "[a-zA-Z]";
+      case 'B':
+      case 'b':
+        ret += '[a-zA-Z]';
         break;
-      case "x":
-        ret += "[0-9a-z]";
+      case 'x':
+        ret += '[0-9a-z]';
         break;
-      case "X":
-        ret += "[0-9A-Z]";
+      case 'X':
+        ret += '[0-9A-Z]';
         break;
-      case "Y":
-      case "y":
-        ret += "[0-9a-zA-Z]";
+      case 'Y':
+      case 'y':
+        ret += '[0-9a-zA-Z]';
         break;
-      case "?":
-        ret += ".";
+      case '?':
+        ret += '.';
         break;
-      case "1":
-      case "2":
-      case "3":
-      case "4":
-      case "5":
-      case "6":
-      case "7":
-      case "8":
-      case "9":
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9':
         ret += character;
         break;
-      case "c":
-      case "C":
-      case "e":
-      case "E":
-      case "f":
-      case "F":
-      case "r":
-      case "d":
-      case "D":
-      case "n":
-      case "s":
-      case "S":
-      case "w":
-      case "W":
-      case "t":
-      case "v":
+      case 'c':
+      case 'C':
+      case 'e':
+      case 'E':
+      case 'f':
+      case 'F':
+      case 'r':
+      case 'd':
+      case 'D':
+      case 'n':
+      case 's':
+      case 'S':
+      case 'w':
+      case 'W':
+      case 't':
+      case 'v':
         ret += character;
         break;
       default:
@@ -2097,13 +2075,13 @@ Spry.Widget.ValidationTextField.regExpFromChars = function (string) {
 };
 
 Spry.Widget.ValidationTextField.prototype.patternToRegExp = function (len) {
-  let ret = "^";
+  let ret = '^';
   const end = Math.min(this.compiledPattern.length, len);
   for (let i = 0; i < end; i++) {
     ret += this.compiledPattern[i];
   }
-  ret += "$";
-  ret = new RegExp(ret, "");
+  ret += '$';
+  ret = new RegExp(ret, '');
   return ret;
 };
 
@@ -2133,7 +2111,7 @@ Spry.Widget.ValidationTextField.prototype.reset = function () {
     // IE6 will not fire the first onpropertychange on an input type text after a onreset handler if inside that handler the className of one of the elements inside the form has been changed
     // to reproduce: change the className of one of the elements inside the form from within the onreset handler; then the onpropertychange does not fire the first time
     this.input.forceFireFirstOnPropertyChange = true;
-    this.input.removeAttribute("forceFireFirstOnPropertyChange");
+    this.input.removeAttribute('forceFireFirstOnPropertyChange');
   }
   const self = this;
   setTimeout(() => {
@@ -2157,8 +2135,8 @@ Spry.Widget.ValidationTextField.prototype.validate = function () {
   }
 
   if (
-    this.isRequired &&
-    this.errors & Spry.Widget.ValidationTextField.ERROR_REQUIRED
+    this.isRequired
+    && this.errors & Spry.Widget.ValidationTextField.ERROR_REQUIRED
   ) {
     this.addClassName(this.element, this.requiredClass);
     this.addClassName(this.additionalError, this.requiredClass);
@@ -2202,32 +2180,30 @@ Spry.Widget.ValidationTextField.prototype.validate = function () {
 
 Spry.Widget.ValidationTextField.prototype.addClassName = function (
   ele,
-  className
+  className,
 ) {
   if (
-    !ele ||
-    !className ||
-    (ele.className &&
-      ele.className.search(new RegExp(`\\b${className}\\b`)) != -1)
-  )
-    return;
-  ele.className += (ele.className ? " " : "") + className;
+    !ele
+    || !className
+    || (ele.className
+      && ele.className.search(new RegExp(`\\b${className}\\b`)) != -1)
+  ) return;
+  ele.className += (ele.className ? ' ' : '') + className;
 };
 
 Spry.Widget.ValidationTextField.prototype.removeClassName = function (
   ele,
-  className
+  className,
 ) {
   if (
-    !ele ||
-    !className ||
-    (ele.className &&
-      ele.className.search(new RegExp(`\\b${className}\\b`)) == -1)
-  )
-    return;
+    !ele
+    || !className
+    || (ele.className
+      && ele.className.search(new RegExp(`\\b${className}\\b`)) == -1)
+  ) return;
   ele.className = ele.className.replace(
-    new RegExp(`\\s*\\b${className}\\b`, "g"),
-    ""
+    new RegExp(`\\s*\\b${className}\\b`, 'g'),
+    '',
   );
 };
 Spry.Widget.ValidationTextField.prototype.showError = function (msg) {
@@ -2245,8 +2221,8 @@ Spry.Widget.SelectionDescriptor = function (element) {
 Spry.Widget.SelectionDescriptor.prototype.update = function () {
   if (Spry.is.ie && Spry.is.windows) {
     const sel = this.element.ownerDocument.selection;
-    if (this.element.nodeName == "TEXTAREA") {
-      if (sel.type != "None") {
+    if (this.element.nodeName == 'TEXTAREA') {
+      if (sel.type != 'None') {
         try {
           var range = sel.createRange();
         } catch (err) {
@@ -2257,10 +2233,10 @@ Spry.Widget.SelectionDescriptor.prototype.update = function () {
           range_all.moveToElementText(this.element);
           for (
             var sel_start = 0;
-            range_all.compareEndPoints("StartToStart", range) < 0;
+            range_all.compareEndPoints('StartToStart', range) < 0;
             sel_start++
           ) {
-            range_all.moveStart("character", 1);
+            range_all.moveStart('character', 1);
           }
           this.start = sel_start;
           // create a selection of the whole this.element
@@ -2268,10 +2244,10 @@ Spry.Widget.SelectionDescriptor.prototype.update = function () {
           range_all.moveToElementText(this.element);
           for (
             var sel_end = 0;
-            range_all.compareEndPoints("StartToEnd", range) < 0;
+            range_all.compareEndPoints('StartToEnd', range) < 0;
             sel_end++
           ) {
-            range_all.moveStart("character", 1);
+            range_all.moveStart('character', 1);
           }
           this.end = sel_end;
           this.length = this.end - this.start;
@@ -2279,7 +2255,7 @@ Spry.Widget.SelectionDescriptor.prototype.update = function () {
           this.text = range.text;
         }
       }
-    } else if (this.element.nodeName == "INPUT") {
+    } else if (this.element.nodeName == 'INPUT') {
       try {
         this.range = sel.createRange();
       } catch (err) {
@@ -2287,10 +2263,10 @@ Spry.Widget.SelectionDescriptor.prototype.update = function () {
       }
       this.length = this.range.text.length;
       let clone = this.range.duplicate();
-      this.start = -clone.moveStart("character", -10000);
+      this.start = -clone.moveStart('character', -10000);
       clone = this.range.duplicate();
       clone.collapse(false);
-      this.end = -clone.moveStart("character", -10000);
+      this.end = -clone.moveStart('character', -10000);
       this.text = this.range.text;
     }
   } else {
@@ -2331,7 +2307,7 @@ Spry.Widget.SelectionDescriptor.prototype.destroy = function () {
 
 Spry.Widget.SelectionDescriptor.prototype.move = function (amount) {
   if (Spry.is.ie && Spry.is.windows) {
-    this.range.move("character", amount);
+    this.range.move('character', amount);
     this.range.select();
   } else {
     try {
@@ -2343,26 +2319,26 @@ Spry.Widget.SelectionDescriptor.prototype.move = function (amount) {
 
 Spry.Widget.SelectionDescriptor.prototype.moveTo = function (start, end) {
   if (Spry.is.ie && Spry.is.windows) {
-    if (this.element.nodeName == "TEXTAREA") {
+    if (this.element.nodeName == 'TEXTAREA') {
       const ta_range = this.element.createTextRange();
       this.range = this.element.createTextRange();
-      this.range.move("character", start);
-      this.range.moveEnd("character", end - start);
+      this.range.move('character', start);
+      this.range.moveEnd('character', end - start);
 
-      const c1 = this.range.compareEndPoints("StartToStart", ta_range);
+      const c1 = this.range.compareEndPoints('StartToStart', ta_range);
       if (c1 < 0) {
-        this.range.setEndPoint("StartToStart", ta_range);
+        this.range.setEndPoint('StartToStart', ta_range);
       }
 
-      const c2 = this.range.compareEndPoints("EndToEnd", ta_range);
+      const c2 = this.range.compareEndPoints('EndToEnd', ta_range);
       if (c2 > 0) {
-        this.range.setEndPoint("EndToEnd", ta_range);
+        this.range.setEndPoint('EndToEnd', ta_range);
       }
-    } else if (this.element.nodeName == "INPUT") {
+    } else if (this.element.nodeName == 'INPUT') {
       this.range = this.element.ownerDocument.selection.createRange();
-      this.range.move("character", -10000);
-      this.start = this.range.moveStart("character", start);
-      this.end = this.start + this.range.moveEnd("character", end - start);
+      this.range.move('character', -10000);
+      this.start = this.range.moveStart('character', start);
+      this.end = this.start + this.range.moveEnd('character', end - start);
     }
     this.range.select();
   } else {
@@ -2381,7 +2357,7 @@ Spry.Widget.SelectionDescriptor.prototype.moveTo = function (start, end) {
 
 Spry.Widget.SelectionDescriptor.prototype.moveEnd = function (amount) {
   if (Spry.is.ie && Spry.is.windows) {
-    this.range.moveEnd("character", amount);
+    this.range.moveEnd('character', amount);
     this.range.select();
   } else {
     try {
@@ -2416,8 +2392,7 @@ Spry.Widget.SelectionDescriptor.prototype.collapse = function (begin) {
 /// ///////////////////////////////////////////////////////////////////
 
 if (!Spry.Widget.Form) Spry.Widget.Form = {};
-if (!Spry.Widget.Form.onSubmitWidgetQueue)
-  Spry.Widget.Form.onSubmitWidgetQueue = [];
+if (!Spry.Widget.Form.onSubmitWidgetQueue) Spry.Widget.Form.onSubmitWidgetQueue = [];
 
 if (!Spry.Widget.Form.validate) {
   Spry.Widget.Form.validate = function (vform) {
@@ -2450,9 +2425,9 @@ if (!Spry.Widget.Form.onReset) {
     const qlen = q.length;
     for (let i = 0; i < qlen; i++) {
       if (
-        !q[i].isDisabled() &&
-        q[i].form == vform &&
-        typeof q[i].reset === "function"
+        !q[i].isDisabled()
+        && q[i].form == vform
+        && typeof q[i].reset === 'function'
       ) {
         q[i].reset();
       }
@@ -2465,7 +2440,7 @@ if (!Spry.Widget.Form.destroy) {
   Spry.Widget.Form.destroy = function (form) {
     const q = Spry.Widget.Form.onSubmitWidgetQueue;
     for (let i = 0; i < Spry.Widget.Form.onSubmitWidgetQueue.length; i++) {
-      if (q[i].form == form && typeof q[i].destroy === "function") {
+      if (q[i].form == form && typeof q[i].destroy === 'function') {
         q[i].destroy();
         i--;
       }
@@ -2477,7 +2452,7 @@ if (!Spry.Widget.Form.destroyAll) {
   Spry.Widget.Form.destroyAll = function () {
     const q = Spry.Widget.Form.onSubmitWidgetQueue;
     for (let i = 0; i < Spry.Widget.Form.onSubmitWidgetQueue.length; i++) {
-      if (typeof q[i].destroy === "function") {
+      if (typeof q[i].destroy === 'function') {
         q[i].destroy();
         i--;
       }
@@ -2515,19 +2490,19 @@ Spry.Widget.Utils.punycode_adapt = function (delta, numpoints, firsttime) {
 
   for (
     var k = 0;
-    delta >
-    ((this.punycode_constants.base - this.punycode_constants.tmin) *
-      this.punycode_constants.tmax) /
-      2;
+    delta
+    > ((this.punycode_constants.base - this.punycode_constants.tmin)
+      * this.punycode_constants.tmax)
+      / 2;
     k += this.punycode_constants.base
   ) {
     delta /= this.punycode_constants.base - this.punycode_constants.tmin;
   }
   return (
-    k +
-    ((this.punycode_constants.base - this.punycode_constants.tmin + 1) *
-      delta) /
-      (delta + this.punycode_constants.skew)
+    k
+    + ((this.punycode_constants.base - this.punycode_constants.tmin + 1)
+      * delta)
+      / (delta + this.punycode_constants.skew)
   );
 };
 
@@ -2536,12 +2511,12 @@ Spry.Widget.Utils.punycode_adapt = function (delta, numpoints, firsttime) {
  * adapted from http://tools.ietf.org/html/rfc3492
  */
 Spry.Widget.Utils.punycode_encode = function (input, max_out) {
-  const inputc = input.split("");
+  const inputc = input.split('');
   input = [];
   for (let i = 0; i < inputc.length; i++) {
     input.push(inputc[i].charCodeAt(0));
   }
-  let output = "";
+  let output = '';
 
   let h;
   let b;
@@ -2602,10 +2577,9 @@ Spry.Widget.Utils.punycode_encode = function (input, max_out) {
             return false;
           }
 
-          t =
-            k <= bias
-              ? this.punycode_constants.tmin
-              : k >= bias + this.punycode_constants.tmax
+          t = k <= bias
+            ? this.punycode_constants.tmin
+            : k >= bias + this.punycode_constants.tmax
               ? this.punycode_constants.tmax
               : k - bias;
           if (q < t) {
@@ -2613,7 +2587,7 @@ Spry.Widget.Utils.punycode_encode = function (input, max_out) {
           }
 
           output += this.punycode_encode_digit(
-            t + ((q - t) % (this.punycode_constants.base - t))
+            t + ((q - t) % (this.punycode_constants.base - t)),
           );
           out++;
           q = (q - t) / (this.punycode_constants.base - t);
@@ -2635,7 +2609,7 @@ Spry.Widget.Utils.punycode_encode = function (input, max_out) {
 Spry.Widget.Utils.setOptions = function (
   obj,
   optionsObj,
-  ignoreUndefinedProps
+  ignoreUndefinedProps,
 ) {
   if (!optionsObj) return;
   for (const optionName in optionsObj) {
@@ -2647,7 +2621,7 @@ Spry.Widget.Utils.setOptions = function (
 Spry.Widget.Utils.firstValid = function () {
   let ret = null;
   for (let i = 0; i < Spry.Widget.Utils.firstValid.arguments.length; i++) {
-    if (typeof Spry.Widget.Utils.firstValid.arguments[i] !== "undefined") {
+    if (typeof Spry.Widget.Utils.firstValid.arguments[i] !== 'undefined') {
       ret = Spry.Widget.Utils.firstValid.arguments[i];
       break;
     }
@@ -2655,17 +2629,15 @@ Spry.Widget.Utils.firstValid = function () {
   return ret;
 };
 
-Spry.Widget.Utils.specialCharacters =
-  ",8,9,16,17,18,20,27,33,34,35,36,37,38,40,45,144,192,63232,";
-Spry.Widget.Utils.specialSafariNavKeys =
-  "63232,63233,63234,63235,63272,63273,63275,63276,63277,63289,";
-Spry.Widget.Utils.specialNotSafariCharacters = "39,46,91,92,93,";
+Spry.Widget.Utils.specialCharacters = ',8,9,16,17,18,20,27,33,34,35,36,37,38,40,45,144,192,63232,';
+Spry.Widget.Utils.specialSafariNavKeys = '63232,63233,63234,63235,63272,63273,63275,63276,63277,63289,';
+Spry.Widget.Utils.specialNotSafariCharacters = '39,46,91,92,93,';
 
 Spry.Widget.Utils.specialCharacters += Spry.Widget.Utils.specialSafariNavKeys;
 
 if (!Spry.is.safari) {
-  Spry.Widget.Utils.specialCharacters +=
-    Spry.Widget.Utils.specialNotSafariCharacters;
+  Spry.Widget.Utils.specialCharacters
+    += Spry.Widget.Utils.specialNotSafariCharacters;
 }
 
 Spry.Widget.Utils.isSpecialKey = function (ev) {
@@ -2673,7 +2645,7 @@ Spry.Widget.Utils.isSpecialKey = function (ev) {
 };
 
 Spry.Widget.Utils.getCharacterFromEvent = function (e) {
-  const keyDown = e.type == "keydown";
+  const keyDown = e.type == 'keydown';
 
   let code = null;
   let character = null;
@@ -2717,7 +2689,7 @@ Spry.Widget.Utils.getCharacterFromEvent = function (e) {
 
 Spry.Widget.Utils.getFirstChildWithNodeNameAtAnyLevel = function (
   node,
-  nodeName
+  nodeName,
 ) {
   const elements = node.getElementsByTagName(nodeName);
   if (elements) {
@@ -2728,16 +2700,16 @@ Spry.Widget.Utils.getFirstChildWithNodeNameAtAnyLevel = function (
 
 Spry.Widget.Utils.getFirstParentWithNodeName = function (node, nodeName) {
   while (
-    node.parentNode &&
-    node.parentNode.nodeName.toLowerCase() != nodeName.toLowerCase() &&
-    node.parentNode.nodeName != "BODY"
+    node.parentNode
+    && node.parentNode.nodeName.toLowerCase() != nodeName.toLowerCase()
+    && node.parentNode.nodeName != 'BODY'
   ) {
     node = node.parentNode;
   }
 
   if (
-    node.parentNode &&
-    node.parentNode.nodeName.toLowerCase() == nodeName.toLowerCase()
+    node.parentNode
+    && node.parentNode.nodeName.toLowerCase() == nodeName.toLowerCase()
   ) {
     return node.parentNode;
   }
@@ -2745,15 +2717,15 @@ Spry.Widget.Utils.getFirstParentWithNodeName = function (node, nodeName) {
 };
 
 Spry.Widget.Utils.destroyWidgets = function (container) {
-  if (typeof container === "string") {
+  if (typeof container === 'string') {
     container = document.getElementById(container);
   }
 
   const q = Spry.Widget.Form.onSubmitWidgetQueue;
   for (let i = 0; i < Spry.Widget.Form.onSubmitWidgetQueue.length; i++) {
     if (
-      typeof q[i].destroy === "function" &&
-      Spry.Widget.Utils.contains(container, q[i].element)
+      typeof q[i].destroy === 'function'
+      && Spry.Widget.Utils.contains(container, q[i].element)
     ) {
       q[i].destroy();
       i--;
@@ -2762,7 +2734,7 @@ Spry.Widget.Utils.destroyWidgets = function (container) {
 };
 
 Spry.Widget.Utils.contains = function (who, what) {
-  if (typeof who.contains === "object") {
+  if (typeof who.contains === 'object') {
     return what && who && (who == what || who.contains(what));
   }
   let el = what;
@@ -2779,13 +2751,11 @@ Spry.Widget.Utils.addEventListener = function (
   element,
   eventType,
   handler,
-  capture
+  capture,
 ) {
   try {
-    if (element.addEventListener)
-      element.addEventListener(eventType, handler, capture);
-    else if (element.attachEvent)
-      element.attachEvent(`on${eventType}`, handler, capture);
+    if (element.addEventListener) element.addEventListener(eventType, handler, capture);
+    else if (element.attachEvent) element.attachEvent(`on${eventType}`, handler, capture);
   } catch (e) {}
 };
 
@@ -2793,13 +2763,11 @@ Spry.Widget.Utils.removeEventListener = function (
   element,
   eventType,
   handler,
-  capture
+  capture,
 ) {
   try {
-    if (element.removeEventListener)
-      element.removeEventListener(eventType, handler, capture);
-    else if (element.detachEvent)
-      element.detachEvent(`on${eventType}`, handler, capture);
+    if (element.removeEventListener) element.removeEventListener(eventType, handler, capture);
+    else if (element.detachEvent) element.detachEvent(`on${eventType}`, handler, capture);
   } catch (e) {}
 };
 

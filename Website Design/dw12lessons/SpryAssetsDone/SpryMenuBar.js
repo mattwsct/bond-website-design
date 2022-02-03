@@ -72,14 +72,14 @@ Spry.BrowserSniff = function () {
   this.windows = this.mac = this.linux = false;
 
   this.Platform = ua.match(/windows/i)
-    ? "windows"
+    ? 'windows'
     : ua.match(/linux/i)
-    ? "linux"
-    : ua.match(/mac/i)
-    ? "mac"
-    : ua.match(/unix/i)
-    ? "unix"
-    : "unknown";
+      ? 'linux'
+      : ua.match(/mac/i)
+        ? 'mac'
+        : ua.match(/unix/i)
+          ? 'unix'
+          : 'unknown';
   this[this.Platform] = true;
   this.v = this.version;
 
@@ -105,10 +105,10 @@ Spry.Widget.MenuBar.prototype.init = function (element, opts) {
   this.showDelay = 250;
   this.hideDelay = 600;
   if (
-    typeof document.getElementById === "undefined" ||
-    (navigator.vendor == "Apple Computer, Inc." &&
-      typeof window.XMLHttpRequest === "undefined") ||
-    (Spry.is.ie && typeof document.uniqueID === "undefined")
+    typeof document.getElementById === 'undefined'
+    || (navigator.vendor == 'Apple Computer, Inc.'
+      && typeof window.XMLHttpRequest === 'undefined')
+    || (Spry.is.ie && typeof document.uniqueID === 'undefined')
   ) {
     // bail on older unsupported browsers
     return;
@@ -117,7 +117,7 @@ Spry.Widget.MenuBar.prototype.init = function (element, opts) {
   // Fix IE6 CSS images flicker
   if (Spry.is.ie && Spry.is.version < 7) {
     try {
-      document.execCommand("BackgroundImageCache", false, true);
+      document.execCommand('BackgroundImageCache', false, true);
     } catch (err) {}
   }
 
@@ -127,21 +127,21 @@ Spry.Widget.MenuBar.prototype.init = function (element, opts) {
   this.rightKeyCode = Spry.Widget.MenuBar.KEY_RIGHT;
   this.escKeyCode = Spry.Widget.MenuBar.KEY_ESC;
 
-  this.hoverClass = "MenuBarItemHover";
-  this.subHoverClass = "MenuBarItemSubmenuHover";
-  this.subVisibleClass = "MenuBarSubmenuVisible";
-  this.hasSubClass = "MenuBarItemSubmenu";
-  this.activeClass = "MenuBarActive";
-  this.isieClass = "MenuBarItemIE";
-  this.verticalClass = "MenuBarVertical";
-  this.horizontalClass = "MenuBarHorizontal";
+  this.hoverClass = 'MenuBarItemHover';
+  this.subHoverClass = 'MenuBarItemSubmenuHover';
+  this.subVisibleClass = 'MenuBarSubmenuVisible';
+  this.hasSubClass = 'MenuBarItemSubmenu';
+  this.activeClass = 'MenuBarActive';
+  this.isieClass = 'MenuBarItemIE';
+  this.verticalClass = 'MenuBarVertical';
+  this.horizontalClass = 'MenuBarHorizontal';
   this.enableKeyboardNavigation = true;
 
   this.hasFocus = false;
   // load hover images now
   if (opts) {
     for (const k in opts) {
-      if (typeof this[k] === "undefined") {
+      if (typeof this[k] === 'undefined') {
         const rollover = new Image();
         rollover.src = opts[k];
       }
@@ -154,36 +154,35 @@ Spry.Widget.MenuBar.prototype.init = function (element, opts) {
 
   if (this.element) {
     this.currMenu = this.element;
-    const items = this.element.getElementsByTagName("li");
+    const items = this.element.getElementsByTagName('li');
     for (var i = 0; i < items.length; i++) {
-      if (i > 0 && this.enableKeyboardNavigation)
-        items[i].getElementsByTagName("a")[0].tabIndex = "-1";
+      if (i > 0 && this.enableKeyboardNavigation) items[i].getElementsByTagName('a')[0].tabIndex = '-1';
 
       this.initialize(items[i], element);
       if (Spry.is.ie) {
         this.addClassName(items[i], this.isieClass);
-        items[i].style.position = "static";
+        items[i].style.position = 'static';
       }
     }
     if (this.enableKeyboardNavigation) {
       const self = this;
       this.addEventListener(
         document,
-        "keydown",
+        'keydown',
         (e) => {
           self.keyDown(e);
         },
-        false
+        false,
       );
     }
 
     if (Spry.is.ie) {
       if (this.hasClassName(this.element, this.verticalClass)) {
-        this.element.style.position = "relative";
+        this.element.style.position = 'relative';
       }
-      const linkitems = this.element.getElementsByTagName("a");
+      const linkitems = this.element.getElementsByTagName('a');
       for (var i = 0; i < linkitems.length; i++) {
-        linkitems[i].style.position = "relative";
+        linkitems[i].style.position = 'relative';
       }
     }
   }
@@ -195,16 +194,16 @@ Spry.Widget.MenuBar.KEY_LEFT = 37;
 Spry.Widget.MenuBar.KEY_RIGHT = 39;
 
 Spry.Widget.MenuBar.prototype.getElement = function (ele) {
-  if (ele && typeof ele === "string") return document.getElementById(ele);
+  if (ele && typeof ele === 'string') return document.getElementById(ele);
   return ele;
 };
 
 Spry.Widget.MenuBar.prototype.hasClassName = function (ele, className) {
   if (
-    !ele ||
-    !className ||
-    !ele.className ||
-    ele.className.search(new RegExp(`\\b${className}\\b`)) == -1
+    !ele
+    || !className
+    || !ele.className
+    || ele.className.search(new RegExp(`\\b${className}\\b`)) == -1
   ) {
     return false;
   }
@@ -213,14 +212,14 @@ Spry.Widget.MenuBar.prototype.hasClassName = function (ele, className) {
 
 Spry.Widget.MenuBar.prototype.addClassName = function (ele, className) {
   if (!ele || !className || this.hasClassName(ele, className)) return;
-  ele.className += (ele.className ? " " : "") + className;
+  ele.className += (ele.className ? ' ' : '') + className;
 };
 
 Spry.Widget.MenuBar.prototype.removeClassName = function (ele, className) {
   if (!ele || !className || !this.hasClassName(ele, className)) return;
   ele.className = ele.className.replace(
-    new RegExp(`\\s*\\b${className}\\b`, "g"),
-    ""
+    new RegExp(`\\s*\\b${className}\\b`, 'g'),
+    '',
   );
 };
 
@@ -230,7 +229,7 @@ Spry.Widget.MenuBar.prototype.addEventListener = function (
   element,
   eventType,
   handler,
-  capture
+  capture,
 ) {
   try {
     if (element.addEventListener) {
@@ -244,11 +243,11 @@ Spry.Widget.MenuBar.prototype.addEventListener = function (
 // createIframeLayer for Menu Bar
 // creates an IFRAME underneath a menu so that it will show above form controls and ActiveX
 Spry.Widget.MenuBar.prototype.createIframeLayer = function (menu) {
-  const layer = document.createElement("iframe");
-  layer.tabIndex = "-1";
+  const layer = document.createElement('iframe');
+  layer.tabIndex = '-1';
   layer.src = 'javascript:""';
-  layer.frameBorder = "0";
-  layer.scrolling = "no";
+  layer.frameBorder = '0';
+  layer.scrolling = 'no';
   menu.parentNode.appendChild(layer);
 
   layer.style.left = `${menu.offsetLeft}px`;
@@ -262,7 +261,7 @@ Spry.Widget.MenuBar.prototype.createIframeLayer = function (menu) {
 Spry.Widget.MenuBar.prototype.removeIframeLayer = function (menu) {
   const layers = (
     menu == this.element ? menu : menu.parentNode
-  ).getElementsByTagName("iframe");
+  ).getElementsByTagName('iframe');
   while (layers.length > 0) {
     layers[0].parentNode.removeChild(layers[0]);
   }
@@ -271,7 +270,7 @@ Spry.Widget.MenuBar.prototype.removeIframeLayer = function (menu) {
 // clearMenus for Menu Bar
 // root is the top level unordered list (<ul> tag)
 Spry.Widget.MenuBar.prototype.clearMenus = function (root) {
-  const menus = root.getElementsByTagName("ul");
+  const menus = root.getElementsByTagName('ul');
   for (let i = 0; i < menus.length; i++) this.hideSubmenu(menus[i]);
 
   this.removeClassName(this.element, this.activeClass);
@@ -281,9 +280,9 @@ Spry.Widget.MenuBar.prototype.clearMenus = function (root) {
 // identify bubbled up text events in Safari so we can ignore them
 Spry.Widget.MenuBar.prototype.bubbledTextEvent = function () {
   return (
-    Spry.is.safari &&
-    (event.target == event.relatedTarget.parentNode ||
-      (event.eventPhase == 3 && event.target.parentNode == event.relatedTarget))
+    Spry.is.safari
+    && (event.target == event.relatedTarget.parentNode
+      || (event.eventPhase == 3 && event.target.parentNode == event.relatedTarget))
   );
 };
 
@@ -298,13 +297,13 @@ Spry.Widget.MenuBar.prototype.showSubmenu = function (menu) {
   if (menu) {
     this.addClassName(menu, this.subVisibleClass);
     if (
-      typeof document.all !== "undefined" &&
-      !Spry.is.opera &&
-      navigator.vendor != "KDE"
+      typeof document.all !== 'undefined'
+      && !Spry.is.opera
+      && navigator.vendor != 'KDE'
     ) {
       if (
-        !this.hasClassName(this.element, this.horizontalClass) ||
-        menu.parentNode.parentNode != this.element
+        !this.hasClassName(this.element, this.horizontalClass)
+        || menu.parentNode.parentNode != this.element
       ) {
         menu.style.top = `${menu.parentNode.offsetTop}px`;
       }
@@ -322,12 +321,12 @@ Spry.Widget.MenuBar.prototype.hideSubmenu = function (menu) {
   if (menu) {
     this.removeClassName(menu, this.subVisibleClass);
     if (
-      typeof document.all !== "undefined" &&
-      !Spry.is.opera &&
-      navigator.vendor != "KDE"
+      typeof document.all !== 'undefined'
+      && !Spry.is.opera
+      && navigator.vendor != 'KDE'
     ) {
-      menu.style.top = "";
-      menu.style.left = "";
+      menu.style.top = '';
+      menu.style.left = '';
     }
     if (Spry.is.ie && Spry.is.version < 7) this.removeIframeLayer(menu);
   }
@@ -339,8 +338,8 @@ Spry.Widget.MenuBar.prototype.hideSubmenu = function (menu) {
 Spry.Widget.MenuBar.prototype.initialize = function (listitem, element) {
   let opentime;
   let closetime;
-  const link = listitem.getElementsByTagName("a")[0];
-  const submenus = listitem.getElementsByTagName("ul");
+  const link = listitem.getElementsByTagName('a')[0];
+  const submenus = listitem.getElementsByTagName('ul');
   const menu = submenus.length > 0 ? submenus[0] : null;
 
   if (menu) this.addClassName(link, this.hasSubClass);
@@ -361,48 +360,48 @@ Spry.Widget.MenuBar.prototype.initialize = function (listitem, element) {
   const self = this;
   this.addEventListener(
     listitem,
-    "mouseover",
+    'mouseover',
     (e) => {
       self.mouseOver(listitem, e);
     },
-    false
+    false,
   );
   this.addEventListener(
     listitem,
-    "mouseout",
+    'mouseout',
     (e) => {
       if (self.enableKeyboardNavigation) self.clearSelection();
       self.mouseOut(listitem, e);
     },
-    false
+    false,
   );
 
   if (this.enableKeyboardNavigation) {
     this.addEventListener(
       link,
-      "blur",
+      'blur',
       (e) => {
         self.onBlur(listitem);
       },
-      false
+      false,
     );
     this.addEventListener(
       link,
-      "focus",
+      'focus',
       (e) => {
         self.keyFocus(listitem, e);
       },
-      false
+      false,
     );
   }
 };
 Spry.Widget.MenuBar.prototype.keyFocus = function (listitem, e) {
-  this.lastOpen = listitem.getElementsByTagName("a")[0];
+  this.lastOpen = listitem.getElementsByTagName('a')[0];
   this.addClassName(
     this.lastOpen,
-    listitem.getElementsByTagName("ul").length > 0
+    listitem.getElementsByTagName('ul').length > 0
       ? this.subHoverClass
-      : this.hoverClass
+      : this.hoverClass,
   );
   this.hasFocus = true;
 };
@@ -414,7 +413,7 @@ Spry.Widget.MenuBar.prototype.clearSelection = function (el) {
   if (!this.lastOpen) return;
 
   if (el) {
-    el = el.getElementsByTagName("a")[0];
+    el = el.getElementsByTagName('a')[0];
 
     // check children
     var item = this.lastOpen;
@@ -434,7 +433,7 @@ Spry.Widget.MenuBar.prototype.clearSelection = function (el) {
   var item = this.lastOpen;
   while (item != this.element) {
     this.hideSubmenu(item.parentNode);
-    const link = item.getElementsByTagName("a")[0];
+    const link = item.getElementsByTagName('a')[0];
     this.removeClassName(link, this.hoverClass);
     this.removeClassName(link, this.subHoverClass);
     item = item.parentNode;
@@ -452,7 +451,7 @@ Spry.Widget.MenuBar.prototype.keyDown = function (e) {
   var e = e || event;
   const listitem = this.lastOpen.parentNode;
   var link = this.lastOpen;
-  const submenus = listitem.getElementsByTagName("ul");
+  const submenus = listitem.getElementsByTagName('ul');
   const menu = submenus.length > 0 ? submenus[0] : null;
   const hasSubMenu = !!menu;
 
@@ -460,30 +459,29 @@ Spry.Widget.MenuBar.prototype.keyDown = function (e) {
     listitem,
     menu,
     null,
-    this.getSibling(listitem, "previousSibling"),
-    this.getSibling(listitem, "nextSibling"),
+    this.getSibling(listitem, 'previousSibling'),
+    this.getSibling(listitem, 'nextSibling'),
   ];
 
   if (!opts[3]) {
-    opts[2] =
-      listitem.parentNode.parentNode.nodeName.toLowerCase() == "li"
-        ? listitem.parentNode.parentNode
-        : null;
+    opts[2] = listitem.parentNode.parentNode.nodeName.toLowerCase() == 'li'
+      ? listitem.parentNode.parentNode
+      : null;
   }
 
   let found = 0;
   switch (e.keyCode) {
     case this.upKeyCode:
-      found = this.getElementForKey(opts, "y", 1);
+      found = this.getElementForKey(opts, 'y', 1);
       break;
     case this.downKeyCode:
-      found = this.getElementForKey(opts, "y", -1);
+      found = this.getElementForKey(opts, 'y', -1);
       break;
     case this.leftKeyCode:
-      found = this.getElementForKey(opts, "x", 1);
+      found = this.getElementForKey(opts, 'x', 1);
       break;
     case this.rightKeyCode:
-      found = this.getElementForKey(opts, "x", -1);
+      found = this.getElementForKey(opts, 'x', -1);
       break;
     case this.escKeyCode:
     case 9:
@@ -508,29 +506,28 @@ Spry.Widget.MenuBar.prototype.keyDown = function (e) {
       // left - right
       this.removeClassName(
         link,
-        hasSubMenu ? this.subHoverClass : this.hoverClass
+        hasSubMenu ? this.subHoverClass : this.hoverClass,
       );
       break;
   }
-  var link = opts[found].getElementsByTagName("a")[0];
-  if (opts[found].nodeName.toLowerCase() == "ul")
-    opts[found] = opts[found].getElementsByTagName("li")[0];
+  var link = opts[found].getElementsByTagName('a')[0];
+  if (opts[found].nodeName.toLowerCase() == 'ul') opts[found] = opts[found].getElementsByTagName('li')[0];
 
   this.addClassName(
     link,
-    opts[found].getElementsByTagName("ul").length > 0
+    opts[found].getElementsByTagName('ul').length > 0
       ? this.subHoverClass
-      : this.hoverClass
+      : this.hoverClass,
   );
   this.lastOpen = link;
-  opts[found].getElementsByTagName("a")[0].focus();
+  opts[found].getElementsByTagName('a')[0].focus();
 
   // stop further event handling by the browser
   return Spry.Widget.MenuBar.stopPropagation(e);
 };
 Spry.Widget.MenuBar.prototype.mouseOver = function (listitem, e) {
-  const link = listitem.getElementsByTagName("a")[0];
-  const submenus = listitem.getElementsByTagName("ul");
+  const link = listitem.getElementsByTagName('a')[0];
+  const submenus = listitem.getElementsByTagName('ul');
   const menu = submenus.length > 0 ? submenus[0] : null;
   const hasSubMenu = !!menu;
   if (this.enableKeyboardNavigation) this.clearSelection(listitem);
@@ -560,8 +557,8 @@ Spry.Widget.MenuBar.prototype.mouseOver = function (listitem, e) {
   }
 };
 Spry.Widget.MenuBar.prototype.mouseOut = function (listitem, e) {
-  const link = listitem.getElementsByTagName("a")[0];
-  const submenus = listitem.getElementsByTagName("ul");
+  const link = listitem.getElementsByTagName('a')[0];
+  const submenus = listitem.getElementsByTagName('ul');
   const menu = submenus.length > 0 ? submenus[0] : null;
   const hasSubMenu = !!menu;
   if (this.bubbledTextEvent()) {
@@ -569,8 +566,7 @@ Spry.Widget.MenuBar.prototype.mouseOut = function (listitem, e) {
     return;
   }
 
-  const related =
-    typeof e.relatedTarget !== "undefined" ? e.relatedTarget : e.toElement;
+  const related = typeof e.relatedTarget !== 'undefined' ? e.relatedTarget : e.toElement;
   if (!listitem.contains(related)) {
     if (listitem.opentime) clearTimeout(listitem.opentime);
     this.currMenu = listitem;
@@ -578,7 +574,7 @@ Spry.Widget.MenuBar.prototype.mouseOut = function (listitem, e) {
     // remove menu highlighting
     this.removeClassName(
       link,
-      hasSubMenu ? this.subHoverClass : this.hoverClass
+      hasSubMenu ? this.subHoverClass : this.hoverClass,
     );
     if (menu) {
       const self = this;
@@ -591,7 +587,7 @@ Spry.Widget.MenuBar.prototype.mouseOut = function (listitem, e) {
 };
 Spry.Widget.MenuBar.prototype.getSibling = function (element, sibling) {
   let child = element[sibling];
-  while (child && child.nodeName.toLowerCase() != "li") child = child[sibling];
+  while (child && child.nodeName.toLowerCase() != 'li') child = child[sibling];
 
   return child;
 };
@@ -603,21 +599,21 @@ Spry.Widget.MenuBar.prototype.getElementForKey = function (els, prop, dir) {
   let hideSubmenu = false;
   // make the subelement visible to compute the position
   if (els[1] && !this.hasClassName(els[1], this.MenuBarSubmenuVisible)) {
-    els[1].style.visibility = "hidden";
+    els[1].style.visibility = 'hidden';
     this.showSubmenu(els[1]);
     hideSubmenu = true;
   }
 
   const isVert = this.hasClassName(this.element, this.verticalClass);
-  const hasParent = els[0].parentNode.parentNode.nodeName.toLowerCase() == "li";
+  const hasParent = els[0].parentNode.parentNode.nodeName.toLowerCase() == 'li';
 
   for (let i = 1; i < els.length; i++) {
     // when navigating on the y axis in vertical menus, ignore children and parents
-    if (prop == "y" && isVert && (i == 1 || i == 2)) {
+    if (prop == 'y' && isVert && (i == 1 || i == 2)) {
       continue;
     }
     // when navigationg on the x axis in the FIRST LEVEL of horizontal menus, ignore children and parents
-    if (prop == "x" && !isVert && !hasParent && (i == 1 || i == 2)) {
+    if (prop == 'x' && !isVert && !hasParent && (i == 1 || i == 2)) {
       continue;
     }
 
@@ -633,18 +629,18 @@ Spry.Widget.MenuBar.prototype.getElementForKey = function (els, prop, dir) {
   // hide back the submenu
   if (els[1] && hideSubmenu) {
     this.hideSubmenu(els[1]);
-    els[1].style.visibility = "";
+    els[1].style.visibility = '';
   }
 
   return found;
 };
 Spry.Widget.MenuBar.camelize = function (str) {
-  if (str.indexOf("-") == -1) {
+  if (str.indexOf('-') == -1) {
     return str;
   }
-  const oStringList = str.split("-");
+  const oStringList = str.split('-');
   let isFirstEntry = true;
-  let camelizedString = "";
+  let camelizedString = '';
 
   for (let i = 0; i < oStringList.length; i++) {
     if (oStringList[i].length > 0) {
@@ -664,8 +660,7 @@ Spry.Widget.MenuBar.camelize = function (str) {
 Spry.Widget.MenuBar.getStyleProp = function (element, prop) {
   let value;
   try {
-    if (element.style)
-      value = element.style[Spry.Widget.MenuBar.camelize(prop)];
+    if (element.style) value = element.style[Spry.Widget.MenuBar.camelize(prop)];
 
     if (!value) {
       if (document.defaultView && document.defaultView.getComputedStyle) {
@@ -677,7 +672,7 @@ Spry.Widget.MenuBar.getStyleProp = function (element, prop) {
     }
   } catch (e) {}
 
-  return value == "auto" ? null : value;
+  return value == 'auto' ? null : value;
 };
 Spry.Widget.MenuBar.getIntProp = function (element, prop) {
   const a = parseInt(Spry.Widget.MenuBar.getStyleProp(element, prop), 10);
@@ -687,7 +682,7 @@ Spry.Widget.MenuBar.getIntProp = function (element, prop) {
 
 Spry.Widget.MenuBar.getPosition = function (el, doc) {
   doc = doc || document;
-  if (typeof el === "string") {
+  if (typeof el === 'string') {
     el = doc.getElementById(el);
   }
 
@@ -696,8 +691,8 @@ Spry.Widget.MenuBar.getPosition = function (el, doc) {
   }
 
   if (
-    el.parentNode === null ||
-    Spry.Widget.MenuBar.getStyleProp(el, "display") == "none"
+    el.parentNode === null
+    || Spry.Widget.MenuBar.getStyleProp(el, 'display') == 'none'
   ) {
     // element must be visible to have a box
     return false;
@@ -733,17 +728,16 @@ Spry.Widget.MenuBar.getPosition = function (el, doc) {
     }
     // opera & (safari absolute) incorrectly account for body offsetTop
     if (
-      Spry.is.opera ||
-      (Spry.is.safari &&
-        Spry.Widget.MenuBar.getStyleProp(el, "position") == "absolute")
-    )
-      ret.y -= doc.body.offsetTop;
+      Spry.is.opera
+      || (Spry.is.safari
+        && Spry.Widget.MenuBar.getStyleProp(el, 'position') == 'absolute')
+    ) ret.y -= doc.body.offsetTop;
   }
   if (el.parentNode) parent = el.parentNode;
   else parent = null;
   if (parent.nodeName) {
     let cas = parent.nodeName.toUpperCase();
-    while (parent && cas != "BODY" && cas != "HTML") {
+    while (parent && cas != 'BODY' && cas != 'HTML') {
       cas = parent.nodeName.toUpperCase();
       ret.x -= parent.scrollLeft;
       ret.y -= parent.scrollTop;
@@ -764,7 +758,7 @@ Spry.Widget.MenuBar.stopPropagation = function (ev) {
 Spry.Widget.MenuBar.setOptions = function (
   obj,
   optionsObj,
-  ignoreUndefinedProps
+  ignoreUndefinedProps,
 ) {
   if (!optionsObj) return;
   for (const optionName in optionsObj) {

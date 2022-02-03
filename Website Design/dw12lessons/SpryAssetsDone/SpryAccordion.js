@@ -34,10 +34,10 @@ if (!Spry.Widget) Spry.Widget = {};
 Spry.Widget.Accordion = function (element, opts) {
   this.element = this.getElement(element);
   this.defaultPanel = 0;
-  this.hoverClass = "AccordionPanelTabHover";
-  this.openClass = "AccordionPanelOpen";
-  this.closedClass = "AccordionPanelClosed";
-  this.focusedClass = "AccordionFocused";
+  this.hoverClass = 'AccordionPanelTabHover';
+  this.openClass = 'AccordionPanelOpen';
+  this.closedClass = 'AccordionPanelClosed';
+  this.focusedClass = 'AccordionFocused';
   this.enableAnimation = true;
   this.enableKeyboardNavigation = true;
   this.currentPanel = null;
@@ -56,39 +56,37 @@ Spry.Widget.Accordion = function (element, opts) {
 };
 
 Spry.Widget.Accordion.prototype.getElement = function (ele) {
-  if (ele && typeof ele === "string") return document.getElementById(ele);
+  if (ele && typeof ele === 'string') return document.getElementById(ele);
   return ele;
 };
 
 Spry.Widget.Accordion.prototype.addClassName = function (ele, className) {
   if (
-    !ele ||
-    !className ||
-    (ele.className &&
-      ele.className.search(new RegExp(`\\b${className}\\b`)) != -1)
-  )
-    return;
-  ele.className += (ele.className ? " " : "") + className;
+    !ele
+    || !className
+    || (ele.className
+      && ele.className.search(new RegExp(`\\b${className}\\b`)) != -1)
+  ) return;
+  ele.className += (ele.className ? ' ' : '') + className;
 };
 
 Spry.Widget.Accordion.prototype.removeClassName = function (ele, className) {
   if (
-    !ele ||
-    !className ||
-    (ele.className &&
-      ele.className.search(new RegExp(`\\b${className}\\b`)) == -1)
-  )
-    return;
+    !ele
+    || !className
+    || (ele.className
+      && ele.className.search(new RegExp(`\\b${className}\\b`)) == -1)
+  ) return;
   ele.className = ele.className.replace(
-    new RegExp(`\\s*\\b${className}\\b`, "g"),
-    ""
+    new RegExp(`\\s*\\b${className}\\b`, 'g'),
+    '',
   );
 };
 
 Spry.Widget.Accordion.setOptions = function (
   obj,
   optionsObj,
-  ignoreUndefinedProps
+  ignoreUndefinedProps,
 ) {
   if (!optionsObj) return;
   for (const optionName in optionsObj) {
@@ -111,8 +109,7 @@ Spry.Widget.Accordion.prototype.openPanel = function (elementOrIndex) {
   const panelA = this.currentPanel;
   let panelB;
 
-  if (typeof elementOrIndex === "number")
-    panelB = this.getPanels()[elementOrIndex];
+  if (typeof elementOrIndex === 'number') panelB = this.getPanels()[elementOrIndex];
   else panelB = this.getElement(elementOrIndex);
 
   if (!panelB || panelA == panelB) return null;
@@ -138,13 +135,13 @@ Spry.Widget.Accordion.prototype.openPanel = function (elementOrIndex) {
     this.animator.start();
   } else {
     if (contentA) {
-      contentA.style.display = "none";
-      contentA.style.height = "0px";
+      contentA.style.display = 'none';
+      contentA.style.height = '0px';
     }
-    contentB.style.display = "block";
+    contentB.style.display = 'block';
     contentB.style.height = this.useFixedPanelHeights
       ? `${this.fixedPanelHeight}px`
-      : "auto";
+      : 'auto';
   }
 
   if (panelA) {
@@ -179,8 +176,8 @@ Spry.Widget.Accordion.prototype.closePanel = function () {
         });
         this.animator.start();
       } else {
-        content.style.display = "none";
-        content.style.height = "0px";
+        content.style.display = 'none';
+        content.style.height = '0px';
       }
     }
     this.removeClassName(panel, this.openClass);
@@ -238,25 +235,22 @@ Spry.Widget.Accordion.KEY_DOWN = 40;
 Spry.Widget.Accordion.prototype.onKeyDown = function (e) {
   const key = e.keyCode;
   if (
-    !this.hasFocus ||
-    (key != this.previousPanelKeyCode && key != this.nextPanelKeyCode)
-  )
-    return true;
+    !this.hasFocus
+    || (key != this.previousPanelKeyCode && key != this.nextPanelKeyCode)
+  ) return true;
 
   const panels = this.getPanels();
   if (!panels || panels.length < 1) return false;
   const currentPanel = this.currentPanel ? this.currentPanel : panels[0];
-  let nextPanel =
-    key == this.nextPanelKeyCode
-      ? currentPanel.nextSibling
-      : currentPanel.previousSibling;
+  let nextPanel = key == this.nextPanelKeyCode
+    ? currentPanel.nextSibling
+    : currentPanel.previousSibling;
 
   while (nextPanel) {
     if (nextPanel.nodeType == 1 /* Node.ELEMENT_NODE */) break;
-    nextPanel =
-      key == this.nextPanelKeyCode
-        ? nextPanel.nextSibling
-        : nextPanel.previousSibling;
+    nextPanel = key == this.nextPanelKeyCode
+      ? nextPanel.nextSibling
+      : nextPanel.previousSibling;
   }
 
   if (nextPanel && currentPanel != nextPanel) this.openPanel(nextPanel);
@@ -278,21 +272,21 @@ Spry.Widget.Accordion.prototype.attachPanelHandlers = function (panel) {
     const self = this;
     Spry.Widget.Accordion.addEventListener(
       tab,
-      "click",
+      'click',
       (e) => self.onPanelTabClick(e, panel),
-      false
+      false,
     );
     Spry.Widget.Accordion.addEventListener(
       tab,
-      "mouseover",
+      'mouseover',
       (e) => self.onPanelTabMouseOver(e, panel),
-      false
+      false,
     );
     Spry.Widget.Accordion.addEventListener(
       tab,
-      "mouseout",
+      'mouseout',
       (e) => self.onPanelTabMouseOut(e, panel),
-      false
+      false,
     );
   }
 };
@@ -301,13 +295,11 @@ Spry.Widget.Accordion.addEventListener = function (
   element,
   eventType,
   handler,
-  capture
+  capture,
 ) {
   try {
-    if (element.addEventListener)
-      element.addEventListener(eventType, handler, capture);
-    else if (element.attachEvent)
-      element.attachEvent(`on${eventType}`, handler);
+    if (element.addEventListener) element.addEventListener(eventType, handler, capture);
+    else if (element.attachEvent) element.attachEvent(`on${eventType}`, handler);
   } catch (e) {}
 };
 
@@ -327,14 +319,13 @@ Spry.Widget.Accordion.prototype.initPanel = function (panel, isDefault) {
         // We are in fixed panel height mode and the user passed in
         // a panel height for us to use.
 
-        if (this.fixedPanelHeight)
-          content.style.height = `${this.fixedPanelHeight}px`;
+        if (this.fixedPanelHeight) content.style.height = `${this.fixedPanelHeight}px`;
       } else {
         // We are in variable panel height mode, but since we can't
         // calculate the panel height here, we just set the height to
         // auto so that it expands to show all of its content.
 
-        content.style.height = "auto";
+        content.style.height = 'auto';
       }
     }
   } else {
@@ -342,8 +333,8 @@ Spry.Widget.Accordion.prototype.initPanel = function (panel, isDefault) {
     this.addClassName(panel, this.closedClass);
 
     if (content) {
-      content.style.height = "0px";
-      content.style.display = "none";
+      content.style.height = '0px';
+      content.style.display = 'none';
     }
   }
 
@@ -352,34 +343,32 @@ Spry.Widget.Accordion.prototype.initPanel = function (panel, isDefault) {
 
 Spry.Widget.Accordion.prototype.attachBehaviors = function () {
   const panels = this.getPanels();
-  for (let i = 0; i < panels.length; i++)
-    this.initPanel(panels[i], i == this.defaultPanel);
+  for (let i = 0; i < panels.length; i++) this.initPanel(panels[i], i == this.defaultPanel);
 
   // Advanced keyboard navigation requires the tabindex attribute
   // on the top-level element.
 
-  this.enableKeyboardNavigation =
-    this.enableKeyboardNavigation &&
-    this.element.attributes.getNamedItem("tabindex");
+  this.enableKeyboardNavigation = this.enableKeyboardNavigation
+    && this.element.attributes.getNamedItem('tabindex');
   if (this.enableKeyboardNavigation) {
     const self = this;
     Spry.Widget.Accordion.addEventListener(
       this.element,
-      "focus",
+      'focus',
       (e) => self.onFocus(e),
-      false
+      false,
     );
     Spry.Widget.Accordion.addEventListener(
       this.element,
-      "blur",
+      'blur',
       (e) => self.onBlur(e),
-      false
+      false,
     );
     Spry.Widget.Accordion.addEventListener(
       this.element,
-      "keydown",
+      'keydown',
       (e) => self.onKeyDown(e),
-      false
+      false,
     );
   }
 };
@@ -465,24 +454,23 @@ Spry.Widget.Accordion.PanelAnimator = function (accordion, panel, opts) {
       let h = c.offsetHeight;
       if (h == undefined) h = 0;
 
-      if (p == panel && h == 0) c.style.display = "block";
+      if (p == panel && h == 0) c.style.display = 'block';
 
       if (p == panel || h > 0) {
         const obj = new Object();
         obj.panel = p;
         obj.content = c;
         obj.fromHeight = h;
-        obj.toHeight =
-          p == panel
-            ? accordion.useFixedPanelHeights
-              ? accordion.fixedPanelHeight
-              : c.scrollHeight
-            : 0;
+        obj.toHeight = p == panel
+          ? accordion.useFixedPanelHeights
+            ? accordion.fixedPanelHeight
+            : c.scrollHeight
+          : 0;
         obj.distance = obj.toHeight - obj.fromHeight;
         obj.overflow = c.style.overflow;
         this.panelData.push(obj);
 
-        c.style.overflow = "hidden";
+        c.style.overflow = 'hidden';
         c.style.height = `${h}px`;
       }
     }
@@ -493,7 +481,7 @@ Spry.Widget.Accordion.PanelAnimator.defaultTransition = function (
   time,
   begin,
   finish,
-  duration
+  duration,
 ) {
   time /= duration;
   return begin + (2 - time) * time * finish;
@@ -534,14 +522,13 @@ Spry.Widget.Accordion.PanelAnimator.prototype.stepAnimation = function () {
     for (i = 0; i < this.panelData.length; i++) {
       obj = this.panelData[i];
       if (obj.panel != this.panel) {
-        obj.content.style.display = "none";
-        obj.content.style.height = "0px";
+        obj.content.style.display = 'none';
+        obj.content.style.height = '0px';
       }
       obj.content.style.overflow = obj.overflow;
-      obj.content.style.height =
-        this.useFixedPanelHeights || obj.toHeight == 0
-          ? `${obj.toHeight}px`
-          : "auto";
+      obj.content.style.height = this.useFixedPanelHeights || obj.toHeight == 0
+        ? `${obj.toHeight}px`
+        : 'auto';
     }
     if (this.onComplete) this.onComplete();
     return;
@@ -553,7 +540,7 @@ Spry.Widget.Accordion.PanelAnimator.prototype.stepAnimation = function () {
       elapsedTime,
       obj.fromHeight,
       obj.distance,
-      this.duration
+      this.duration,
     );
     obj.content.style.height = `${ht < 0 ? 0 : ht}px`;
   }

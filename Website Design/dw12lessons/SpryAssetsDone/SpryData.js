@@ -38,7 +38,7 @@ if (!Spry) Spry = {};
 
 if (!Spry.Utils) Spry.Utils = {};
 
-Spry.Utils.msProgIDs = ["MSXML2.XMLHTTP.6.0", "MSXML2.XMLHTTP.3.0"];
+Spry.Utils.msProgIDs = ['MSXML2.XMLHTTP.6.0', 'MSXML2.XMLHTTP.3.0'];
 
 Spry.Utils.createXMLHttpRequest = function () {
   let req = null;
@@ -67,8 +67,7 @@ Spry.Utils.createXMLHttpRequest = function () {
     req = null;
   }
 
-  if (!req)
-    Spry.Debug.reportError("Failed to create an XMLHttpRequest object!");
+  if (!req) Spry.Debug.reportError('Failed to create an XMLHttpRequest object!');
 
   return req;
 };
@@ -96,12 +95,11 @@ Spry.Utils.loadURL = function (method, url, async, callback, opts) {
       req.url,
       req.async,
       req.username,
-      req.password
+      req.password,
     );
 
     if (req.headers) {
-      for (const name in req.headers)
-        req.xhRequest.setRequestHeader(name, req.headers[name]);
+      for (const name in req.headers) req.xhRequest.setRequestHeader(name, req.headers[name]);
     }
 
     req.xhRequest.send(req.postData);
@@ -121,10 +119,9 @@ Spry.Utils.loadURL = function (method, url, async, callback, opts) {
 Spry.Utils.loadURL.callback = function (req) {
   if (!req || req.xhRequest.readyState != 4) return;
   if (
-    req.successCallback &&
-    (req.xhRequest.status == 200 || req.xhRequest.status == 0)
-  )
-    req.successCallback(req);
+    req.successCallback
+    && (req.xhRequest.status == 200 || req.xhRequest.status == 0)
+  ) req.successCallback(req);
   else if (req.errorCallback) req.errorCallback(req);
 };
 
@@ -134,28 +131,28 @@ Spry.Utils.loadURL.Request = function () {
 
   for (let i = 0; i < numProps; i++) this[props[i]] = null;
 
-  this.method = "GET";
+  this.method = 'GET';
   this.async = true;
   this.headers = {};
 };
 
 Spry.Utils.loadURL.Request.props = [
-  "method",
-  "url",
-  "async",
-  "username",
-  "password",
-  "postData",
-  "successCallback",
-  "errorCallback",
-  "headers",
-  "userData",
-  "xhRequest",
+  'method',
+  'url',
+  'async',
+  'username',
+  'password',
+  'postData',
+  'successCallback',
+  'errorCallback',
+  'headers',
+  'userData',
+  'xhRequest',
 ];
 
 Spry.Utils.loadURL.Request.prototype.extractRequestOptions = function (
   opts,
-  undefineRequestProps
+  undefineRequestProps,
 ) {
   if (!opts) return;
 
@@ -186,18 +183,18 @@ Spry.Utils.loadURL.Request.prototype.clone = function () {
 Spry.Utils.setInnerHTML = function (ele, str, preventScripts) {
   if (!ele) return;
   ele = Spry.$(ele);
-  const scriptExpr = "<script[^>]*>(.|s|\n|\r)*?</script>";
-  ele.innerHTML = str.replace(new RegExp(scriptExpr, "img"), "");
+  const scriptExpr = '<script[^>]*>(.|s|\n|\r)*?</script>';
+  ele.innerHTML = str.replace(new RegExp(scriptExpr, 'img'), '');
 
   if (preventScripts) return;
 
-  const matches = str.match(new RegExp(scriptExpr, "img"));
+  const matches = str.match(new RegExp(scriptExpr, 'img'));
   if (matches) {
     const numMatches = matches.length;
     for (let i = 0; i < numMatches; i++) {
       const s = matches[i].replace(
         /<script[^>]*>[\s\r\n]*(<\!--)?|(-->)?[\s\r\n]*<\/script>/gim,
-        ""
+        '',
       );
       Spry.Utils.eval(s);
     }
@@ -206,14 +203,14 @@ Spry.Utils.setInnerHTML = function (ele, str, preventScripts) {
 
 Spry.Utils.updateContent = function (ele, url, finishFunc, opts) {
   Spry.Utils.loadURL(
-    "GET",
+    'GET',
     url,
     true,
     (req) => {
       Spry.Utils.setInnerHTML(ele, req.xhRequest.responseText);
       if (finishFunc) finishFunc(ele, url);
     },
-    opts
+    opts,
   );
 };
 
@@ -234,14 +231,12 @@ if (!Spry.$$) {
     element,
     eventType,
     handler,
-    capture
+    capture,
   ) {
     try {
       element = Spry.$(element);
-      if (element.addEventListener)
-        element.addEventListener(eventType, handler, capture);
-      else if (element.attachEvent)
-        element.attachEvent(`on${eventType}`, handler);
+      if (element.addEventListener) element.addEventListener(eventType, handler, capture);
+      else if (element.attachEvent) element.attachEvent(`on${eventType}`, handler);
     } catch (e) {}
   };
 
@@ -249,24 +244,19 @@ if (!Spry.$$) {
     element,
     eventType,
     handler,
-    capture
+    capture,
   ) {
     try {
       element = Spry.$(element);
-      if (element.removeEventListener)
-        element.removeEventListener(eventType, handler, capture);
-      else if (element.detachEvent)
-        element.detachEvent(`on${eventType}`, handler);
+      if (element.removeEventListener) element.removeEventListener(eventType, handler, capture);
+      else if (element.detachEvent) element.detachEvent(`on${eventType}`, handler);
     } catch (e) {}
   };
 
   Spry.Utils.addLoadListener = function (handler) {
-    if (typeof window.addEventListener !== "undefined")
-      window.addEventListener("load", handler, false);
-    else if (typeof document.addEventListener !== "undefined")
-      document.addEventListener("load", handler, false);
-    else if (typeof window.attachEvent !== "undefined")
-      window.attachEvent("onload", handler);
+    if (typeof window.addEventListener !== 'undefined') window.addEventListener('load', handler, false);
+    else if (typeof document.addEventListener !== 'undefined') document.addEventListener('load', handler, false);
+    else if (typeof window.attachEvent !== 'undefined') window.attachEvent('onload', handler);
   };
 
   Spry.Utils.getAttribute = function (ele, name) {
@@ -292,7 +282,7 @@ if (!Spry.$$) {
 
     if (value == undefined && name.search(/:/) != -1) {
       try {
-        var value = ele.getAttribute(name.replace(/:/, ""));
+        var value = ele.getAttribute(name.replace(/:/, ''));
       } catch (e) {
         value == undefined;
       }
@@ -308,7 +298,7 @@ if (!Spry.$$) {
     // IE doesn't allow you to set the "class" attribute. You
     // have to set the className property instead.
 
-    if (name == "class") ele.className = value;
+    if (name == 'class') ele.className = value;
     else {
       // I'm probably being a bit paranoid, but given the fact that
       // getAttribute() throws exceptions when dealing with namespace
@@ -330,8 +320,7 @@ if (!Spry.$$) {
       // remove the ':' character, Spry.Utils.getAttribute() will still
       // find the attribute.
 
-      if (name.search(/:/) != -1 && ele.getAttribute(name) == undefined)
-        ele.setAttribute(name.replace(/:/, ""), value);
+      if (name.search(/:/) != -1 && ele.getAttribute(name) == undefined) ele.setAttribute(name.replace(/:/, ''), value);
     }
   };
 
@@ -349,7 +338,7 @@ if (!Spry.$$) {
     // also remove any attributes with the same name, but without
     // the ':' character.
 
-    if (name.search(/:/) != -1) ele.removeAttribute(name.replace(/:/, ""));
+    if (name.search(/:/) != -1) ele.removeAttribute(name.replace(/:/, ''));
 
     // XXX: Workaround for IE
     //
@@ -357,33 +346,31 @@ if (!Spry.$$) {
     // It requires you to remove "className" instead, so go
     // ahead and try to remove that too.
 
-    if (name == "class") ele.removeAttribute("className");
+    if (name == 'class') ele.removeAttribute('className');
   };
 
   Spry.Utils.addClassName = function (ele, className) {
     ele = Spry.$(ele);
     if (
-      !ele ||
-      !className ||
-      (ele.className &&
-        ele.className.search(new RegExp(`\\b${className}\\b`)) != -1)
-    )
-      return;
-    ele.className += (ele.className ? " " : "") + className;
+      !ele
+      || !className
+      || (ele.className
+        && ele.className.search(new RegExp(`\\b${className}\\b`)) != -1)
+    ) return;
+    ele.className += (ele.className ? ' ' : '') + className;
   };
 
   Spry.Utils.removeClassName = function (ele, className) {
     ele = Spry.$(ele);
     if (
-      !ele ||
-      !className ||
-      (ele.className &&
-        ele.className.search(new RegExp(`\\b${className}\\b`)) == -1)
-    )
-      return;
+      !ele
+      || !className
+      || (ele.className
+        && ele.className.search(new RegExp(`\\b${className}\\b`)) == -1)
+    ) return;
     ele.className = ele.className.replace(
-      new RegExp(`\\s*\\b${className}\\b`, "g"),
-      ""
+      new RegExp(`\\s*\\b${className}\\b`, 'g'),
+      '',
     );
   };
 
@@ -397,11 +384,10 @@ if (!Spry.$$) {
 
   Spry.$ = function (element) {
     if (arguments.length > 1) {
-      for (var i = 0, elements = [], { length } = arguments; i < length; i++)
-        elements.push(Spry.$(arguments[i]));
+      for (var i = 0, elements = [], { length } = arguments; i < length; i++) elements.push(Spry.$(arguments[i]));
       return elements;
     }
-    if (typeof element === "string") element = document.getElementById(element);
+    if (typeof element === 'string') element = document.getElementById(element);
     return element;
   };
 } // if (!Spry.$$)
@@ -412,7 +398,7 @@ Spry.Utils.getObjectByName = function (name) {
   let result = null;
   if (name) {
     let lu = window;
-    const objPath = name.split(".");
+    const objPath = name.split('.');
     for (let i = 0; lu && i < objPath.length; i++) {
       result = lu[objPath[i]];
       lu = result;
@@ -432,20 +418,20 @@ Spry.Utils.eval = function (str) {
 
 Spry.Utils.escapeQuotesAndLineBreaks = function (str) {
   if (str) {
-    str = str.replace(/\\/g, "\\\\");
-    str = str.replace(/["']/g, "\\$&");
-    str = str.replace(/\n/g, "\\n");
-    str = str.replace(/\r/g, "\\r");
+    str = str.replace(/\\/g, '\\\\');
+    str = str.replace(/["']/g, '\\$&');
+    str = str.replace(/\n/g, '\\n');
+    str = str.replace(/\r/g, '\\r');
   }
   return str;
 };
 
 Spry.Utils.encodeEntities = function (str) {
   if (str && str.search(/[&<>"]/) != -1) {
-    str = str.replace(/&/g, "&amp;");
-    str = str.replace(/</g, "&lt;");
-    str = str.replace(/>/g, "&gt;");
-    str = str.replace(/"/g, "&quot;");
+    str = str.replace(/&/g, '&amp;');
+    str = str.replace(/</g, '&lt;');
+    str = str.replace(/>/g, '&gt;');
+    str = str.replace(/"/g, '&quot;');
   }
   return str;
 };
@@ -453,38 +439,37 @@ Spry.Utils.encodeEntities = function (str) {
 Spry.Utils.decodeEntities = function (str) {
   let d = Spry.Utils.decodeEntities.div;
   if (!d) {
-    d = document.createElement("div");
+    d = document.createElement('div');
     Spry.Utils.decodeEntities.div = d;
     if (!d) return str;
   }
   d.innerHTML = str;
   if (
-    d.childNodes.length == 1 &&
-    d.firstChild.nodeType == 3 &&
-    /* Node.TEXT_NODE */ d.firstChild.nextSibling == null
-  )
-    str = d.firstChild.data;
+    d.childNodes.length == 1
+    && d.firstChild.nodeType == 3
+    /* Node.TEXT_NODE */ && d.firstChild.nextSibling == null
+  ) str = d.firstChild.data;
   else {
     // Hmmm, innerHTML processing of str produced content
     // we weren't expecting, so just replace entities we
     // expect folks will use in node attributes that contain
     // JavaScript.
-    str = str.replace(/&lt;/gi, "<");
-    str = str.replace(/&gt;/gi, ">");
+    str = str.replace(/&lt;/gi, '<');
+    str = str.replace(/&gt;/gi, '>');
     str = str.replace(/&quot;/gi, '"');
-    str = str.replace(/&amp;/gi, "&");
+    str = str.replace(/&amp;/gi, '&');
   }
   return str;
 };
 
 Spry.Utils.fixupIETagAttributes = function (inStr) {
-  let outStr = "";
+  let outStr = '';
 
   // Break the tag string into 3 pieces.
 
   const tagStart = inStr.match(/^<[^\s>]+\s*/)[0];
   const tagEnd = inStr.match(/\s*\/?>$/)[0];
-  const tagAttrs = inStr.replace(/^<[^\s>]+\s*|\s*\/?>/g, "");
+  const tagAttrs = inStr.replace(/^<[^\s>]+\s*|\s*\/?>/g, '');
 
   // Write out the start of the tag.
   outStr += tagStart;
@@ -498,8 +483,7 @@ Spry.Utils.fixupIETagAttributes = function (inStr) {
 
     while (startIndex < tagAttrs.length) {
       // Find the '=' char of the attribute.
-      while (tagAttrs.charAt(endIndex) != "=" && endIndex < tagAttrs.length)
-        ++endIndex;
+      while (tagAttrs.charAt(endIndex) != '=' && endIndex < tagAttrs.length) ++endIndex;
 
       // If we are at the end of the string, just write out what we've
       // collected.
@@ -517,8 +501,8 @@ Spry.Utils.fixupIETagAttributes = function (inStr) {
       startIndex = endIndex;
 
       if (
-        tagAttrs.charAt(endIndex) == '"' ||
-        tagAttrs.charAt(endIndex) == "'"
+        tagAttrs.charAt(endIndex) == '"'
+        || tagAttrs.charAt(endIndex) == "'"
       ) {
         // Attribute is quoted. Advance us past the quoted value!
         const savedIndex = endIndex++;
@@ -526,7 +510,7 @@ Spry.Utils.fixupIETagAttributes = function (inStr) {
           if (tagAttrs.charAt(endIndex) == tagAttrs.charAt(savedIndex)) {
             endIndex++;
             break;
-          } else if (tagAttrs.charAt(endIndex) == "\\") endIndex++;
+          } else if (tagAttrs.charAt(endIndex) == '\\') endIndex++;
           endIndex++;
         }
 
@@ -555,7 +539,7 @@ Spry.Utils.fixupIETagAttributes = function (inStr) {
 };
 
 Spry.Utils.fixUpIEInnerHTML = function (inStr) {
-  let outStr = "";
+  let outStr = '';
 
   // Create a regular expression that will match:
   //     <!--
@@ -569,8 +553,8 @@ Spry.Utils.fixUpIEInnerHTML = function (inStr) {
   // are not in any comments or CDATA.
 
   const regexp = new RegExp(
-    "<\\!--|<\\!\\[CDATA\\[|<\\w+[^<>]*>|-->|\\]\\](>|&gt;)",
-    "g"
+    '<\\!--|<\\!\\[CDATA\\[|<\\w+[^<>]*>|-->|\\]\\](>|&gt;)',
+    'g',
   );
   let searchStartIndex = 0;
   let skipFixUp = 0;
@@ -587,22 +571,21 @@ Spry.Utils.fixUpIEInnerHTML = function (inStr) {
       // Create a string token for everything that precedes the match.
       outStr += inStr.substr(
         searchStartIndex,
-        results.index - searchStartIndex
+        results.index - searchStartIndex,
       );
     }
 
-    if (results[0] == "<!--" || results[0] == "<![CDATA[") {
+    if (results[0] == '<!--' || results[0] == '<![CDATA[') {
       ++skipFixUp;
       outStr += results[0];
     } else if (
-      results[0] == "-->" ||
-      results[0] == "]]>" ||
-      (skipFixUp && results[0] == "]]&gt;")
+      results[0] == '-->'
+      || results[0] == ']]>'
+      || (skipFixUp && results[0] == ']]&gt;')
     ) {
       --skipFixUp;
       outStr += results[0];
-    } else if (!skipFixUp && results[0].charAt(0) == "<")
-      outStr += Spry.Utils.fixupIETagAttributes(results[0]);
+    } else if (!skipFixUp && results[0].charAt(0) == '<') outStr += Spry.Utils.fixupIETagAttributes(results[0]);
     else outStr += results[0];
 
     searchStartIndex = regexp.lastIndex;
@@ -617,7 +600,7 @@ Spry.Utils.stringToXMLDoc = function (str) {
   try {
     // Attempt to parse the string using the IE method.
 
-    const xmlDOMObj = new ActiveXObject("Microsoft.XMLDOM");
+    const xmlDOMObj = new ActiveXObject('Microsoft.XMLDOM');
     xmlDOMObj.async = false;
     xmlDOMObj.loadXML(str);
     xmlDoc = xmlDOMObj;
@@ -626,10 +609,10 @@ Spry.Utils.stringToXMLDoc = function (str) {
 
     try {
       const domParser = new DOMParser();
-      xmlDoc = domParser.parseFromString(str, "text/xml");
+      xmlDoc = domParser.parseFromString(str, 'text/xml');
     } catch (e) {
       Spry.Debug.reportError(
-        `Caught exception in Spry.Utils.stringToXMLDoc(): ${e}\n`
+        `Caught exception in Spry.Utils.stringToXMLDoc(): ${e}\n`,
       );
       xmlDoc = null;
     }
@@ -641,32 +624,31 @@ Spry.Utils.stringToXMLDoc = function (str) {
 Spry.Utils.serializeObject = function (obj) {
   // Create a JSON representation of a given object.
 
-  let str = "";
+  let str = '';
   let firstItem = true;
 
   if (obj == null || obj == undefined) return str + obj;
 
   const objType = typeof obj;
 
-  if (objType == "number" || objType == "boolean") str += obj;
-  else if (objType == "string")
-    str += `"${Spry.Utils.escapeQuotesAndLineBreaks(obj)}"`;
+  if (objType == 'number' || objType == 'boolean') str += obj;
+  else if (objType == 'string') str += `"${Spry.Utils.escapeQuotesAndLineBreaks(obj)}"`;
   else if (obj.constructor == Array) {
-    str += "[";
+    str += '[';
     for (let i = 0; i < obj.length; i++) {
-      if (!firstItem) str += ", ";
+      if (!firstItem) str += ', ';
       str += Spry.Utils.serializeObject(obj[i]);
       firstItem = false;
     }
-    str += "]";
-  } else if (objType == "object") {
-    str += "{";
+    str += ']';
+  } else if (objType == 'object') {
+    str += '{';
     for (const p in obj) {
-      if (!firstItem) str += ", ";
+      if (!firstItem) str += ', ';
       str += `"${p}": ${Spry.Utils.serializeObject(obj[p])}`;
       firstItem = false;
     }
-    str += "}";
+    str += '}';
   }
   return str;
 };
@@ -706,7 +688,7 @@ Spry.Utils.getNodesByFunc = function (root, func) {
 
   if (nodeStack && nodeStack.length > 0) {
     Spry.Debug.trace(
-      "-- WARNING: Spry.Utils.getNodesByFunc() failed to traverse all nodes!\n"
+      '-- WARNING: Spry.Utils.getNodesByFunc() failed to traverse all nodes!\n',
     );
   }
 
@@ -744,7 +726,7 @@ Spry.Utils.SelectionManager.SelectionGroup = function () {
 Spry.Utils.SelectionManager.SelectionGroup.prototype.select = function (
   element,
   className,
-  multiSelect
+  multiSelect,
 ) {
   let selObj = null;
 
@@ -781,7 +763,7 @@ Spry.Utils.SelectionManager.SelectionGroup.prototype.select = function (
 };
 
 Spry.Utils.SelectionManager.SelectionGroup.prototype.unSelect = function (
-  element
+  element,
 ) {
   for (let i = 0; i < this.selectedElements.length; i++) {
     const selObj = this.selectedElements[i].element;
@@ -793,21 +775,19 @@ Spry.Utils.SelectionManager.SelectionGroup.prototype.unSelect = function (
   }
 };
 
-Spry.Utils.SelectionManager.SelectionGroup.prototype.clearSelection =
-  function () {
-    let selObj = null;
+Spry.Utils.SelectionManager.SelectionGroup.prototype.clearSelection = function () {
+  let selObj = null;
 
-    do {
-      selObj = this.selectedElements.shift();
-      if (selObj) Spry.Utils.removeClassName(selObj.element, selObj.className);
-    } while (selObj);
-  };
+  do {
+    selObj = this.selectedElements.shift();
+    if (selObj) Spry.Utils.removeClassName(selObj.element, selObj.className);
+  } while (selObj);
+};
 
 Spry.Utils.SelectionManager.getSelectionGroup = function (selectionGroupName) {
   if (!selectionGroupName) return null;
 
-  let groupObj =
-    Spry.Utils.SelectionManager.selectionGroups[selectionGroupName];
+  let groupObj = Spry.Utils.SelectionManager.selectionGroups[selectionGroupName];
 
   if (!groupObj) {
     groupObj = new Spry.Utils.SelectionManager.SelectionGroup();
@@ -821,10 +801,9 @@ Spry.Utils.SelectionManager.select = function (
   selectionGroupName,
   element,
   className,
-  multiSelect
+  multiSelect,
 ) {
-  const groupObj =
-    Spry.Utils.SelectionManager.getSelectionGroup(selectionGroupName);
+  const groupObj = Spry.Utils.SelectionManager.getSelectionGroup(selectionGroupName);
 
   if (!groupObj) return;
 
@@ -832,8 +811,7 @@ Spry.Utils.SelectionManager.select = function (
 };
 
 Spry.Utils.SelectionManager.unSelect = function (selectionGroupName, element) {
-  const groupObj =
-    Spry.Utils.SelectionManager.getSelectionGroup(selectionGroupName);
+  const groupObj = Spry.Utils.SelectionManager.getSelectionGroup(selectionGroupName);
 
   if (!groupObj) return;
 
@@ -841,8 +819,7 @@ Spry.Utils.SelectionManager.unSelect = function (selectionGroupName, element) {
 };
 
 Spry.Utils.SelectionManager.clearSelection = function (selectionGroupName) {
-  const groupObj =
-    Spry.Utils.SelectionManager.getSelectionGroup(selectionGroupName);
+  const groupObj = Spry.Utils.SelectionManager.getSelectionGroup(selectionGroupName);
 
   if (!groupObj) return;
 
@@ -885,7 +862,7 @@ Spry.Utils.Notifier.prototype.notifyObservers = function (methodName, data) {
     for (let i = 0; i < len; i++) {
       const obs = this.observers[i];
       if (obs) {
-        if (typeof obs === "function") obs(methodName, this, data);
+        if (typeof obs === 'function') obs(methodName, this, data);
         else if (obs[methodName]) obs[methodName](this, data);
       }
     }
@@ -895,7 +872,7 @@ Spry.Utils.Notifier.prototype.notifyObservers = function (methodName, data) {
 Spry.Utils.Notifier.prototype.enableNotifications = function () {
   if (--this.suppressNotifications < 0) {
     this.suppressNotifications = 0;
-    Spry.Debug.reportError("Unbalanced enableNotifications() call!\n");
+    Spry.Debug.reportError('Unbalanced enableNotifications() call!\n');
   }
 };
 
@@ -922,36 +899,34 @@ Spry.Utils.addLoadListener(() => {
 Spry.Debug.flushQueuedMessages = function () {
   if (Spry.Debug.flushQueuedMessages.msgs) {
     const { msgs } = Spry.Debug.flushQueuedMessages;
-    for (let i = 0; i < msgs.length; i++)
-      Spry.Debug.debugOut(msgs[i].msg, msgs[i].color);
+    for (let i = 0; i < msgs.length; i++) Spry.Debug.debugOut(msgs[i].msg, msgs[i].color);
     Spry.Debug.flushQueuedMessages.msgs = null;
   }
 };
 
 Spry.Debug.createDebugWindow = function () {
   if (
-    !Spry.Debug.enableTrace ||
-    Spry.Debug.debugWindow ||
-    !Spry.Debug.onloadDidFire
-  )
-    return;
+    !Spry.Debug.enableTrace
+    || Spry.Debug.debugWindow
+    || !Spry.Debug.onloadDidFire
+  ) return;
   try {
-    Spry.Debug.debugWindow = document.createElement("div");
+    Spry.Debug.debugWindow = document.createElement('div');
     const div = Spry.Debug.debugWindow;
-    div.style.fontSize = "12px";
-    div.style.fontFamily = "console";
-    div.style.position = "absolute";
-    div.style.width = "400px";
-    div.style.height = "300px";
-    div.style.overflow = "auto";
-    div.style.border = "solid 1px black";
-    div.style.backgroundColor = "white";
-    div.style.color = "black";
-    div.style.bottom = "0px";
-    div.style.right = "0px";
+    div.style.fontSize = '12px';
+    div.style.fontFamily = 'console';
+    div.style.position = 'absolute';
+    div.style.width = '400px';
+    div.style.height = '300px';
+    div.style.overflow = 'auto';
+    div.style.border = 'solid 1px black';
+    div.style.backgroundColor = 'white';
+    div.style.color = 'black';
+    div.style.bottom = '0px';
+    div.style.right = '0px';
     // div.style.opacity = "0.5";
     // div.style.filter = "alpha(opacity=50)";
-    div.setAttribute("id", "SpryDebugWindow");
+    div.setAttribute('id', 'SpryDebugWindow');
     document.body.appendChild(Spry.Debug.debugWindow);
   } catch (e) {}
 };
@@ -960,14 +935,13 @@ Spry.Debug.debugOut = function (str, bgColor) {
   if (!Spry.Debug.debugWindow) {
     Spry.Debug.createDebugWindow();
     if (!Spry.Debug.debugWindow) {
-      if (!Spry.Debug.flushQueuedMessages.msgs)
-        Spry.Debug.flushQueuedMessages.msgs = new Array();
+      if (!Spry.Debug.flushQueuedMessages.msgs) Spry.Debug.flushQueuedMessages.msgs = new Array();
       Spry.Debug.flushQueuedMessages.msgs.push({ msg: str, color: bgColor });
       return;
     }
   }
 
-  const d = document.createElement("div");
+  const d = document.createElement('div');
   if (bgColor) d.style.backgroundColor = bgColor;
   d.innerHTML = str;
   Spry.Debug.debugWindow.appendChild(d);
@@ -978,7 +952,7 @@ Spry.Debug.trace = function (str) {
 };
 
 Spry.Debug.reportError = function (str) {
-  Spry.Debug.debugOut(str, "red");
+  Spry.Debug.debugOut(str, 'red');
 };
 
 /// ///////////////////////////////////////////////////////////////////
@@ -1004,10 +978,10 @@ Spry.Data.initRegions = function (rootNode) {
       // non-empty value. An id attribute is also required so we can
       // reference the region by name if necessary.
 
-      let attrName = "spry:region";
+      let attrName = 'spry:region';
       let attrValue = Spry.Utils.getAttribute(node, attrName);
       if (attrValue == undefined) {
-        attrName = "spry:detailregion";
+        attrName = 'spry:detailregion';
         attrValue = Spry.Utils.getAttribute(node, attrName);
       }
       if (attrValue) {
@@ -1017,8 +991,8 @@ Spry.Data.initRegions = function (rootNode) {
             if (parent == lastRegionFound) {
               Spry.Debug.reportError(
                 `Found a nested ${attrName} in the following markup. Nested regions are currently not supported.<br/><pre>${Spry.Utils.encodeEntities(
-                  parent.innerHTML
-                )}</pre>`
+                  parent.innerHTML,
+                )}</pre>`,
               );
               return false;
             }
@@ -1026,22 +1000,23 @@ Spry.Data.initRegions = function (rootNode) {
           }
         }
 
-        attrValue = node.getAttribute("id");
+        attrValue = node.getAttribute('id');
         if (!attrValue) {
           // The node is missing an id attribute so add one.
           node.setAttribute(
-            "id",
-            `spryregion${++Spry.Data.initRegions.nextUniqueRegionID}`
+            'id',
+            `spryregion${++Spry.Data.initRegions.nextUniqueRegionID}`,
           );
         }
 
         lastRegionFound = node;
         return true;
       }
-      if (attrValue == "")
+      if (attrValue == '') {
         Spry.Debug.reportError(
-          `${attrName} attributes require one or more data set names as values!`
+          `${attrName} attributes require one or more data set names as values!`,
         );
+      }
     } catch (e) {}
     return false;
   });
@@ -1057,19 +1032,19 @@ Spry.Data.initRegions = function (rootNode) {
     let isDetailRegion = false;
 
     // Get the region name.
-    name = rgn.getAttribute("id");
+    name = rgn.getAttribute('id');
 
-    let attrName = "spry:region";
+    let attrName = 'spry:region';
     let attrValue = Spry.Utils.getAttribute(rgn, attrName);
     if (attrValue == undefined) {
-      attrName = "spry:detailregion";
+      attrName = 'spry:detailregion';
       attrValue = Spry.Utils.getAttribute(rgn, attrName);
       isDetailRegion = true;
     }
 
     if (!attrValue) {
       Spry.Debug.reportError(
-        "spry:region and spry:detailregion attributes require one or more data set names as values!"
+        'spry:region and spry:detailregion attributes require one or more data set names as values!',
       );
       continue;
     }
@@ -1086,14 +1061,14 @@ Spry.Data.initRegions = function (rootNode) {
 
     if (!dataSets.length) {
       Spry.Debug.reportError(
-        "spry:region or spry:detailregion attribute has no data set!"
+        'spry:region or spry:detailregion attribute has no data set!',
       );
       continue;
     }
 
     var hasBehaviorAttributes = false;
     const hasSpryContent = false;
-    let dataStr = "";
+    let dataStr = '';
 
     const parent = null;
     var regionStates = {};
@@ -1102,13 +1077,13 @@ Spry.Data.initRegions = function (rootNode) {
     // Check if there are any attributes on the region node that remap
     // the default states.
 
-    attrValue = Spry.Utils.getAttribute(rgn, "spry:readystate");
+    attrValue = Spry.Utils.getAttribute(rgn, 'spry:readystate');
     if (attrValue) regionStateMap.ready = attrValue;
-    attrValue = Spry.Utils.getAttribute(rgn, "spry:errorstate");
+    attrValue = Spry.Utils.getAttribute(rgn, 'spry:errorstate');
     if (attrValue) regionStateMap.error = attrValue;
-    attrValue = Spry.Utils.getAttribute(rgn, "spry:loadingstate");
+    attrValue = Spry.Utils.getAttribute(rgn, 'spry:loadingstate');
     if (attrValue) regionStateMap.loading = attrValue;
-    attrValue = Spry.Utils.getAttribute(rgn, "spry:expiredstate");
+    attrValue = Spry.Utils.getAttribute(rgn, 'spry:expiredstate');
     if (attrValue) regionStateMap.expired = attrValue;
 
     // Find all of the processing instruction regions in the region.
@@ -1137,8 +1112,7 @@ Spry.Data.initRegions = function (rootNode) {
               const oComment = document.createComment(openTag);
               const cComment = document.createComment(closeTag);
 
-              if (!lastStartComment)
-                node.insertBefore(oComment, node.firstChild);
+              if (!lastStartComment) node.insertBefore(oComment, node.firstChild);
               else node.insertBefore(oComment, lastStartComment.nextSibling);
               lastStartComment = oComment;
 
@@ -1150,15 +1124,14 @@ Spry.Data.initRegions = function (rootNode) {
               parent.insertBefore(document.createComment(openTag), node);
               parent.insertBefore(
                 document.createComment(closeTag),
-                node.nextSibling
+                node.nextSibling,
               );
             }
 
             // If this is a spry:state processing instruction, record the state name
             // so we know that we should re-generate the region if we ever see that state.
 
-            if (piName == "spry:state" || piName == "sprystate")
-              regionStates[attrValue] = true;
+            if (piName == 'spry:state' || piName == 'sprystate') regionStates[attrValue] = true;
 
             Spry.Utils.removeAttribute(node, piName);
           }
@@ -1168,12 +1141,11 @@ Spry.Data.initRegions = function (rootNode) {
             for (const behaviorAttrName in bAttrs) {
               const bAttrValue = Spry.Utils.getAttribute(
                 node,
-                behaviorAttrName
+                behaviorAttrName,
               );
               if (bAttrValue != undefined) {
                 hasBehaviorAttributes = true;
-                if (bAttrs[behaviorAttrName].setup)
-                  bAttrs[behaviorAttrName].setup(node, bAttrValue);
+                if (bAttrs[behaviorAttrName].setup) bAttrs[behaviorAttrName].setup(node, bAttrValue);
               }
             }
           }
@@ -1192,15 +1164,15 @@ Spry.Data.initRegions = function (rootNode) {
     // fixUpIEInnerHTML to get around this problem.
 
     if (
-      window.ActiveXObject &&
-      !Spry.Data.Region.disableIEInnerHTMLFixUp &&
-      dataStr.search(/=\{/) != -1
+      window.ActiveXObject
+      && !Spry.Data.Region.disableIEInnerHTMLFixUp
+      && dataStr.search(/=\{/) != -1
     ) {
       if (Spry.Data.Region.debug) {
         Spry.Debug.trace(
           `<hr />Performing IE innerHTML fix up of Region: ${name}<br /><br />${Spry.Utils.encodeEntities(
-            dataStr
-          )}`
+            dataStr,
+          )}`,
         );
       }
 
@@ -1210,14 +1182,14 @@ Spry.Data.initRegions = function (rootNode) {
     if (Spry.Data.Region.debug) {
       Spry.Debug.trace(
         `<hr />Region template markup for '${name}':<br /><br />${Spry.Utils.encodeEntities(
-          dataStr
-        )}`
+          dataStr,
+        )}`,
       );
     }
 
     if (!hasSpryContent) {
       // Clear the region.
-      rgn.innerHTML = "";
+      rgn.innerHTML = '';
     }
 
     // Create a Spry.Data.Region object for this region.
@@ -1229,7 +1201,7 @@ Spry.Data.initRegions = function (rootNode) {
       dataSets,
       regionStates,
       regionStateMap,
-      hasBehaviorAttributes
+      hasBehaviorAttributes,
     );
     Spry.Data.regionsArray[region.name] = region;
     newRegions.push(region);
@@ -1242,17 +1214,16 @@ Spry.Data.initRegions.nextUniqueRegionID = 0;
 
 Spry.Data.updateRegion = function (regionName) {
   if (
-    !regionName ||
-    !Spry.Data.regionsArray ||
-    !Spry.Data.regionsArray[regionName]
-  )
-    return;
+    !regionName
+    || !Spry.Data.regionsArray
+    || !Spry.Data.regionsArray[regionName]
+  ) return;
 
   try {
     Spry.Data.regionsArray[regionName].updateContent();
   } catch (e) {
     Spry.Debug.reportError(
-      `Spry.Data.updateRegion(${regionName}) caught an exception: ${e}\n`
+      `Spry.Data.updateRegion(${regionName}) caught an exception: ${e}\n`,
     );
   }
 };
@@ -1264,8 +1235,7 @@ Spry.Data.getRegion = function (regionName) {
 Spry.Data.updateAllRegions = function () {
   if (!Spry.Data.regionsArray) return;
 
-  for (const regionName in Spry.Data.regionsArray)
-    Spry.Data.updateRegion(regionName);
+  for (const regionName in Spry.Data.regionsArray) Spry.Data.updateRegion(regionName);
 };
 
 Spry.Data.getDataSetByName = function (dataSetName) {
@@ -1279,7 +1249,7 @@ Spry.Data.getDataSetByName = function (dataSetName) {
   // object with at least 2 of the data set base functions defined.
 
   const ds = Spry.Utils.getObjectByName(dataSetName);
-  if (typeof ds !== "object" || !ds.getData || !ds.filter) return null;
+  if (typeof ds !== 'object' || !ds.getData || !ds.filter) return null;
   return ds;
 };
 
@@ -1292,7 +1262,7 @@ Spry.Data.getDataSetByName = function (dataSetName) {
 Spry.Data.DataSet = function (options) {
   Spry.Utils.Notifier.call(this);
 
-  this.name = "";
+  this.name = '';
   this.internalID = Spry.Data.DataSet.nextDataSetID++;
   this.curRowID = 0;
   this.data = [];
@@ -1305,14 +1275,14 @@ Spry.Data.DataSet = function (options) {
   this.distinctOnLoad = false;
   this.distinctFieldsOnLoad = null;
   this.sortOnLoad = null;
-  this.sortOrderOnLoad = "ascending";
+  this.sortOrderOnLoad = 'ascending';
   this.keepSorted = false;
 
   this.dataWasLoaded = false;
   this.pendingRequest = null;
 
   this.lastSortColumns = [];
-  this.lastSortOrder = "";
+  this.lastSortOrder = '';
 
   this.loadIntervalID = 0;
 
@@ -1348,34 +1318,33 @@ Spry.Data.DataSet.prototype.getValue = function (valueName, rowContext) {
   if (!rowContext) rowContext = this.getCurrentRow();
 
   switch (valueName) {
-    case "ds_RowNumber":
+    case 'ds_RowNumber':
       result = this.getRowNumber(rowContext);
       break;
-    case "ds_RowNumberPlus1":
+    case 'ds_RowNumberPlus1':
       result = this.getRowNumber(rowContext) + 1;
       break;
-    case "ds_RowCount":
+    case 'ds_RowCount':
       result = this.getRowCount();
       break;
-    case "ds_UnfilteredRowCount":
+    case 'ds_UnfilteredRowCount':
       result = this.getRowCount(true);
       break;
-    case "ds_CurrentRowNumber":
+    case 'ds_CurrentRowNumber':
       result = this.getCurrentRowNumber();
       break;
-    case "ds_CurrentRowID":
+    case 'ds_CurrentRowID':
       result = this.getCurrentRowID();
       break;
-    case "ds_EvenOddRow":
-      result =
-        this.getRowNumber(rowContext) % 2
-          ? Spry.Data.Region.evenRowClassName
-          : Spry.Data.Region.oddRowClassName;
+    case 'ds_EvenOddRow':
+      result = this.getRowNumber(rowContext) % 2
+        ? Spry.Data.Region.evenRowClassName
+        : Spry.Data.Region.oddRowClassName;
       break;
-    case "ds_SortOrder":
+    case 'ds_SortOrder':
       result = this.getSortOrder();
       break;
-    case "ds_SortColumn":
+    case 'ds_SortColumn':
       result = this.getSortColumn();
       break;
     default:
@@ -1389,7 +1358,7 @@ Spry.Data.DataSet.prototype.getValue = function (valueName, rowContext) {
 };
 
 Spry.Data.DataSet.prototype.setDataFromArray = function (arr, fireSyncLoad) {
-  this.notifyObservers("onPreLoad");
+  this.notifyObservers('onPreLoad');
 
   this.unfilteredData = null;
   this.filteredData = null;
@@ -1439,8 +1408,8 @@ Spry.Data.DataSet.prototype.loadData = function (syncLoad) {
     self.filterAndSortData();
     self.enableNotifications();
 
-    self.notifyObservers("onPostLoad");
-    self.notifyObservers("onDataChanged");
+    self.notifyObservers('onPostLoad');
+    self.notifyObservers('onDataChanged');
   };
 
   if (syncLoad) loadCallbackFunc();
@@ -1460,8 +1429,7 @@ Spry.Data.DataSet.prototype.filterAndSortData = function () {
   // If sortOnLoad was set, sort the data based on the columns
   // specified in sortOnLoad.
 
-  if (this.keepSorted && this.getSortColumn())
-    this.sort(this.lastSortColumns, this.lastSortOrder);
+  if (this.keepSorted && this.getSortColumn()) this.sort(this.lastSortColumns, this.lastSortOrder);
   else if (this.sortOnLoad) this.sort(this.sortOnLoad, this.sortOrderOnLoad);
 
   // If there is a view filter installed, run it.
@@ -1474,8 +1442,7 @@ Spry.Data.DataSet.prototype.filterAndSortData = function () {
 };
 
 Spry.Data.DataSet.prototype.cancelLoadData = function () {
-  if (this.pendingRequest && this.pendingRequest.timer)
-    clearTimeout(this.pendingRequest.timer);
+  if (this.pendingRequest && this.pendingRequest.timer) clearTimeout(this.pendingRequest.timer);
   this.pendingRequest = null;
 };
 
@@ -1491,7 +1458,7 @@ Spry.Data.DataSet.prototype.getRowByID = function (rowID) {
 
 Spry.Data.DataSet.prototype.getRowByRowNumber = function (
   rowNumber,
-  unfiltered
+  unfiltered,
 ) {
   const rows = this.getData(unfiltered);
   if (rows && rowNumber >= 0 && rowNumber < rows.length) return rows[rowNumber];
@@ -1507,7 +1474,7 @@ Spry.Data.DataSet.prototype.setCurrentRow = function (rowID) {
 
   const nData = { oldRowID: this.curRowID, newRowID: rowID };
   this.curRowID = rowID;
-  this.notifyObservers("onCurrentRowChanged", nData);
+  this.notifyObservers('onCurrentRowChanged', nData);
 };
 
 Spry.Data.DataSet.prototype.getRowNumber = function (row, unfiltered) {
@@ -1547,7 +1514,7 @@ Spry.Data.DataSet.prototype.setCurrentRowNumber = function (rowNumber) {
 Spry.Data.DataSet.prototype.findRowsWithColumnValues = function (
   valueObj,
   firstMatchOnly,
-  unfiltered
+  unfiltered,
 ) {
   const results = [];
   const rows = this.getData(unfiltered);
@@ -1576,15 +1543,14 @@ Spry.Data.DataSet.prototype.findRowsWithColumnValues = function (
 
 Spry.Data.DataSet.prototype.setColumnType = function (columnNames, columnType) {
   if (columnNames) {
-    if (typeof columnNames === "string") columnNames = [columnNames];
-    for (let i = 0; i < columnNames.length; i++)
-      this.columnTypes[columnNames[i]] = columnType;
+    if (typeof columnNames === 'string') columnNames = [columnNames];
+    for (let i = 0; i < columnNames.length; i++) this.columnTypes[columnNames[i]] = columnType;
   }
 };
 
 Spry.Data.DataSet.prototype.getColumnType = function (columnName) {
   if (this.columnTypes[columnName]) return this.columnTypes[columnName];
-  return "string";
+  return 'string';
 };
 
 Spry.Data.DataSet.prototype.applyColumnTypes = function () {
@@ -1596,13 +1562,13 @@ Spry.Data.DataSet.prototype.applyColumnTypes = function () {
 
   for (const cname in this.columnTypes) {
     const ctype = this.columnTypes[cname];
-    if (ctype != "string") {
+    if (ctype != 'string') {
       for (let i = 0; i < numRows; i++) {
         const row = rows[i];
         const val = row[cname];
         if (val != undefined) {
-          if (ctype == "number") row[cname] = new Number(val);
-          else if (ctype == "html") row[cname] = Spry.Utils.decodeEntities(val);
+          if (ctype == 'number') row[cname] = new Number(val);
+          else if (ctype == 'html') row[cname] = Spry.Utils.decodeEntities(val);
         }
       }
     }
@@ -1621,17 +1587,17 @@ Spry.Data.DataSet.prototype.distinct = function (columnNames) {
 
     let keys = [];
 
-    if (typeof columnNames === "string") keys = [columnNames];
+    if (typeof columnNames === 'string') keys = [columnNames];
     else if (columnNames) keys = columnNames;
     else for (var recField in oldData[0]) keys[i++] = recField;
 
     for (var i = 0; i < oldData.length; i++) {
       const rec = oldData[i];
-      let hashStr = "";
+      let hashStr = '';
       for (let j = 0; j < keys.length; j++) {
         recField = keys[j];
-        if (recField != "ds_RowID") {
-          if (hashStr) hashStr += ",";
+        if (recField != 'ds_RowID') {
+          if (hashStr) hashStr += ',';
           hashStr += `${recField}:` + `"${rec[recField]}"`;
         }
       }
@@ -1641,18 +1607,18 @@ Spry.Data.DataSet.prototype.distinct = function (columnNames) {
         alreadySeenHash[hashStr] = true;
       } else dataChanged = true;
     }
-    if (dataChanged) this.notifyObservers("onDataChanged");
+    if (dataChanged) this.notifyObservers('onDataChanged');
   }
 };
 
 Spry.Data.DataSet.prototype.getSortColumn = function () {
   return this.lastSortColumns && this.lastSortColumns.length > 0
     ? this.lastSortColumns[0]
-    : "";
+    : '';
 };
 
 Spry.Data.DataSet.prototype.getSortOrder = function () {
-  return this.lastSortOrder ? this.lastSortOrder : "";
+  return this.lastSortOrder ? this.lastSortOrder : '';
 };
 
 Spry.Data.DataSet.prototype.sort = function (columnNames, sortOrder) {
@@ -1665,23 +1631,21 @@ Spry.Data.DataSet.prototype.sort = function (columnNames, sortOrder) {
   // If only one column name was specified for sorting, do a
   // secondary sort on ds_RowID so we get a stable sort order.
 
-  if (typeof columnNames === "string") columnNames = [columnNames, "ds_RowID"];
-  else if (columnNames.length < 2 && columnNames[0] != "ds_RowID")
-    columnNames.push("ds_RowID");
+  if (typeof columnNames === 'string') columnNames = [columnNames, 'ds_RowID'];
+  else if (columnNames.length < 2 && columnNames[0] != 'ds_RowID') columnNames.push('ds_RowID');
 
-  if (!sortOrder) sortOrder = "toggle";
+  if (!sortOrder) sortOrder = 'toggle';
 
-  if (sortOrder == "toggle") {
+  if (sortOrder == 'toggle') {
     if (
-      this.lastSortColumns.length > 0 &&
-      this.lastSortColumns[0] == columnNames[0] &&
-      this.lastSortOrder == "ascending"
-    )
-      sortOrder = "descending";
-    else sortOrder = "ascending";
+      this.lastSortColumns.length > 0
+      && this.lastSortColumns[0] == columnNames[0]
+      && this.lastSortOrder == 'ascending'
+    ) sortOrder = 'descending';
+    else sortOrder = 'ascending';
   }
 
-  if (sortOrder != "ascending" && sortOrder != "descending") {
+  if (sortOrder != 'ascending' && sortOrder != 'descending') {
     Spry.Debug.reportError(`Invalid sort order type specified: ${sortOrder}\n`);
     return;
   }
@@ -1692,13 +1656,13 @@ Spry.Data.DataSet.prototype.sort = function (columnNames, sortOrder) {
     newSortColumns: columnNames,
     newSortOrder: sortOrder,
   };
-  this.notifyObservers("onPreSort", nData);
+  this.notifyObservers('onPreSort', nData);
 
   let cname = columnNames[columnNames.length - 1];
   let sortfunc = Spry.Data.DataSet.prototype.sort.getSortFunc(
     cname,
     this.getColumnType(cname),
-    sortOrder
+    sortOrder,
   );
 
   for (let i = columnNames.length - 2; i >= 0; i--) {
@@ -1707,9 +1671,9 @@ Spry.Data.DataSet.prototype.sort = function (columnNames, sortOrder) {
       Spry.Data.DataSet.prototype.sort.getSortFunc(
         cname,
         this.getColumnType(cname),
-        sortOrder
+        sortOrder,
       ),
-      sortfunc
+      sortfunc,
     );
   }
 
@@ -1721,13 +1685,13 @@ Spry.Data.DataSet.prototype.sort = function (columnNames, sortOrder) {
   this.lastSortColumns = columnNames.slice(0); // Copy the array.
   this.lastSortOrder = sortOrder;
 
-  this.notifyObservers("onPostSort", nData);
+  this.notifyObservers('onPostSort', nData);
 };
 
 Spry.Data.DataSet.prototype.sort.getSortFunc = function (prop, type, order) {
   let sortfunc = null;
-  if (type == "number") {
-    if (order == "ascending") {
+  if (type == 'number') {
+    if (order == 'ascending') {
       sortfunc = function (a, b) {
         a = a[prop];
         b = b[prop];
@@ -1744,8 +1708,8 @@ Spry.Data.DataSet.prototype.sort.getSortFunc = function (prop, type, order) {
         return b - a;
       };
     }
-  } else if (type == "date") {
-    if (order == "ascending") {
+  } else if (type == 'date') {
+    if (order == 'ascending') {
       sortfunc = function (a, b) {
         let dA = a[prop];
         let dB = b[prop];
@@ -1765,7 +1729,7 @@ Spry.Data.DataSet.prototype.sort.getSortFunc = function (prop, type, order) {
       };
     }
   } // type == "string" || type == "html"
-  else if (order == "ascending") {
+  else if (order == 'ascending') {
     sortfunc = function (a, b) {
       a = a[prop];
       b = b[prop];
@@ -1823,7 +1787,7 @@ Spry.Data.DataSet.prototype.sort.getSortFunc = function (prop, type, order) {
 
 Spry.Data.DataSet.prototype.sort.buildSecondarySortFunc = function (
   funcA,
-  funcB
+  funcB,
 ) {
   return function (a, b) {
     let ret = funcA(a, b);
@@ -1846,9 +1810,9 @@ Spry.Data.DataSet.prototype.filterData = function (filterFunc, filterOnly) {
     this.filterDataFunc = filterFunc;
 
     if (
-      this.dataWasLoaded &&
-      ((this.unfilteredData && this.unfilteredData.length) ||
-        (this.data && this.data.length))
+      this.dataWasLoaded
+      && ((this.unfilteredData && this.unfilteredData.length)
+        || (this.data && this.data.length))
     ) {
       if (this.unfilteredData) {
         this.data = this.unfilteredData;
@@ -1878,7 +1842,7 @@ Spry.Data.DataSet.prototype.filterData = function (filterFunc, filterOnly) {
       this.enableNotifications();
     }
 
-    this.notifyObservers("onDataChanged");
+    this.notifyObservers('onDataChanged');
   }
 };
 
@@ -1901,8 +1865,8 @@ Spry.Data.DataSet.prototype.filter = function (filterFunc, filterOnly) {
     this.filterFunc = filterFunc;
 
     if (
-      this.dataWasLoaded &&
-      (this.unfilteredData || (this.data && this.data.length))
+      this.dataWasLoaded
+      && (this.unfilteredData || (this.data && this.data.length))
     ) {
       if (!this.unfilteredData) this.unfilteredData = this.data;
 
@@ -1919,7 +1883,7 @@ Spry.Data.DataSet.prototype.filter = function (filterFunc, filterOnly) {
     }
   }
 
-  if (dataChanged) this.notifyObservers("onDataChanged");
+  if (dataChanged) this.notifyObservers('onDataChanged');
 };
 
 Spry.Data.DataSet.prototype.startLoadInterval = function (interval) {
@@ -1976,7 +1940,7 @@ Spry.Data.HTTPSourceDataSet.prototype.constructor = Spry.Data.HTTPSourceDataSet;
 
 Spry.Data.HTTPSourceDataSet.prototype.setRequestInfo = function (
   requestInfo,
-  undefineRequestProps
+  undefineRequestProps,
 ) {
   // Create a loadURL request object to store any load options
   // the caller specified. We'll fill in the URL at the last minute
@@ -1990,71 +1954,67 @@ Spry.Data.HTTPSourceDataSet.prototype.setRequestInfo = function (
   // If the caller wants to use "POST" to fetch the data, but didn't
   // provide the content type, default to x-www-form-urlencoded.
 
-  if (this.requestInfo.method == "POST") {
+  if (this.requestInfo.method == 'POST') {
     if (!this.requestInfo.headers) this.requestInfo.headers = {};
-    if (!this.requestInfo.headers["Content-Type"])
-      this.requestInfo.headers["Content-Type"] =
-        "application/x-www-form-urlencoded; charset=UTF-8";
+    if (!this.requestInfo.headers['Content-Type']) this.requestInfo.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
   }
 };
 
-Spry.Data.HTTPSourceDataSet.prototype.recalculateDataSetDependencies =
-  function () {
-    this.hasDataRefStrings = false;
+Spry.Data.HTTPSourceDataSet.prototype.recalculateDataSetDependencies = function () {
+  this.hasDataRefStrings = false;
 
-    // Clear all old callbacks that may have been registered.
+  // Clear all old callbacks that may have been registered.
 
-    let i = 0;
-    for (i = 0; i < this.dataSetsForDataRefStrings.length; i++) {
-      var ds = this.dataSetsForDataRefStrings[i];
-      if (ds) ds.removeObserver(this);
-    }
+  let i = 0;
+  for (i = 0; i < this.dataSetsForDataRefStrings.length; i++) {
+    var ds = this.dataSetsForDataRefStrings[i];
+    if (ds) ds.removeObserver(this);
+  }
 
-    // Now run through the strings that may contain data references and figure
-    // out what data sets they require. Note that the data references in these
-    // strings must be fully qualified with a data set name. (ex: {dsDataSetName::columnName})
+  // Now run through the strings that may contain data references and figure
+  // out what data sets they require. Note that the data references in these
+  // strings must be fully qualified with a data set name. (ex: {dsDataSetName::columnName})
 
-    this.dataSetsForDataRefStrings = new Array();
+  this.dataSetsForDataRefStrings = new Array();
 
-    const regionStrs = this.getDataRefStrings();
+  const regionStrs = this.getDataRefStrings();
 
-    let dsCount = 0;
+  let dsCount = 0;
 
-    for (let n = 0; n < regionStrs.length; n++) {
-      const tokens = Spry.Data.Region.getTokensFromStr(regionStrs[n]);
+  for (let n = 0; n < regionStrs.length; n++) {
+    const tokens = Spry.Data.Region.getTokensFromStr(regionStrs[n]);
 
-      for (i = 0; tokens && i < tokens.length; i++) {
-        if (tokens[i].search(/{[^}:]+::[^}]+}/) != -1) {
-          const dsName = tokens[i].replace(/^\{|::.*\}/g, "");
-          var ds = null;
-          if (!this.dataSetsForDataRefStrings[dsName]) {
-            ds = Spry.Data.getDataSetByName(dsName);
-            if (dsName && ds) {
-              // The dataSetsForDataRefStrings array serves as both an
-              // array of data sets and a hash lookup by name.
+    for (i = 0; tokens && i < tokens.length; i++) {
+      if (tokens[i].search(/{[^}:]+::[^}]+}/) != -1) {
+        const dsName = tokens[i].replace(/^\{|::.*\}/g, '');
+        var ds = null;
+        if (!this.dataSetsForDataRefStrings[dsName]) {
+          ds = Spry.Data.getDataSetByName(dsName);
+          if (dsName && ds) {
+            // The dataSetsForDataRefStrings array serves as both an
+            // array of data sets and a hash lookup by name.
 
-              this.dataSetsForDataRefStrings[dsName] = ds;
-              this.dataSetsForDataRefStrings[dsCount++] = ds;
-              this.hasDataRefStrings = true;
-            }
+            this.dataSetsForDataRefStrings[dsName] = ds;
+            this.dataSetsForDataRefStrings[dsCount++] = ds;
+            this.hasDataRefStrings = true;
           }
         }
       }
     }
+  }
 
-    // Set up observers on any data sets our URL depends on.
+  // Set up observers on any data sets our URL depends on.
 
-    for (i = 0; i < this.dataSetsForDataRefStrings.length; i++) {
-      var ds = this.dataSetsForDataRefStrings[i];
-      ds.addObserver(this);
-    }
-  };
+  for (i = 0; i < this.dataSetsForDataRefStrings.length; i++) {
+    var ds = this.dataSetsForDataRefStrings[i];
+    ds.addObserver(this);
+  }
+};
 
 Spry.Data.HTTPSourceDataSet.prototype.getDataRefStrings = function () {
   const strArr = [];
   if (this.url) strArr.push(this.url);
-  if (this.requestInfo && this.requestInfo.postData)
-    strArr.push(this.requestInfo.postData);
+  if (this.requestInfo && this.requestInfo.postData) strArr.push(this.requestInfo.postData);
   return strArr;
 };
 
@@ -2070,7 +2030,7 @@ Spry.Data.HTTPSourceDataSet.prototype.attemptLoadData = function () {
 
 Spry.Data.HTTPSourceDataSet.prototype.onCurrentRowChanged = function (
   ds,
-  data
+  data,
 ) {
   this.attemptLoadData();
 };
@@ -2113,20 +2073,20 @@ Spry.Data.HTTPSourceDataSet.prototype.loadData = function () {
     url = Spry.Data.Region.processDataRefString(
       null,
       this.url,
-      this.dataSetsForDataRefStrings
+      this.dataSetsForDataRefStrings,
     );
     if (!url) return;
 
-    if (postData && typeof postData === "string") {
+    if (postData && typeof postData === 'string') {
       postData = Spry.Data.Region.processDataRefString(
         null,
         postData,
-        this.dataSetsForDataRefStrings
+        this.dataSetsForDataRefStrings,
       );
     }
   }
 
-  this.notifyObservers("onPreLoad");
+  this.notifyObservers('onPreLoad');
 
   this.data = null;
   this.dataWasLoaded = false;
@@ -2146,7 +2106,7 @@ Spry.Data.HTTPSourceDataSet.prototype.loadData = function () {
   this.pendingRequest.data = Spry.Data.HTTPSourceDataSet.LoadManager.loadData(
     req,
     this,
-    this.useCache
+    this.useCache,
   );
 };
 
@@ -2154,7 +2114,7 @@ Spry.Data.HTTPSourceDataSet.prototype.cancelLoadData = function () {
   if (this.pendingRequest) {
     Spry.Data.HTTPSourceDataSet.LoadManager.cancelLoadData(
       this.pendingRequest.data,
-      this
+      this,
     );
     this.pendingRequest = null;
   }
@@ -2171,12 +2131,11 @@ Spry.Data.HTTPSourceDataSet.prototype.setURL = function (url, requestOptions) {
     // difference, we need to process the new URL.
 
     if (
-      !requestOptions ||
-      (this.requestInfo.method == requestOptions.method &&
-        (requestOptions.method != "POST" ||
-          this.requestInfo.postData == requestOptions.postData))
-    )
-      return;
+      !requestOptions
+      || (this.requestInfo.method == requestOptions.method
+        && (requestOptions.method != 'POST'
+          || this.requestInfo.postData == requestOptions.postData))
+    ) return;
   }
 
   this.url = url;
@@ -2198,12 +2157,12 @@ Spry.Data.HTTPSourceDataSet.prototype.setDataFromDoc = function (rawDataDoc) {
   this.filterAndSortData();
   this.enableNotifications();
 
-  this.notifyObservers("onPostLoad");
-  this.notifyObservers("onDataChanged");
+  this.notifyObservers('onPostLoad');
+  this.notifyObservers('onDataChanged');
 };
 
 Spry.Data.HTTPSourceDataSet.prototype.loadDataIntoDataSet = function (
-  rawDataDoc
+  rawDataDoc,
 ) {
   // this method needs to be overwritten by the descendent classes;
   // internal data structures (data & dataHash) have to load data from the source document (ResponseText | ResponseDoc);
@@ -2214,7 +2173,7 @@ Spry.Data.HTTPSourceDataSet.prototype.loadDataIntoDataSet = function (
 };
 
 Spry.Data.HTTPSourceDataSet.prototype.xhRequestProcessor = function (
-  xhRequest
+  xhRequest,
 ) {
   // This method needs to be overwritten by the descendent classes if other objects (like responseXML)
   // are going to be used as a data source
@@ -2227,36 +2186,36 @@ Spry.Data.HTTPSourceDataSet.prototype.xhRequestProcessor = function (
 };
 
 Spry.Data.HTTPSourceDataSet.prototype.sessionExpiredChecker = function (req) {
-  if (req.xhRequest.responseText == "session expired") return true;
+  if (req.xhRequest.responseText == 'session expired') return true;
   return false;
 };
 
 Spry.Data.HTTPSourceDataSet.prototype.setSessionExpiredChecker = function (
-  checker
+  checker,
 ) {
   this.sessionExpiredChecker = checker;
 };
 
 Spry.Data.HTTPSourceDataSet.prototype.onRequestResponse = function (
   cachedRequest,
-  req
+  req,
 ) {
   this.setDataFromDoc(cachedRequest.rawData);
 };
 
 Spry.Data.HTTPSourceDataSet.prototype.onRequestError = function (
   cachedRequest,
-  req
+  req,
 ) {
-  this.notifyObservers("onLoadError", req);
+  this.notifyObservers('onLoadError', req);
   // Spry.Debug.reportError("Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.loadDataCallback(" + req.xhRequest.status + ") failed to load: " + req.url + "\n");
 };
 
 Spry.Data.HTTPSourceDataSet.prototype.onRequestSessionExpired = function (
   cachedRequest,
-  req
+  req,
 ) {
-  this.notifyObservers("onSessionExpired", req);
+  this.notifyObservers('onSessionExpired', req);
   // Spry.Debug.reportError("Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.loadDataCallback(" + req.xhRequest.status + ") failed to load: " + req.url + "\n");
 };
 
@@ -2266,7 +2225,7 @@ Spry.Data.HTTPSourceDataSet.LoadManager.cache = [];
 Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest = function (
   reqInfo,
   xhRequestProcessor,
-  sessionExpiredChecker
+  sessionExpiredChecker,
 ) {
   Spry.Utils.Notifier.call(this);
 
@@ -2278,104 +2237,93 @@ Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest = function (
   this.sessionExpiredChecker = sessionExpiredChecker;
 };
 
-Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.prototype =
-  new Spry.Utils.Notifier();
-Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.prototype.constructor =
-  Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest;
+Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.prototype = new Spry.Utils.Notifier();
+Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.prototype.constructor = Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest;
 
 Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.NOT_LOADED = 1;
 Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.LOAD_REQUESTED = 2;
 Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.LOAD_FAILED = 3;
 Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.LOAD_SUCCESSFUL = 4;
 
-Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.prototype.loadDataCallback =
-  function (req) {
-    if (req.xhRequest.readyState != 4) return;
+Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.prototype.loadDataCallback = function (req) {
+  if (req.xhRequest.readyState != 4) return;
 
-    let rawData = null;
-    if (this.xhRequestProcessor)
-      rawData = this.xhRequestProcessor(req.xhRequest);
+  let rawData = null;
+  if (this.xhRequestProcessor) rawData = this.xhRequestProcessor(req.xhRequest);
 
-    if (this.sessionExpiredChecker) {
-      Spry.Utils.setOptions(req, { rawData }, false);
-      if (this.sessionExpiredChecker(req)) {
-        this.state =
-          Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.LOAD_FAILED;
-        this.notifyObservers("onRequestSessionExpired", req);
-        this.observers.length = 0;
-        return;
-      }
-    }
-
-    if (!rawData) {
-      this.state =
-        Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.LOAD_FAILED;
-      this.notifyObservers("onRequestError", req);
-      this.observers.length = 0; // Clear the observers list.
+  if (this.sessionExpiredChecker) {
+    Spry.Utils.setOptions(req, { rawData }, false);
+    if (this.sessionExpiredChecker(req)) {
+      this.state = Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.LOAD_FAILED;
+      this.notifyObservers('onRequestSessionExpired', req);
+      this.observers.length = 0;
       return;
     }
+  }
 
-    this.rawData = rawData;
-    this.state =
-      Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.LOAD_SUCCESSFUL;
+  if (!rawData) {
+    this.state = Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.LOAD_FAILED;
+    this.notifyObservers('onRequestError', req);
+    this.observers.length = 0; // Clear the observers list.
+    return;
+  }
 
-    // Notify all of the cached request's observers!
-    this.notifyObservers("onRequestResponse", req);
+  this.rawData = rawData;
+  this.state = Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.LOAD_SUCCESSFUL;
 
-    // Clear the observers list.
-    this.observers.length = 0;
+  // Notify all of the cached request's observers!
+  this.notifyObservers('onRequestResponse', req);
+
+  // Clear the observers list.
+  this.observers.length = 0;
+};
+
+Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.prototype.loadData = function () {
+  // IE will synchronously fire our loadDataCallback() during the call
+  // to an async Spry.Utils.loadURL() if the data for the url is already
+  // in the browser's local cache. This can wreak havoc with complicated master/detail
+  // regions that use data sets that have master/detail relationships with other
+  // data sets. Our data set logic already handles async data loading nicely so we
+  // use a timer to fire off the async Spry.Utils.loadURL() call to insure that any
+  // data loading happens asynchronously after this function is finished.
+
+  const self = this;
+  this.cancelLoadData();
+  this.rawData = null;
+  this.state = Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.LOAD_REQUESTED;
+
+  const reqInfo = this.reqInfo.clone();
+  reqInfo.successCallback = function (req) {
+    self.loadDataCallback(req);
   };
+  reqInfo.errorCallback = reqInfo.successCallback;
 
-Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.prototype.loadData =
-  function () {
-    // IE will synchronously fire our loadDataCallback() during the call
-    // to an async Spry.Utils.loadURL() if the data for the url is already
-    // in the browser's local cache. This can wreak havoc with complicated master/detail
-    // regions that use data sets that have master/detail relationships with other
-    // data sets. Our data set logic already handles async data loading nicely so we
-    // use a timer to fire off the async Spry.Utils.loadURL() call to insure that any
-    // data loading happens asynchronously after this function is finished.
+  this.timer = setTimeout(() => {
+    self.timer = null;
+    Spry.Utils.loadURL(
+      reqInfo.method,
+      reqInfo.url,
+      reqInfo.async,
+      reqInfo.successCallback,
+      reqInfo,
+    );
+  }, 0);
+};
 
-    const self = this;
-    this.cancelLoadData();
-    this.rawData = null;
-    this.state =
-      Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.LOAD_REQUESTED;
-
-    const reqInfo = this.reqInfo.clone();
-    reqInfo.successCallback = function (req) {
-      self.loadDataCallback(req);
-    };
-    reqInfo.errorCallback = reqInfo.successCallback;
-
-    this.timer = setTimeout(() => {
-      self.timer = null;
-      Spry.Utils.loadURL(
-        reqInfo.method,
-        reqInfo.url,
-        reqInfo.async,
-        reqInfo.successCallback,
-        reqInfo
-      );
-    }, 0);
-  };
-
-Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.prototype.cancelLoadData =
-  function () {
-    if (
-      this.state ==
-      Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.LOAD_REQUESTED
-    ) {
-      if (this.timer) {
-        this.timer.clearTimeout();
-        this.timer = null;
-      }
-
-      this.rawData = null;
-      this.state =
-        Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.NOT_LOADED;
+Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.prototype.cancelLoadData = function () {
+  if (
+    this.state
+      == Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.LOAD_REQUESTED
+  ) {
+    if (this.timer) {
+      this.timer.clearTimeout();
+      this.timer = null;
     }
-  };
+
+    this.rawData = null;
+    this.state = Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.NOT_LOADED;
+  }
+};
 
 Spry.Data.HTTPSourceDataSet.LoadManager.getCacheKey = function (reqInfo) {
   return `${reqInfo.method}::${reqInfo.url}::${reqInfo.postData}::${reqInfo.username}`;
@@ -2384,7 +2332,7 @@ Spry.Data.HTTPSourceDataSet.LoadManager.getCacheKey = function (reqInfo) {
 Spry.Data.HTTPSourceDataSet.LoadManager.loadData = function (
   reqInfo,
   ds,
-  useCache
+  useCache,
 ) {
   if (!reqInfo) return null;
 
@@ -2398,15 +2346,15 @@ Spry.Data.HTTPSourceDataSet.LoadManager.loadData = function (
 
   if (cacheObj) {
     if (
-      cacheObj.state ==
-      Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.LOAD_REQUESTED
+      cacheObj.state
+      == Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.LOAD_REQUESTED
     ) {
       if (ds) cacheObj.addObserver(ds);
       return cacheObj;
     }
     if (
-      cacheObj.state ==
-      Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.LOAD_SUCCESSFUL
+      cacheObj.state
+      == Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest.LOAD_SUCCESSFUL
     ) {
       // Data is already cached so if we have a data set, trigger an async call
       // that tells it to load its data.
@@ -2426,7 +2374,7 @@ Spry.Data.HTTPSourceDataSet.LoadManager.loadData = function (
     cacheObj = new Spry.Data.HTTPSourceDataSet.LoadManager.CachedRequest(
       reqInfo,
       ds ? ds.xhRequestProcessor : null,
-      ds ? ds.sessionExpiredChecker : null
+      ds ? ds.sessionExpiredChecker : null,
     );
 
     if (useCache) {
@@ -2451,7 +2399,7 @@ Spry.Data.HTTPSourceDataSet.LoadManager.loadData = function (
 
 Spry.Data.HTTPSourceDataSet.LoadManager.cancelLoadData = function (
   cacheObj,
-  ds
+  ds,
 ) {
   if (cacheObj) {
     if (ds) cacheObj.removeObserver(ds);
@@ -2482,10 +2430,9 @@ Spry.Data.XMLDataSet = function (dataSetURL, dataSetPath, dataSetOptions) {
 
   const jwType = typeof this.subPaths;
   if (
-    jwType == "string" ||
-    (jwType == "object" && this.subPaths.constructor != Array)
-  )
-    this.subPaths = [this.subPaths];
+    jwType == 'string'
+    || (jwType == 'object' && this.subPaths.constructor != Array)
+  ) this.subPaths = [this.subPaths];
 }; // End of Spry.Data.XMLDataSet() constructor.
 
 Spry.Data.XMLDataSet.prototype = new Spry.Data.HTTPSourceDataSet();
@@ -2495,8 +2442,7 @@ Spry.Data.XMLDataSet.prototype.getDataRefStrings = function () {
   const strArr = [];
   if (this.url) strArr.push(this.url);
   if (this.xpath) strArr.push(this.xpath);
-  if (this.requestInfo && this.requestInfo.postData)
-    strArr.push(this.requestInfo.postData);
+  if (this.requestInfo && this.requestInfo.postData) strArr.push(this.requestInfo.postData);
   return strArr;
 };
 
@@ -2510,7 +2456,7 @@ Spry.Data.XMLDataSet.prototype.setXPath = function (path) {
   if (this.xpath != path) {
     this.xpath = path;
     if (this.dataWasLoaded && this.doc) {
-      this.notifyObservers("onPreLoad");
+      this.notifyObservers('onPreLoad');
       this.setDataFromDoc(this.doc);
     }
   }
@@ -2530,7 +2476,7 @@ Spry.Data.XMLDataSet.nodeContainsElementNode = function (node) {
 };
 
 Spry.Data.XMLDataSet.getNodeText = function (node, encodeText, encodeCData) {
-  let txt = "";
+  let txt = '';
 
   if (!node) return;
 
@@ -2550,7 +2496,7 @@ Spry.Data.XMLDataSet.getNodeText = function (node, encodeText, encodeCData) {
         }
       } catch (e) {
         Spry.Debug.reportError(
-          `Spry.Data.XMLDataSet.getNodeText() exception caught: ${e}\n`
+          `Spry.Data.XMLDataSet.getNodeText() exception caught: ${e}\n`,
         );
       }
 
@@ -2558,7 +2504,7 @@ Spry.Data.XMLDataSet.getNodeText = function (node, encodeText, encodeCData) {
     }
   } catch (e) {
     Spry.Debug.reportError(
-      `Spry.Data.XMLDataSet.getNodeText() exception caught: ${e}\n`
+      `Spry.Data.XMLDataSet.getNodeText() exception caught: ${e}\n`,
     );
   }
 
@@ -2568,7 +2514,7 @@ Spry.Data.XMLDataSet.getNodeText = function (node, encodeText, encodeCData) {
 Spry.Data.XMLDataSet.createObjectForNode = function (
   node,
   encodeText,
-  encodeCData
+  encodeCData,
 ) {
   if (!node) return null;
 
@@ -2579,21 +2525,20 @@ Spry.Data.XMLDataSet.createObjectForNode = function (
   try {
     for (i = 0; i < node.attributes.length; i++) {
       attr = node.attributes[i];
-      if (attr && attr.nodeType == 2 /* Node.ATTRIBUTE_NODE */)
-        obj[`@${attr.name}`] = attr.value;
+      if (attr && attr.nodeType == 2 /* Node.ATTRIBUTE_NODE */) obj[`@${attr.name}`] = attr.value;
     }
   } catch (e) {
     Spry.Debug.reportError(
-      `Spry.Data.XMLDataSet.createObjectForNode() caught exception while accessing attributes: ${e}\n`
+      `Spry.Data.XMLDataSet.createObjectForNode() caught exception while accessing attributes: ${e}\n`,
     );
   }
 
   let child = node.firstChild;
 
   if (
-    child &&
-    !child.nextSibling &&
-    child.nodeType != 1 /* Node.ELEMENT_NODE */
+    child
+    && !child.nextSibling
+    && child.nodeType != 1 /* Node.ELEMENT_NODE */
   ) {
     // We have a single child and it's not an element. It must
     // be the text value for this node. Add it to the record set and
@@ -2602,7 +2547,7 @@ Spry.Data.XMLDataSet.createObjectForNode = function (
     obj[node.nodeName] = Spry.Data.XMLDataSet.getNodeText(
       node,
       encodeText,
-      encodeCData
+      encodeCData,
     );
   }
 
@@ -2616,7 +2561,7 @@ Spry.Data.XMLDataSet.createObjectForNode = function (
         obj[child.nodeName] = Spry.Data.XMLDataSet.getNodeText(
           child,
           encodeText,
-          encodeCData
+          encodeCData,
         );
 
         // Now add properties for any attributes on the child. The property
@@ -2626,12 +2571,11 @@ Spry.Data.XMLDataSet.createObjectForNode = function (
 
           for (i = 0; i < child.attributes.length; i++) {
             attr = child.attributes[i];
-            if (attr && attr.nodeType == 2 /* Node.ATTRIBUTE_NODE */)
-              obj[namePrefix + attr.name] = attr.value;
+            if (attr && attr.nodeType == 2 /* Node.ATTRIBUTE_NODE */) obj[namePrefix + attr.name] = attr.value;
           }
         } catch (e) {
           Spry.Debug.reportError(
-            `Spry.Data.XMLDataSet.createObjectForNode() caught exception while accessing attributes: ${e}\n`
+            `Spry.Data.XMLDataSet.createObjectForNode() caught exception while accessing attributes: ${e}\n`,
           );
         }
       }
@@ -2647,7 +2591,7 @@ Spry.Data.XMLDataSet.getRecordSetFromXMLDoc = function (
   xmlDoc,
   path,
   suppressColumns,
-  entityEncodeStrings
+  entityEncodeStrings,
 ) {
   if (!xmlDoc || !path) return null;
 
@@ -2676,15 +2620,13 @@ Spry.Data.XMLDataSet.getRecordSetFromXMLDoc = function (
 
   let isDOMNodeArray = true;
 
-  if (nodeArray && nodeArray.length > 0)
-    isDOMNodeArray = nodeArray[0].nodeType != 2;
+  if (nodeArray && nodeArray.length > 0) isDOMNodeArray = nodeArray[0].nodeType != 2;
 
   let nextID = 0;
 
   let encodeText = true;
   let encodeCData = false;
-  if (typeof entityEncodeStrings === "boolean")
-    encodeText = encodeCData = entityEncodeStrings;
+  if (typeof entityEncodeStrings === 'boolean') encodeText = encodeCData = entityEncodeStrings;
 
   // We now have the set of nodes that make up our data set
   // so process each one.
@@ -2697,7 +2639,7 @@ Spry.Data.XMLDataSet.getRecordSetFromXMLDoc = function (
       rowObj = Spry.Data.XMLDataSet.createObjectForNode(
         nodeArray[i],
         encodeText,
-        encodeCData
+        encodeCData,
       );
     }
     // Must be a Node.ATTRIBUTE_NODE array.
@@ -2725,7 +2667,7 @@ Spry.Data.XMLDataSet.getRecordSetFromXMLDoc = function (
 Spry.Data.XMLDataSet.PathNode = function (path) {
   this.path = path;
   this.subPaths = [];
-  this.xpath = "";
+  this.xpath = '';
 };
 
 Spry.Data.XMLDataSet.PathNode.prototype.addSubPath = function (path) {
@@ -2756,7 +2698,7 @@ Spry.Data.XMLDataSet.PathNode.prototype.consolidate = function () {
   if (!this.xpath && numSubPaths == 1) {
     // Consolidate!
     const subPath = this.subPaths[0];
-    this.path += (subPath[0] != "/" ? "/" : "") + subPath.path;
+    this.path += (subPath[0] != '/' ? '/' : '') + subPath.path;
     this.xpath = subPath.xpath;
     this.subPaths = subPath.subPaths;
     this.consolidate();
@@ -2793,7 +2735,7 @@ Spry.Data.XMLDataSet.PathNode.prototype.dump = function(indentStr)
 
 Spry.Data.XMLDataSet.prototype.convertXPathsToPathTree = function (xpathArray) {
   const xpaLen = xpathArray.length;
-  const root = new Spry.Data.XMLDataSet.PathNode("");
+  const root = new Spry.Data.XMLDataSet.PathNode('');
 
   for (let i = 0; i < xpaLen; i++) {
     // Convert any "//" in the XPath to our placeholder value.
@@ -2801,8 +2743,8 @@ Spry.Data.XMLDataSet.prototype.convertXPathsToPathTree = function (xpathArray) {
     // path into components.
 
     const xpath = xpathArray[i];
-    let cleanXPath = xpath.replace(/\/\//g, "/__SPRYDS__");
-    cleanXPath = cleanXPath.replace(/^\//, ""); // Strip any leading slash.
+    let cleanXPath = xpath.replace(/\/\//g, '/__SPRYDS__');
+    cleanXPath = cleanXPath.replace(/^\//, ''); // Strip any leading slash.
     const pathItems = cleanXPath.split(/\//);
     const pathItemsLen = pathItems.length;
 
@@ -2813,7 +2755,7 @@ Spry.Data.XMLDataSet.prototype.convertXPathsToPathTree = function (xpathArray) {
       // If this path component has a placeholder in it, convert it
       // back to a double slash.
 
-      const path = pathItems[j].replace(/__SPRYDS__/, "//");
+      const path = pathItems[j].replace(/__SPRYDS__/, '//');
       node = node.addSubPath(path);
     }
 
@@ -2854,21 +2796,21 @@ Spry.Data.XMLDataSet.prototype.flattenSubPaths = function (rs, subPaths) {
     // it, so make sure we properly extract out the XPath to use.
 
     let subPath = subPaths[i];
-    if (typeof subPath === "object") subPath = subPath.path;
-    if (!subPath) subPath = "";
+    if (typeof subPath === 'object') subPath = subPath.path;
+    if (!subPath) subPath = '';
 
     // Convert any data references in the XPath to real values!
 
     xpathArray[i] = Spry.Data.Region.processDataRefString(
       null,
       subPath,
-      this.dataSetsForDataRefStrings
+      this.dataSetsForDataRefStrings,
     );
 
     // Create a clean version of the XPath by stripping out any
     // expressions it may contain.
 
-    cleanedXPathArray[i] = xpathArray[i].replace(/\[.*\]/g, "");
+    cleanedXPathArray[i] = xpathArray[i].replace(/\[.*\]/g, '');
   }
 
   // For each row of the base record set passed in, generate a flattened
@@ -2897,14 +2839,14 @@ Spry.Data.XMLDataSet.prototype.flattenSubPaths = function (rs, subPaths) {
         row.ds_XMLNode,
         xpathArray[j],
         !subPaths[j].xpath,
-        this.entityEncodeStrings
+        this.entityEncodeStrings,
       );
 
       // If this subPath has additional subPaths beneath it,
       // flatten and join them with the recordset we just created.
 
       if (newRS && newRS.data && newRS.data.length) {
-        if (typeof subPaths[j] === "object" && subPaths[j].subPaths) {
+        if (typeof subPaths[j] === 'object' && subPaths[j].subPaths) {
           // The subPaths property can be either an XPath string,
           // an Object describing a subPath and paths beneath it,
           // or an Array of XPath strings or objects. We need to
@@ -2913,9 +2855,8 @@ Spry.Data.XMLDataSet.prototype.flattenSubPaths = function (rs, subPaths) {
 
           let sp = subPaths[j].subPaths;
           spType = typeof sp;
-          if (spType == "string") sp = [sp];
-          else if (spType == "object" && spType.constructor == Object)
-            sp = [sp];
+          if (spType == 'string') sp = [sp];
+          else if (spType == 'object' && spType.constructor == Object) sp = [sp];
 
           // Now that we have a normalized array of sub paths, flatten
           // them and join them to the recordSet we just calculated.
@@ -2982,10 +2923,9 @@ Spry.Data.XMLDataSet.prototype.flattenSubPaths = function (rs, subPaths) {
               // instead of "/employees/employee/employee" which would be incorrect.
 
               if (
-                cleanedXPath == `${prop}/` ||
-                cleanedXPath.search(new RegExp(`\\/${prop}\\/$`)) != -1
-              )
-                newPropName = cleanedXPathArray[j];
+                cleanedXPath == `${prop}/`
+                || cleanedXPath.search(new RegExp(`\\/${prop}\\/$`)) != -1
+              ) newPropName = cleanedXPathArray[j];
 
               // Copy the props to the new object using the new property name.
 
@@ -3035,7 +2975,7 @@ Spry.Data.XMLDataSet.prototype.loadDataIntoDataSet = function (rawDataDoc) {
   let mainXPath = Spry.Data.Region.processDataRefString(
     null,
     this.xpath,
-    this.dataSetsForDataRefStrings
+    this.dataSetsForDataRefStrings,
   );
   let { subPaths } = this;
   let suppressColumns = false;
@@ -3051,10 +2991,9 @@ Spry.Data.XMLDataSet.prototype.loadDataIntoDataSet = function (rawDataDoc) {
       let subPathStr = Spry.Data.Region.processDataRefString(
         null,
         subPaths[i],
-        this.dataSetsForDataRefStrings
+        this.dataSetsForDataRefStrings,
       );
-      if (subPathStr.charAt(0) != "/")
-        subPathStr = `${mainXPath}/${subPathStr}`;
+      if (subPathStr.charAt(0) != '/') subPathStr = `${mainXPath}/${subPathStr}`;
       processedSubPaths.push(subPathStr);
     }
 
@@ -3086,12 +3025,12 @@ Spry.Data.XMLDataSet.prototype.loadDataIntoDataSet = function (rawDataDoc) {
     rawDataDoc,
     mainXPath,
     suppressColumns,
-    this.entityEncodeStrings
+    this.entityEncodeStrings,
   );
 
   if (!rs) {
     Spry.Debug.reportError(
-      `Spry.Data.XMLDataSet.loadDataIntoDataSet() failed to create dataSet '${this.name}'for '${this.xpath}' - ${this.url}\n`
+      `Spry.Data.XMLDataSet.loadDataIntoDataSet() failed to create dataSet '${this.name}'for '${this.xpath}' - ${this.url}\n`,
     );
     return;
   }
@@ -3120,8 +3059,7 @@ Spry.Data.XMLDataSet.prototype.xhRequestProcessor = function (xhRequest) {
       // tree for the data, but IE provides an empty document node so try to parse
       // the xml text manually to create a dom tree we can use.
 
-      if (xhRequest.responseText && (!resp || !resp.firstChild))
-        manualParseRequired = true;
+      if (xhRequest.responseText && (!resp || !resp.firstChild)) manualParseRequired = true;
     }
   } else if (!resp) {
     // The server said it sent us data, but for some reason we don't have
@@ -3133,21 +3071,19 @@ Spry.Data.XMLDataSet.prototype.xhRequestProcessor = function (xhRequest) {
     manualParseRequired = true;
   }
 
-  if (manualParseRequired)
-    resp = Spry.Utils.stringToXMLDoc(xhRequest.responseText);
+  if (manualParseRequired) resp = Spry.Utils.stringToXMLDoc(xhRequest.responseText);
 
-  if (!resp || !resp.firstChild || resp.firstChild.nodeName == "parsererror")
-    return null;
+  if (!resp || !resp.firstChild || resp.firstChild.nodeName == 'parsererror') return null;
 
   return resp;
 };
 
 Spry.Data.XMLDataSet.prototype.sessionExpiredChecker = function (req) {
-  if (req.xhRequest.responseText == "session expired") return true;
+  if (req.xhRequest.responseText == 'session expired') return true;
 
   if (req.rawData) {
     const { firstChild } = req.rawData.documentElement;
-    if (firstChild && firstChild.nodeValue == "session expired") return true;
+    if (firstChild && firstChild.nodeValue == 'session expired') return true;
   }
 
   return false;
@@ -3167,7 +3103,7 @@ Spry.Data.Region = function (
   dataSets,
   regionStates,
   regionStateMap,
-  hasBehaviorAttributes
+  hasBehaviorAttributes,
 ) {
   this.regionNode = regionNode;
   this.name = name;
@@ -3191,15 +3127,15 @@ Spry.Data.Region = function (
       if (ds) ds.addObserver(this);
     } catch (e) {
       Spry.Debug.reportError(
-        `Failed to add '${this.name}' as a dataSet observer!\n`
+        `Failed to add '${this.name}' as a dataSet observer!\n`,
       );
     }
   }
 }; // End of Spry.Data.Region() constructor.
 
-Spry.Data.Region.hiddenRegionClassName = "SpryHiddenRegion";
-Spry.Data.Region.evenRowClassName = "even";
-Spry.Data.Region.oddRowClassName = "odd";
+Spry.Data.Region.hiddenRegionClassName = 'SpryHiddenRegion';
+Spry.Data.Region.evenRowClassName = 'even';
+Spry.Data.Region.oddRowClassName = 'odd';
 Spry.Data.Region.notifiers = {};
 Spry.Data.Region.evalScripts = true;
 
@@ -3221,7 +3157,7 @@ Spry.Data.Region.notifyObservers = function (methodName, region, data) {
   const n = Spry.Data.Region.notifiers[region.name];
   if (n) {
     let dataObj = {};
-    if (data && typeof data === "object") dataObj = data;
+    if (data && typeof data === 'object') dataObj = data;
     else dataObj.data = data;
 
     dataObj.region = region;
@@ -3252,14 +3188,13 @@ Spry.Data.Region.prototype.getMappedState = function (stateName) {
 
 Spry.Data.Region.prototype.setState = function (
   stateName,
-  suppressNotfications
+  suppressNotfications,
 ) {
   const stateObj = {
     state: stateName,
     mappedState: this.getMappedState(stateName),
   };
-  if (!suppressNotfications)
-    Spry.Data.Region.notifyObservers("onPreStateChange", this, stateObj);
+  if (!suppressNotfications) Spry.Data.Region.notifyObservers('onPreStateChange', this, stateObj);
 
   this.currentState = stateObj.mappedState ? stateObj.mappedState : stateName;
 
@@ -3268,8 +3203,7 @@ Spry.Data.Region.prototype.setState = function (
 
   if (this.states[this.currentState]) {
     const notificationData = { state: this.currentState };
-    if (!suppressNotfications)
-      Spry.Data.Region.notifyObservers("onPreUpdate", this, notificationData);
+    if (!suppressNotfications) Spry.Data.Region.notifyObservers('onPreUpdate', this, notificationData);
 
     // Make the region transform the xml data. The result is
     // a string that we need to parse and insert into the document.
@@ -3283,7 +3217,7 @@ Spry.Data.Region.prototype.setState = function (
       Spry.Debug.trace(
         `<hr />Generated region markup for '${
           this.name
-        }':<br /><br />${Spry.Utils.encodeEntities(str)}`
+        }':<br /><br />${Spry.Utils.encodeEntities(str)}`,
       );
     }
 
@@ -3291,19 +3225,17 @@ Spry.Data.Region.prototype.setState = function (
     Spry.Utils.setInnerHTML(
       this.regionNode,
       str,
-      !Spry.Data.Region.evalScripts
+      !Spry.Data.Region.evalScripts,
     );
 
     // Now run through the content looking for attributes
     // that tell us what behaviors to attach to each element.
     if (this.hasBehaviorAttributes) this.attachBehaviors();
 
-    if (!suppressNotfications)
-      Spry.Data.Region.notifyObservers("onPostUpdate", this, notificationData);
+    if (!suppressNotfications) Spry.Data.Region.notifyObservers('onPostUpdate', this, notificationData);
   }
 
-  if (!suppressNotfications)
-    Spry.Data.Region.notifyObservers("onPostStateChange", this, stateObj);
+  if (!suppressNotfications) Spry.Data.Region.notifyObservers('onPostStateChange', this, stateObj);
 };
 
 Spry.Data.Region.prototype.getDataSets = function () {
@@ -3338,17 +3270,17 @@ Spry.Data.Region.prototype.removeDataSet = function (aDataSet) {
 };
 
 Spry.Data.Region.prototype.onPreLoad = function (dataSet) {
-  if (this.currentState != "loading") this.setState("loading");
+  if (this.currentState != 'loading') this.setState('loading');
 };
 
 Spry.Data.Region.prototype.onLoadError = function (dataSet) {
-  if (this.currentState != "error") this.setState("error");
-  Spry.Data.Region.notifyObservers("onError", this);
+  if (this.currentState != 'error') this.setState('error');
+  Spry.Data.Region.notifyObservers('onError', this);
 };
 
 Spry.Data.Region.prototype.onSessionExpired = function (dataSet) {
-  if (this.currentState != "expired") this.setState("expired");
-  Spry.Data.Region.notifyObservers("onExpired", this);
+  if (this.currentState != 'expired') this.setState('expired');
+  Spry.Data.Region.notifyObservers('onExpired', this);
 };
 
 Spry.Data.Region.prototype.onCurrentRowChanged = function (dataSet, data) {
@@ -3366,54 +3298,54 @@ Spry.Data.Region.prototype.onDataChanged = function (dataSet, data) {
 Spry.Data.Region.enableBehaviorAttributes = true;
 Spry.Data.Region.behaviorAttrs = {};
 
-Spry.Data.Region.behaviorAttrs["spry:select"] = {
+Spry.Data.Region.behaviorAttrs['spry:select'] = {
   attach(rgn, node, value) {
     let selectGroupName = null;
-    const sgAttrValue = Spry.Utils.getAttribute(node, "spry:selectgroup");
+    const sgAttrValue = Spry.Utils.getAttribute(node, 'spry:selectgroup');
     if (sgAttrValue != undefined) {
       selectGroupName = sgAttrValue;
-      Spry.Utils.removeAttribute(node, "spry:selectgroup");
+      Spry.Utils.removeAttribute(node, 'spry:selectgroup');
     }
 
-    if (!selectGroupName) selectGroupName = "default";
+    if (!selectGroupName) selectGroupName = 'default';
 
     Spry.Utils.addEventListener(
       node,
-      "click",
+      'click',
       (event) => {
         Spry.Utils.SelectionManager.select(selectGroupName, node, value);
       },
-      false
+      false,
     );
 
-    if (Spry.Utils.getAttribute(node, "spry:selected") != undefined) {
-      Spry.Utils.removeAttribute(node, "spry:selected");
+    if (Spry.Utils.getAttribute(node, 'spry:selected') != undefined) {
+      Spry.Utils.removeAttribute(node, 'spry:selected');
       Spry.Utils.SelectionManager.select(selectGroupName, node, value);
     }
 
-    Spry.Utils.removeAttribute(node, "spry:select");
+    Spry.Utils.removeAttribute(node, 'spry:select');
   },
 };
 
-Spry.Data.Region.behaviorAttrs["spry:hover"] = {
+Spry.Data.Region.behaviorAttrs['spry:hover'] = {
   attach(rgn, node, value) {
     Spry.Utils.addEventListener(
       node,
-      "mouseover",
+      'mouseover',
       (event) => {
         Spry.Utils.addClassName(node, value);
       },
-      false
+      false,
     );
     Spry.Utils.addEventListener(
       node,
-      "mouseout",
+      'mouseout',
       (event) => {
         Spry.Utils.removeClassName(node, value);
       },
-      false
+      false,
     );
-    Spry.Utils.removeAttribute(node, "spry:hover");
+    Spry.Utils.removeAttribute(node, 'spry:hover');
   },
 };
 
@@ -3421,7 +3353,7 @@ Spry.Data.Region.setUpRowNumberForEvenOddAttr = function (
   node,
   attr,
   value,
-  rowNumAttrName
+  rowNumAttrName,
 ) {
   // The format for the spry:even and spry:odd attributes are as follows:
   //
@@ -3435,13 +3367,13 @@ Spry.Data.Region.setUpRowNumberForEvenOddAttr = function (
 
   if (!value) {
     Spry.Debug.showError(
-      `The ${attr} attribute requires a CSS class name as its value!`
+      `The ${attr} attribute requires a CSS class name as its value!`,
     );
     node.attributes.removeNamedItem(attr);
     return;
   }
 
-  let dsName = "";
+  let dsName = '';
   const valArr = value.split(/\s/);
   if (valArr.length > 1) {
     // Extract out the data set name and reset the attribute so
@@ -3456,53 +3388,53 @@ Spry.Data.Region.setUpRowNumberForEvenOddAttr = function (
 
   node.setAttribute(
     rowNumAttrName,
-    `{${dsName ? `${dsName}::` : ""}ds_RowNumber}`
+    `{${dsName ? `${dsName}::` : ''}ds_RowNumber}`,
   );
 };
 
-Spry.Data.Region.behaviorAttrs["spry:even"] = {
+Spry.Data.Region.behaviorAttrs['spry:even'] = {
   setup(node, value) {
     Spry.Data.Region.setUpRowNumberForEvenOddAttr(
       node,
-      "spry:even",
+      'spry:even',
       value,
-      "spryevenrownumber"
+      'spryevenrownumber',
     );
   },
 
   attach(rgn, node, value) {
     if (value) {
-      rowNumAttr = node.attributes.getNamedItem("spryevenrownumber");
+      rowNumAttr = node.attributes.getNamedItem('spryevenrownumber');
       if (rowNumAttr && rowNumAttr.value) {
         const rowNum = parseInt(rowNumAttr.value);
         if (rowNum % 2) Spry.Utils.addClassName(node, value);
       }
     }
-    Spry.Utils.removeAttribute(node, "spry:even");
-    node.removeAttribute("spryevenrownumber");
+    Spry.Utils.removeAttribute(node, 'spry:even');
+    node.removeAttribute('spryevenrownumber');
   },
 };
 
-Spry.Data.Region.behaviorAttrs["spry:odd"] = {
+Spry.Data.Region.behaviorAttrs['spry:odd'] = {
   setup(node, value) {
     Spry.Data.Region.setUpRowNumberForEvenOddAttr(
       node,
-      "spry:odd",
+      'spry:odd',
       value,
-      "spryoddrownumber"
+      'spryoddrownumber',
     );
   },
 
   attach(rgn, node, value) {
     if (value) {
-      rowNumAttr = node.attributes.getNamedItem("spryoddrownumber");
+      rowNumAttr = node.attributes.getNamedItem('spryoddrownumber');
       if (rowNumAttr && rowNumAttr.value) {
         const rowNum = parseInt(rowNumAttr.value);
         if (rowNum % 2 == 0) Spry.Utils.addClassName(node, value);
       }
     }
-    Spry.Utils.removeAttribute(node, "spry:odd");
-    node.removeAttribute("spryoddrownumber");
+    Spry.Utils.removeAttribute(node, 'spry:odd');
+    node.removeAttribute('spryoddrownumber');
   },
 };
 
@@ -3510,7 +3442,7 @@ Spry.Data.Region.setRowAttrClickHandler = function (
   node,
   dsName,
   rowAttr,
-  funcName
+  funcName,
 ) {
   if (dsName) {
     const ds = Spry.Data.getDataSetByName(dsName);
@@ -3521,11 +3453,11 @@ Spry.Data.Region.setRowAttrClickHandler = function (
         if (rowAttrVal) {
           Spry.Utils.addEventListener(
             node,
-            "click",
+            'click',
             (event) => {
               ds[funcName](rowAttrVal);
             },
-            false
+            false,
           );
         }
       }
@@ -3533,63 +3465,63 @@ Spry.Data.Region.setRowAttrClickHandler = function (
   }
 };
 
-Spry.Data.Region.behaviorAttrs["spry:setrow"] = {
+Spry.Data.Region.behaviorAttrs['spry:setrow'] = {
   setup(node, value) {
     if (!value) {
       Spry.Debug.reportError(
-        "The spry:setrow attribute requires a data set name as its value!"
+        'The spry:setrow attribute requires a data set name as its value!',
       );
-      Spry.Utils.removeAttribute(node, "spry:setrow");
+      Spry.Utils.removeAttribute(node, 'spry:setrow');
       return;
     }
 
     // Tag the node with an attribute that will allow us to fetch the id of the
     // row used when it is written out during the re-generation process.
 
-    node.setAttribute("spryrowid", `{${value}::ds_RowID}`);
+    node.setAttribute('spryrowid', `{${value}::ds_RowID}`);
   },
 
   attach(rgn, node, value) {
     Spry.Data.Region.setRowAttrClickHandler(
       node,
       value,
-      "spryrowid",
-      "setCurrentRow"
+      'spryrowid',
+      'setCurrentRow',
     );
-    Spry.Utils.removeAttribute(node, "spry:setrow");
-    node.removeAttribute("spryrowid");
+    Spry.Utils.removeAttribute(node, 'spry:setrow');
+    node.removeAttribute('spryrowid');
   },
 };
 
-Spry.Data.Region.behaviorAttrs["spry:setrownumber"] = {
+Spry.Data.Region.behaviorAttrs['spry:setrownumber'] = {
   setup(node, value) {
     if (!value) {
       Spry.Debug.reportError(
-        "The spry:setrownumber attribute requires a data set name as its value!"
+        'The spry:setrownumber attribute requires a data set name as its value!',
       );
-      Spry.Utils.removeAttribute(node, "spry:setrownumber");
+      Spry.Utils.removeAttribute(node, 'spry:setrownumber');
       return;
     }
 
     // Tag the node with an attribute that will allow us to fetch the row number
     // of the row used when it is written out during the re-generation process.
 
-    node.setAttribute("spryrownumber", `{${value}::ds_RowID}`);
+    node.setAttribute('spryrownumber', `{${value}::ds_RowID}`);
   },
 
   attach(rgn, node, value) {
     Spry.Data.Region.setRowAttrClickHandler(
       node,
       value,
-      "spryrownumber",
-      "setCurrentRowNumber"
+      'spryrownumber',
+      'setCurrentRowNumber',
     );
-    Spry.Utils.removeAttribute(node, "spry:setrownumber");
-    node.removeAttribute("spryrownumber");
+    Spry.Utils.removeAttribute(node, 'spry:setrownumber');
+    node.removeAttribute('spryrownumber');
   },
 };
 
-Spry.Data.Region.behaviorAttrs["spry:sort"] = {
+Spry.Data.Region.behaviorAttrs['spry:sort'] = {
   attach(rgn, node, value) {
     if (!value) return;
 
@@ -3605,7 +3537,7 @@ Spry.Data.Region.behaviorAttrs["spry:sort"] = {
     // The user *must* specify at least one column name.
 
     let ds = rgn.getDataSets()[0];
-    let sortOrder = "toggle";
+    let sortOrder = 'toggle';
 
     const colArray = value.split(/\s/);
     if (colArray.length > 1) {
@@ -3623,7 +3555,7 @@ Spry.Data.Region.behaviorAttrs["spry:sort"] = {
 
       if (colArray.length > 1) {
         const str = colArray[colArray.length - 1];
-        if (str == "ascending" || str == "descending" || str == "toggle") {
+        if (str == 'ascending' || str == 'descending' || str == 'toggle') {
           sortOrder = str;
           colArray.pop();
         }
@@ -3636,15 +3568,15 @@ Spry.Data.Region.behaviorAttrs["spry:sort"] = {
     if (ds && colArray.length > 0) {
       Spry.Utils.addEventListener(
         node,
-        "click",
+        'click',
         (event) => {
           ds.sort(colArray, sortOrder);
         },
-        false
+        false,
       );
     }
 
-    Spry.Utils.removeAttribute(node, "spry:sort");
+    Spry.Utils.removeAttribute(node, 'spry:sort');
   },
 };
 
@@ -3658,8 +3590,7 @@ Spry.Data.Region.prototype.attachBehaviors = function () {
         const attrValue = Spry.Utils.getAttribute(node, bAttrName);
         if (attrValue != undefined) {
           const behavior = bAttrs[bAttrName];
-          if (behavior && behavior.attach)
-            behavior.attach(rgn, node, attrValue);
+          if (behavior && behavior.attach) behavior.attach(rgn, node, attrValue);
         }
       }
     } catch (e) {}
@@ -3675,7 +3606,7 @@ Spry.Data.Region.prototype.updateContent = function () {
 
   if (!dsArray || dsArray.length < 1) {
     Spry.Debug.reportError(
-      `updateContent(): Region '${this.name}' has no data set!\n`
+      `updateContent(): Region '${this.name}' has no data set!\n`,
     );
     return;
   }
@@ -3694,22 +3625,22 @@ Spry.Data.Region.prototype.updateContent = function () {
   }
 
   if (!allDataSetsReady) {
-    Spry.Data.Region.notifyObservers("onLoadingData", this);
+    Spry.Data.Region.notifyObservers('onLoadingData', this);
 
     // Just return, this method will get called again automatically
     // as each data set load completes!
     return;
   }
 
-  this.setState("ready");
+  this.setState('ready');
 };
 
 Spry.Data.Region.prototype.clearContent = function () {
-  this.regionNode.innerHTML = "";
+  this.regionNode.innerHTML = '';
 };
 
 Spry.Data.Region.processContentPI = function (inStr) {
-  let outStr = "";
+  let outStr = '';
   const regexp = /<!--\s*<\/?spry:content\s*[^>]*>\s*-->/gm;
   let searchStartIndex = 0;
   let processingContentTag = 0;
@@ -3726,7 +3657,7 @@ Spry.Data.Region.processContentPI = function (inStr) {
       // Create a string token for everything that precedes the match.
       outStr += inStr.substr(
         searchStartIndex,
-        results.index - searchStartIndex
+        results.index - searchStartIndex,
       );
     }
 
@@ -3734,13 +3665,13 @@ Spry.Data.Region.processContentPI = function (inStr) {
       --processingContentTag;
       if (processingContentTag) {
         Spry.Debug.reportError(
-          "Nested spry:content regions are not allowed!\n"
+          'Nested spry:content regions are not allowed!\n',
         );
       }
     } else {
       ++processingContentTag;
-      const dataRefStr = results[0].replace(/.*\bdataref="/, "");
-      outStr += dataRefStr.replace(/".*$/, "");
+      const dataRefStr = results[0].replace(/.*\bdataref="/, '');
+      outStr += dataRefStr.replace(/".*$/, '');
     }
 
     searchStartIndex = regexp.lastIndex;
@@ -3757,7 +3688,7 @@ Spry.Data.Region.prototype.tokenizeData = function (dataStr) {
     Spry.Data.Region.Token.LIST_TOKEN,
     null,
     null,
-    null
+    null,
   );
   const tokenStack = new Array();
   const parseStr = Spry.Data.Region.processContentPI(dataStr);
@@ -3769,8 +3700,7 @@ Spry.Data.Region.prototype.tokenizeData = function (dataStr) {
   //   <spry:repeat select="regionName" test="true">
   //   </spry:repeat>
   //   {valueReference}
-  const regexp =
-    /((<!--\s*){0,1}<\/{0,1}spry:[^>]+>(\s*-->){0,1})|((\{|%7[bB])[^\}\s%]+(\}|%7[dD]))/gm;
+  const regexp = /((<!--\s*){0,1}<\/{0,1}spry:[^>]+>(\s*-->){0,1})|((\{|%7[bB])[^\}\s%]+(\}|%7[dD]))/gm;
   let searchStartIndex = 0;
 
   while (parseStr.length) {
@@ -3783,13 +3713,13 @@ Spry.Data.Region.prototype.tokenizeData = function (dataStr) {
       // break out of the list.
       var str = parseStr.substr(
         searchStartIndex,
-        parseStr.length - searchStartIndex
+        parseStr.length - searchStartIndex,
       );
       token = new Spry.Data.Region.Token(
         Spry.Data.Region.Token.STRING_TOKEN,
         null,
         str,
-        str
+        str,
       );
       tokenStack[tokenStack.length - 1].addChild(token);
       break;
@@ -3800,13 +3730,13 @@ Spry.Data.Region.prototype.tokenizeData = function (dataStr) {
       // Create a string token for everything that precedes the match.
       var str = parseStr.substr(
         searchStartIndex,
-        results.index - searchStartIndex
+        results.index - searchStartIndex,
       );
       token = new Spry.Data.Region.Token(
         Spry.Data.Region.Token.STRING_TOKEN,
         null,
         str,
-        str
+        str,
       );
       tokenStack[tokenStack.length - 1].addChild(token);
     }
@@ -3821,8 +3751,8 @@ Spry.Data.Region.prototype.tokenizeData = function (dataStr) {
 
       // Strip off brace and url encode brace chars inside the valueName.
 
-      valueName = valueName.replace(/^({|%7[bB])/, "");
-      valueName = valueName.replace(/(}|%7[dD])$/, "");
+      valueName = valueName.replace(/^({|%7[bB])/, '');
+      valueName = valueName.replace(/(}|%7[dD])$/, '');
 
       // Check to see if our value begins with the name of a data set.
       // For example: {dataSet:tokenValue}. If it is, we need to save
@@ -3839,8 +3769,8 @@ Spry.Data.Region.prototype.tokenizeData = function (dataStr) {
 
       // Convert any url encoded braces to regular brace chars.
 
-      regionStr = regionStr.replace(/^%7[bB]/, "{");
-      regionStr = regionStr.replace(/%7[dD]$/, "}");
+      regionStr = regionStr.replace(/^%7[bB]/, '{');
+      regionStr = regionStr.replace(/%7[dD]$/, '}');
 
       // Now create a token for the placeholder.
 
@@ -3848,13 +3778,13 @@ Spry.Data.Region.prototype.tokenizeData = function (dataStr) {
         Spry.Data.Region.Token.VALUE_TOKEN,
         dataSetName,
         valueName,
-        new String(regionStr)
+        new String(regionStr),
       );
       tokenStack[tokenStack.length - 1].addChild(token);
-    } else if (results[0].charAt(0) == "<") {
+    } else if (results[0].charAt(0) == '<') {
       // Extract out the name of the processing instruction.
-      let piName = results[0].replace(/^(<!--\s*){0,1}<\/?/, "");
-      piName = piName.replace(/>(\s*-->){0,1}|\s.*$/, "");
+      let piName = results[0].replace(/^(<!--\s*){0,1}<\/?/, '');
+      piName = piName.replace(/>(\s*-->){0,1}|\s.*$/, '');
 
       if (results[0].search(/<\//) != -1 /* results[0].charAt(1) == '/' */) {
         // We found a processing instruction close tag. Pop the top of the
@@ -3863,11 +3793,11 @@ Spry.Data.Region.prototype.tokenizeData = function (dataStr) {
         // XXX: We need to make sure that the close tag name matches the one
         //      on the top of the token stack!
         if (
-          tokenStack[tokenStack.length - 1].tokenType !=
-          Spry.Data.Region.Token.PROCESSING_INSTRUCTION_TOKEN
+          tokenStack[tokenStack.length - 1].tokenType
+          != Spry.Data.Region.Token.PROCESSING_INSTRUCTION_TOKEN
         ) {
           Spry.Debug.reportError(
-            `Invalid processing instruction close tag: ${piName} -- ${results[0]}\n`
+            `Invalid processing instruction close tag: ${piName} -- ${results[0]}\n`,
           );
           return null;
         }
@@ -3883,18 +3813,18 @@ Spry.Data.Region.prototype.tokenizeData = function (dataStr) {
         if (piDesc) {
           let dataSet = null;
 
-          let selectedDataSetName = "";
+          let selectedDataSetName = '';
           if (results[0].search(/^.*\bselect=\"/) != -1) {
-            selectedDataSetName = results[0].replace(/^.*\bselect=\"/, "");
-            selectedDataSetName = selectedDataSetName.replace(/".*$/, "");
+            selectedDataSetName = results[0].replace(/^.*\bselect=\"/, '');
+            selectedDataSetName = selectedDataSetName.replace(/".*$/, '');
 
             if (selectedDataSetName) {
               dataSet = Spry.Data.getDataSetByName(selectedDataSetName);
               if (!dataSet) {
                 Spry.Debug.reportError(
-                  `Failed to retrieve data set (${selectedDataSetName}) for ${piName}\n`
+                  `Failed to retrieve data set (${selectedDataSetName}) for ${piName}\n`,
                 );
-                selectedDataSetName = "";
+                selectedDataSetName = '';
               }
             }
           }
@@ -3902,16 +3832,16 @@ Spry.Data.Region.prototype.tokenizeData = function (dataStr) {
           // Check if the repeat has a test attribute.
           let jsExpr = null;
           if (results[0].search(/^.*\btest=\"/) != -1) {
-            jsExpr = results[0].replace(/^.*\btest=\"/, "");
-            jsExpr = jsExpr.replace(/".*$/, "");
+            jsExpr = results[0].replace(/^.*\btest=\"/, '');
+            jsExpr = jsExpr.replace(/".*$/, '');
             jsExpr = Spry.Utils.decodeEntities(jsExpr);
           }
 
           // Check if the instruction has a state name specified.
           let regionState = null;
           if (results[0].search(/^.*\bname=\"/) != -1) {
-            regionState = results[0].replace(/^.*\bname=\"/, "");
-            regionState = regionState.replace(/".*$/, "");
+            regionState = results[0].replace(/^.*\bname=\"/, '');
+            regionState = regionState.replace(/".*$/, '');
             regionState = Spry.Utils.decodeEntities(regionState);
           }
 
@@ -3919,21 +3849,21 @@ Spry.Data.Region.prototype.tokenizeData = function (dataStr) {
             piName,
             selectedDataSetName,
             jsExpr,
-            regionState
+            regionState,
           );
 
           token = new Spry.Data.Region.Token(
             Spry.Data.Region.Token.PROCESSING_INSTRUCTION_TOKEN,
             dataSet,
             piData,
-            new String(results[0])
+            new String(results[0]),
           );
 
           tokenStack[tokenStack.length - 1].addChild(token);
           tokenStack.push(token);
         } else {
           Spry.Debug.reportError(
-            `Unsupported region processing instruction: ${results[0]}\n`
+            `Unsupported region processing instruction: ${results[0]}\n`,
           );
           return null;
         }
@@ -3951,17 +3881,17 @@ Spry.Data.Region.prototype.tokenizeData = function (dataStr) {
 
 Spry.Data.Region.prototype.callScriptFunction = function (
   funcName,
-  processContext
+  processContext,
 ) {
   let result;
 
-  funcName = funcName.replace(/^\s*\{?\s*function::\s*|\s*\}?\s*$/g, "");
+  funcName = funcName.replace(/^\s*\{?\s*function::\s*|\s*\}?\s*$/g, '');
   const func = Spry.Utils.getObjectByName(funcName);
   if (func) {
     result = func(this.name, function () {
       return processContext.getValueFromDataSet.apply(
         processContext,
-        arguments
+        arguments,
       );
     });
   }
@@ -3971,28 +3901,27 @@ Spry.Data.Region.prototype.callScriptFunction = function (
 
 Spry.Data.Region.prototype.evaluateExpression = function (
   exprStr,
-  processContext
+  processContext,
 ) {
   let result;
 
   try {
-    if (exprStr.search(/^\s*function::/) != -1)
-      result = this.callScriptFunction(exprStr, processContext);
+    if (exprStr.search(/^\s*function::/) != -1) result = this.callScriptFunction(exprStr, processContext);
     else {
       result = Spry.Utils.eval(
         Spry.Data.Region.processDataRefString(
           processContext,
           exprStr,
           null,
-          true
-        )
+          true,
+        ),
       );
     }
   } catch (e) {
     Spry.Debug.trace(
       `Caught exception in Spry.Data.Region.prototype.evaluateExpression() while evaluating: ${Spry.Utils.encodeEntities(
-        exprStr
-      )}\n    Exception:${e}\n`
+        exprStr,
+      )}\n    Exception:${e}\n`,
     );
   }
 
@@ -4002,19 +3931,18 @@ Spry.Data.Region.prototype.evaluateExpression = function (
 Spry.Data.Region.prototype.processTokenChildren = function (
   outputArr,
   token,
-  processContext
+  processContext,
 ) {
   const { children } = token;
   const len = children.length;
 
-  for (let i = 0; i < len; i++)
-    this.processTokens(outputArr, children[i], processContext);
+  for (let i = 0; i < len; i++) this.processTokens(outputArr, children[i], processContext);
 };
 
 Spry.Data.Region.prototype.processTokens = function (
   outputArr,
   token,
-  processContext
+  processContext,
 ) {
   let i = 0;
 
@@ -4026,7 +3954,7 @@ Spry.Data.Region.prototype.processTokens = function (
       outputArr.push(token.data);
       break;
     case Spry.Data.Region.Token.PROCESSING_INSTRUCTION_TOKEN:
-      if (token.data.name == "spry:repeat") {
+      if (token.data.name == 'spry:repeat') {
         var dataSet = null;
 
         if (token.dataSet) dataSet = token.dataSet;
@@ -4036,7 +3964,7 @@ Spry.Data.Region.prototype.processTokens = function (
           const dsContext = processContext.getDataSetContext(dataSet);
           if (!dsContext) {
             Spry.Debug.reportError(
-              "processTokens() failed to get a data set context!\n"
+              'processTokens() failed to get a data set context!\n',
             );
             break;
           }
@@ -4052,24 +3980,21 @@ Spry.Data.Region.prototype.processTokens = function (
             if (token.data.jsExpr) {
               testVal = this.evaluateExpression(
                 token.data.jsExpr,
-                processContext
+                processContext,
               );
             }
 
-            if (testVal)
-              this.processTokenChildren(outputArr, token, processContext);
+            if (testVal) this.processTokenChildren(outputArr, token, processContext);
           }
           dsContext.popState();
         }
-      } else if (token.data.name == "spry:if") {
+      } else if (token.data.name == 'spry:if') {
         var testVal = true;
 
-        if (token.data.jsExpr)
-          testVal = this.evaluateExpression(token.data.jsExpr, processContext);
+        if (token.data.jsExpr) testVal = this.evaluateExpression(token.data.jsExpr, processContext);
 
-        if (testVal)
-          this.processTokenChildren(outputArr, token, processContext);
-      } else if (token.data.name == "spry:choose") {
+        if (testVal) this.processTokenChildren(outputArr, token, processContext);
+      } else if (token.data.name == 'spry:choose') {
         let defaultChild = null;
         let childToProcess = null;
         var testVal = false;
@@ -4083,14 +4008,14 @@ Spry.Data.Region.prototype.processTokens = function (
         for (j = 0; j < token.children.length; j++) {
           const child = token.children[j];
           if (
-            child.tokenType ==
-            Spry.Data.Region.Token.PROCESSING_INSTRUCTION_TOKEN
+            child.tokenType
+            == Spry.Data.Region.Token.PROCESSING_INSTRUCTION_TOKEN
           ) {
-            if (child.data.name == "spry:when") {
+            if (child.data.name == 'spry:when') {
               if (child.data.jsExpr) {
                 testVal = this.evaluateExpression(
                   child.data.jsExpr,
-                  processContext
+                  processContext,
                 );
 
                 if (testVal) {
@@ -4098,7 +4023,7 @@ Spry.Data.Region.prototype.processTokens = function (
                   break;
                 }
               }
-            } else if (child.data.name == "spry:default") defaultChild = child;
+            } else if (child.data.name == 'spry:default') defaultChild = child;
           }
         }
 
@@ -4106,38 +4031,36 @@ Spry.Data.Region.prototype.processTokens = function (
 
         if (!childToProcess && defaultChild) childToProcess = defaultChild;
 
-        if (childToProcess)
-          this.processTokenChildren(outputArr, childToProcess, processContext);
-      } else if (token.data.name == "spry:state") {
+        if (childToProcess) this.processTokenChildren(outputArr, childToProcess, processContext);
+      } else if (token.data.name == 'spry:state') {
         var testVal = true;
 
         if (
-          !token.data.regionState ||
-          token.data.regionState == this.currentState
-        )
-          this.processTokenChildren(outputArr, token, processContext);
+          !token.data.regionState
+          || token.data.regionState == this.currentState
+        ) this.processTokenChildren(outputArr, token, processContext);
       } else {
         Spry.Debug.reportError(
-          `processTokens(): Unknown processing instruction: ${token.data.name}\n`
+          `processTokens(): Unknown processing instruction: ${token.data.name}\n`,
         );
-        return "";
+        return '';
       }
       break;
     case Spry.Data.Region.Token.VALUE_TOKEN:
       var { dataSet } = token;
       var val = undefined;
 
-      if (dataSet && dataSet == "function") {
+      if (dataSet && dataSet == 'function') {
         // This value token doesn't contain a data set data reference, it
         // contains a function call, so call it.
 
         val = this.callScriptFunction(token.data, processContext);
       } else {
         if (
-          !dataSet &&
-          this.dataSets &&
-          this.dataSets.length > 0 &&
-          this.dataSets[0]
+          !dataSet
+          && this.dataSets
+          && this.dataSets.length > 0
+          && this.dataSets[0]
         ) {
           // No dataSet was specified by the token, so use whatever the first
           // data set specified in the region.
@@ -4146,20 +4069,20 @@ Spry.Data.Region.prototype.processTokens = function (
         }
         if (!dataSet) {
           Spry.Debug.reportError(
-            `processTokens(): Value reference has no data set specified: ${token.regionStr}\n`
+            `processTokens(): Value reference has no data set specified: ${token.regionStr}\n`,
           );
-          return "";
+          return '';
         }
 
         val = processContext.getValueFromDataSet(dataSet, token.data);
       }
 
-      if (typeof val !== "undefined") outputArr.push(`${val}`);
+      if (typeof val !== 'undefined') outputArr.push(`${val}`);
 
       break;
     default:
       Spry.Debug.reportError(
-        `processTokens(): Invalid token type: ${token.regionStr}\n`
+        `processTokens(): Invalid token type: ${token.regionStr}\n`,
       );
       break;
   }
@@ -4168,10 +4091,10 @@ Spry.Data.Region.prototype.processTokens = function (
 Spry.Data.Region.prototype.transform = function () {
   if (this.data && !this.tokens) this.tokens = this.tokenizeData(this.data);
 
-  if (!this.tokens) return "";
+  if (!this.tokens) return '';
 
   processContext = new Spry.Data.Region.ProcessingContext(this);
-  if (!processContext) return "";
+  if (!processContext) return '';
 
   // Now call processTokens to transform our tokens into real data strings.
   // We use an array to gather the strings during processing as a performance
@@ -4184,9 +4107,9 @@ Spry.Data.Region.prototype.transform = function () {
   // Using an array with a final join reduced one of our test cases  from over
   // a minute to about 15 seconds.
 
-  const outputArr = [""];
+  const outputArr = [''];
   this.processTokens(outputArr, this.tokens, processContext);
-  return outputArr.join("");
+  return outputArr.join('');
 };
 
 Spry.Data.Region.PI = {};
@@ -4195,74 +4118,72 @@ Spry.Data.Region.PI.instructions = {};
 Spry.Data.Region.PI.buildOpenTagForValueAttr = function (
   ele,
   piName,
-  attrName
+  attrName,
 ) {
-  if (!ele || !piName) return "";
+  if (!ele || !piName) return '';
 
-  let jsExpr = "";
+  let jsExpr = '';
 
   try {
     const testAttrValue = Spry.Utils.getAttribute(ele, piName);
     if (testAttrValue) jsExpr = Spry.Utils.encodeEntities(testAttrValue);
   } catch (e) {
-    jsExpr = "";
+    jsExpr = '';
   }
 
   if (!jsExpr) {
     Spry.Debug.reportError(
-      `${piName} attribute requires a JavaScript expression that returns true or false!\n`
+      `${piName} attribute requires a JavaScript expression that returns true or false!\n`,
     );
-    return "";
+    return '';
   }
 
   return `<${Spry.Data.Region.PI.instructions[piName].tagName} ${attrName}="${jsExpr}">`;
 };
 
 Spry.Data.Region.PI.buildOpenTagForTest = function (ele, piName) {
-  return Spry.Data.Region.PI.buildOpenTagForValueAttr(ele, piName, "test");
+  return Spry.Data.Region.PI.buildOpenTagForValueAttr(ele, piName, 'test');
 };
 
 Spry.Data.Region.PI.buildOpenTagForState = function (ele, piName) {
-  return Spry.Data.Region.PI.buildOpenTagForValueAttr(ele, piName, "name");
+  return Spry.Data.Region.PI.buildOpenTagForValueAttr(ele, piName, 'name');
 };
 
 Spry.Data.Region.PI.buildOpenTagForRepeat = function (ele, piName) {
-  if (!ele || !piName) return "";
+  if (!ele || !piName) return '';
 
   let selectAttrStr = Spry.Utils.getAttribute(ele, piName);
-  if (selectAttrStr) selectAttrStr = selectAttrStr.replace(/\s/g, "");
+  if (selectAttrStr) selectAttrStr = selectAttrStr.replace(/\s/g, '');
   else {
     Spry.Debug.reportError(`${piName} attribute requires a data set name!\n`);
-    return "";
+    return '';
   }
 
-  let testAttrStr = "";
-  const testAttrValue = Spry.Utils.getAttribute(ele, "spry:test");
+  let testAttrStr = '';
+  const testAttrValue = Spry.Utils.getAttribute(ele, 'spry:test');
   if (testAttrValue != undefined) {
-    if (testAttrValue)
-      testAttrStr = ` test="${Spry.Utils.encodeEntities(testAttrValue)}"`;
-    Spry.Utils.removeAttribute(ele, "spry:test");
+    if (testAttrValue) testAttrStr = ` test="${Spry.Utils.encodeEntities(testAttrValue)}"`;
+    Spry.Utils.removeAttribute(ele, 'spry:test');
   }
 
   return `<${Spry.Data.Region.PI.instructions[piName].tagName} select="${selectAttrStr}"${testAttrStr}>`;
 };
 
 Spry.Data.Region.PI.buildOpenTagForContent = function (ele, piName) {
-  if (!ele || !piName) return "";
+  if (!ele || !piName) return '';
 
-  let dataRefStr = "";
+  let dataRefStr = '';
 
   try {
     const contentAttrValue = Spry.Utils.getAttribute(ele, piName);
-    if (contentAttrValue)
-      dataRefStr = Spry.Utils.encodeEntities(contentAttrValue);
+    if (contentAttrValue) dataRefStr = Spry.Utils.encodeEntities(contentAttrValue);
   } catch (e) {
-    dataRefStr = "";
+    dataRefStr = '';
   }
 
   if (!dataRefStr) {
     Spry.Debug.reportError(`${piName} attribute requires a data reference!\n`);
-    return "";
+    return '';
   }
 
   return `<${Spry.Data.Region.PI.instructions[piName].tagName} dataref="${dataRefStr}">`;
@@ -4276,64 +4197,64 @@ Spry.Data.Region.PI.buildCloseTag = function (ele, piName) {
   return `</${Spry.Data.Region.PI.instructions[piName].tagName}>`;
 };
 
-Spry.Data.Region.PI.instructions["spry:state"] = {
-  tagName: "spry:state",
+Spry.Data.Region.PI.instructions['spry:state'] = {
+  tagName: 'spry:state',
   childrenOnly: false,
   getOpenTag: Spry.Data.Region.PI.buildOpenTagForState,
   getCloseTag: Spry.Data.Region.PI.buildCloseTag,
 };
-Spry.Data.Region.PI.instructions["spry:if"] = {
-  tagName: "spry:if",
+Spry.Data.Region.PI.instructions['spry:if'] = {
+  tagName: 'spry:if',
   childrenOnly: false,
   getOpenTag: Spry.Data.Region.PI.buildOpenTagForTest,
   getCloseTag: Spry.Data.Region.PI.buildCloseTag,
 };
-Spry.Data.Region.PI.instructions["spry:repeat"] = {
-  tagName: "spry:repeat",
+Spry.Data.Region.PI.instructions['spry:repeat'] = {
+  tagName: 'spry:repeat',
   childrenOnly: false,
   getOpenTag: Spry.Data.Region.PI.buildOpenTagForRepeat,
   getCloseTag: Spry.Data.Region.PI.buildCloseTag,
 };
-Spry.Data.Region.PI.instructions["spry:repeatchildren"] = {
-  tagName: "spry:repeat",
+Spry.Data.Region.PI.instructions['spry:repeatchildren'] = {
+  tagName: 'spry:repeat',
   childrenOnly: true,
   getOpenTag: Spry.Data.Region.PI.buildOpenTagForRepeat,
   getCloseTag: Spry.Data.Region.PI.buildCloseTag,
 };
-Spry.Data.Region.PI.instructions["spry:choose"] = {
-  tagName: "spry:choose",
+Spry.Data.Region.PI.instructions['spry:choose'] = {
+  tagName: 'spry:choose',
   childrenOnly: true,
   getOpenTag: Spry.Data.Region.PI.buildOpenTag,
   getCloseTag: Spry.Data.Region.PI.buildCloseTag,
 };
-Spry.Data.Region.PI.instructions["spry:when"] = {
-  tagName: "spry:when",
+Spry.Data.Region.PI.instructions['spry:when'] = {
+  tagName: 'spry:when',
   childrenOnly: false,
   getOpenTag: Spry.Data.Region.PI.buildOpenTagForTest,
   getCloseTag: Spry.Data.Region.PI.buildCloseTag,
 };
-Spry.Data.Region.PI.instructions["spry:default"] = {
-  tagName: "spry:default",
+Spry.Data.Region.PI.instructions['spry:default'] = {
+  tagName: 'spry:default',
   childrenOnly: false,
   getOpenTag: Spry.Data.Region.PI.buildOpenTag,
   getCloseTag: Spry.Data.Region.PI.buildCloseTag,
 };
-Spry.Data.Region.PI.instructions["spry:content"] = {
-  tagName: "spry:content",
+Spry.Data.Region.PI.instructions['spry:content'] = {
+  tagName: 'spry:content',
   childrenOnly: true,
   getOpenTag: Spry.Data.Region.PI.buildOpenTagForContent,
   getCloseTag: Spry.Data.Region.PI.buildCloseTag,
 };
 
 Spry.Data.Region.PI.orderedInstructions = [
-  "spry:state",
-  "spry:if",
-  "spry:repeat",
-  "spry:repeatchildren",
-  "spry:choose",
-  "spry:when",
-  "spry:default",
-  "spry:content",
+  'spry:state',
+  'spry:if',
+  'spry:repeat',
+  'spry:repeatchildren',
+  'spry:choose',
+  'spry:when',
+  'spry:default',
+  'spry:content',
 ];
 
 Spry.Data.Region.getTokensFromStr = function (str) {
@@ -4347,14 +4268,14 @@ Spry.Data.Region.processDataRefString = function (
   processingContext,
   regionStr,
   dataSetsToUse,
-  isJSExpr
+  isJSExpr,
 ) {
-  if (!regionStr) return "";
+  if (!regionStr) return '';
 
   if (!processingContext && !dataSetsToUse) return regionStr;
 
-  let resultStr = "";
-  const re = new RegExp("\\{([^\\}:]+::)?[^\\}]+\\}", "g");
+  let resultStr = '';
+  const re = new RegExp('\\{([^\\}:]+::)?[^\\}]+\\}', 'g');
   let startSearchIndex = 0;
 
   while (startSearchIndex < regionStr.length) {
@@ -4362,7 +4283,7 @@ Spry.Data.Region.processDataRefString = function (
     if (!reArray || !reArray[0]) {
       resultStr += regionStr.substr(
         startSearchIndex,
-        regionStr.length - startSearchIndex
+        regionStr.length - startSearchIndex,
       );
       return resultStr;
     }
@@ -4370,28 +4291,26 @@ Spry.Data.Region.processDataRefString = function (
     if (reArray.index != startSearchIndex) {
       resultStr += regionStr.substr(
         startSearchIndex,
-        reArray.index - startSearchIndex
+        reArray.index - startSearchIndex,
       );
     }
 
-    let dsName = "";
-    if (reArray[0].search(/^\{[^}:]+::/) != -1)
-      dsName = reArray[0].replace(/^\{|::.*/g, "");
+    let dsName = '';
+    if (reArray[0].search(/^\{[^}:]+::/) != -1) dsName = reArray[0].replace(/^\{|::.*/g, '');
 
-    const fieldName = reArray[0].replace(/^\{|.*::|\}/g, "");
+    const fieldName = reArray[0].replace(/^\{|.*::|\}/g, '');
     const row = null;
 
-    let val = "";
+    let val = '';
 
-    if (processingContext)
-      val = processingContext.getValueFromDataSet(dsName, fieldName);
+    if (processingContext) val = processingContext.getValueFromDataSet(dsName, fieldName);
     else {
       const ds = dsName ? dataSetsToUse[dsName] : dataSetsToUse[0];
       if (ds) val = ds.getValue(fieldName);
     }
 
-    if (typeof val !== "undefined") {
-      val += ""; // Make sure val is converted to a string.
+    if (typeof val !== 'undefined') {
+      val += ''; // Make sure val is converted to a string.
       resultStr += isJSExpr ? Spry.Utils.escapeQuotesAndLineBreaks(val) : val;
     }
 
@@ -4403,8 +4322,7 @@ Spry.Data.Region.processDataRefString = function (
       // match.
 
       const leftOverIndex = reArray.index + reArray[0].length;
-      if (leftOverIndex < regionStr.length)
-        resultStr += regionStr.substr(leftOverIndex);
+      if (leftOverIndex < regionStr.length) resultStr += regionStr.substr(leftOverIndex);
 
       break;
     }
@@ -4421,8 +4339,8 @@ Spry.Data.Region.strToDataSetsArray = function (str, returnRegionNames) {
 
   if (!str) return dataSetsArr;
 
-  str = str.replace(/\s+/g, " ");
-  str = str.replace(/^\s|\s$/g, "");
+  str = str.replace(/\s+/g, ' ');
+  str = str.replace(/^\s|\s$/g, '');
   const arr = str.split(/ /);
 
   for (let i = 0; i < arr.length; i++) {
@@ -4476,22 +4394,21 @@ Spry.Data.Region.DSContext = function (dataSet, processingContext) {
     this.getCurrentState().data = data;
   };
   this.getValue = function (valueName, rowContext) {
-    let result = "";
+    let result = '';
     const curState = this.getCurrentState();
     const ds = curState.nestedDS ? curState.nestedDS : this.getDataSet();
     if (ds) result = ds.getValue(valueName, rowContext);
     return result;
   };
   this.getCurrentRow = function () {
-    if (m_curRowIndexArray.length < 2 || getInternalRowIndex() < 0)
-      return m_dataSet.getCurrentRow();
+    if (m_curRowIndexArray.length < 2 || getInternalRowIndex() < 0) return m_dataSet.getCurrentRow();
 
     const data = this.getData();
     const curRowIndex = getInternalRowIndex();
 
     if (curRowIndex < 0 || curRowIndex > data.length) {
       Spry.Debug.reportError(
-        "Invalid index used in Spry.Data.Region.DSContext.getCurrentRow()!\n"
+        'Invalid index used in Spry.Data.Region.DSContext.getCurrentRow()!\n',
       );
       return null;
     }
@@ -4509,13 +4426,12 @@ Spry.Data.Region.DSContext = function (dataSet, processingContext) {
 
     const data = this.getData();
     const numChildren = m_children.length;
-    for (let i = 0; i < numChildren; i++)
-      m_children[i].syncDataWithParentRow(this, rowIndex, data);
+    for (let i = 0; i < numChildren; i++) m_children[i].syncDataWithParentRow(this, rowIndex, data);
   };
   this.syncDataWithParentRow = function (
     parentDSContext,
     rowIndex,
-    parentData
+    parentData,
   ) {
     const row = parentData[rowIndex];
     if (row) {
@@ -4531,15 +4447,14 @@ Spry.Data.Region.DSContext = function (dataSet, processingContext) {
         // zero so the dsContext doesn't attempt to use the *real* current
         // row of the data set.
 
-        currentState.rowIndex =
-          currentState.rowIndex < 0 ? 0 : currentState.rowIndex;
+        currentState.rowIndex = currentState.rowIndex < 0 ? 0 : currentState.rowIndex;
 
         const numChildren = m_children.length;
         for (let i = 0; i < numChildren; i++) {
           m_children[i].syncDataWithParentRow(
             this,
             currentState.rowIndex,
-            currentState.data
+            currentState.data,
           );
         }
       }
@@ -4561,7 +4476,7 @@ Spry.Data.Region.DSContext = function (dataSet, processingContext) {
     if (m_curRowIndexArray.length < 2) {
       // Our array should always have at least one element in it!
       Spry.Debug.reportError(
-        "Stack underflow in Spry.Data.Region.DSContext.popState()!\n"
+        'Stack underflow in Spry.Data.Region.DSContext.popState()!\n',
       );
       return;
     }
@@ -4605,7 +4520,7 @@ Spry.Data.Region.ProcessingContext = function (region) {
 
     for (i = 0; i < dsArray.length; i++) {
       this.dataSetContexts.push(
-        new Spry.Data.Region.DSContext(dsArray[i], this)
+        new Spry.Data.Region.DSContext(dsArray[i], this),
       );
     }
 
@@ -4641,7 +4556,7 @@ Spry.Data.Region.ProcessingContext.prototype.indexOf = function (arr, item) {
 };
 
 Spry.Data.Region.ProcessingContext.prototype.getDataSetContext = function (
-  dataSet
+  dataSet,
 ) {
   if (!dataSet) {
     // We were called without a specified data set or
@@ -4652,7 +4567,7 @@ Spry.Data.Region.ProcessingContext.prototype.getDataSetContext = function (
     return null;
   }
 
-  if (typeof dataSet === "string") {
+  if (typeof dataSet === 'string') {
     dataSet = Spry.Data.getDataSetByName(dataSet);
     if (!dataSet) return null;
   }
@@ -4666,8 +4581,8 @@ Spry.Data.Region.ProcessingContext.prototype.getDataSetContext = function (
 };
 
 Spry.Data.Region.ProcessingContext.prototype.getValueFromDataSet = function () {
-  let dsName = "";
-  let columnName = "";
+  let dsName = '';
+  let columnName = '';
 
   if (arguments.length > 1) {
     // The caller is passing in the data set name and the
@@ -4684,20 +4599,19 @@ Spry.Data.Region.ProcessingContext.prototype.getValueFromDataSet = function () {
     //    "{columnName}"
     //    "{dsName::columnName}"
 
-    const dataRef = arguments[0].replace(/\s*{\s*|\s*}\s*/g, "");
-    if (dataRef.search("::") != -1) {
-      dsName = dataRef.replace(/::.*/, "");
-      columnName = dataRef.replace(/.*::/, "");
+    const dataRef = arguments[0].replace(/\s*{\s*|\s*}\s*/g, '');
+    if (dataRef.search('::') != -1) {
+      dsName = dataRef.replace(/::.*/, '');
+      columnName = dataRef.replace(/.*::/, '');
     } else columnName = dataRef;
   }
 
-  let result = "";
+  let result = '';
   const dsContext = this.getDataSetContext(dsName);
-  if (dsContext)
-    result = dsContext.getValue(columnName, dsContext.getCurrentRow());
+  if (dsContext) result = dsContext.getValue(columnName, dsContext.getCurrentRow());
   else {
     Spry.Debug.reportError(
-      `getValueFromDataSet: Failed to get ${dsName} context for the ${this.region.regionNode.id} region.\n`
+      `getValueFromDataSet: Failed to get ${dsName} context for the ${this.region.regionNode.id} region.\n`,
     );
   }
 
@@ -4705,15 +4619,13 @@ Spry.Data.Region.ProcessingContext.prototype.getValueFromDataSet = function () {
 };
 
 // Define a short-hand name for developers.
-Spry.Data.Region.ProcessingContext.prototype.$v =
-  Spry.Data.Region.ProcessingContext.prototype.getValueFromDataSet;
+Spry.Data.Region.ProcessingContext.prototype.$v = Spry.Data.Region.ProcessingContext.prototype.getValueFromDataSet;
 
-Spry.Data.Region.ProcessingContext.prototype.getCurrentRowForDataSet =
-  function (dataSet) {
-    const dsc = this.getDataSetContext(dataSet);
-    if (dsc) return dsc.getCurrentRow();
-    return null;
-  };
+Spry.Data.Region.ProcessingContext.prototype.getCurrentRowForDataSet = function (dataSet) {
+  const dsc = this.getDataSetContext(dataSet);
+  if (dsc) return dsc.getCurrentRow();
+  return null;
+};
 
 Spry.Data.Region.Token = function (tokenType, dataSet, data, regionStr) {
   const self = this;

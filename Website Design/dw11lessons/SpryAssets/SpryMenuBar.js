@@ -59,15 +59,14 @@ Spry.Widget.MenuBar.prototype.init = function (element, opts) {
   // represents the current (sub)menu we are operating on
   this.currMenu = null;
 
-  const isie =
-    typeof document.all !== "undefined" &&
-    typeof window.opera === "undefined" &&
-    navigator.vendor != "KDE";
+  const isie = typeof document.all !== 'undefined'
+    && typeof window.opera === 'undefined'
+    && navigator.vendor != 'KDE';
   if (
-    typeof document.getElementById === "undefined" ||
-    (navigator.vendor == "Apple Computer, Inc." &&
-      typeof window.XMLHttpRequest === "undefined") ||
-    (isie && typeof document.uniqueID === "undefined")
+    typeof document.getElementById === 'undefined'
+    || (navigator.vendor == 'Apple Computer, Inc.'
+      && typeof window.XMLHttpRequest === 'undefined')
+    || (isie && typeof document.uniqueID === 'undefined')
   ) {
     // bail on older unsupported browsers
     return;
@@ -83,37 +82,37 @@ Spry.Widget.MenuBar.prototype.init = function (element, opts) {
 
   if (this.element) {
     this.currMenu = this.element;
-    const items = this.element.getElementsByTagName("li");
+    const items = this.element.getElementsByTagName('li');
     for (var i = 0; i < items.length; i++) {
       this.initialize(items[i], element, isie);
       if (isie) {
-        this.addClassName(items[i], "MenuBarItemIE");
-        items[i].style.position = "static";
+        this.addClassName(items[i], 'MenuBarItemIE');
+        items[i].style.position = 'static';
       }
     }
     if (isie) {
-      if (this.hasClassName(this.element, "MenuBarVertical")) {
-        this.element.style.position = "relative";
+      if (this.hasClassName(this.element, 'MenuBarVertical')) {
+        this.element.style.position = 'relative';
       }
-      const linkitems = this.element.getElementsByTagName("a");
+      const linkitems = this.element.getElementsByTagName('a');
       for (var i = 0; i < linkitems.length; i++) {
-        linkitems[i].style.position = "relative";
+        linkitems[i].style.position = 'relative';
       }
     }
   }
 };
 
 Spry.Widget.MenuBar.prototype.getElement = function (ele) {
-  if (ele && typeof ele === "string") return document.getElementById(ele);
+  if (ele && typeof ele === 'string') return document.getElementById(ele);
   return ele;
 };
 
 Spry.Widget.MenuBar.prototype.hasClassName = function (ele, className) {
   if (
-    !ele ||
-    !className ||
-    !ele.className ||
-    ele.className.search(new RegExp(`\\b${className}\\b`)) == -1
+    !ele
+    || !className
+    || !ele.className
+    || ele.className.search(new RegExp(`\\b${className}\\b`)) == -1
   ) {
     return false;
   }
@@ -122,14 +121,14 @@ Spry.Widget.MenuBar.prototype.hasClassName = function (ele, className) {
 
 Spry.Widget.MenuBar.prototype.addClassName = function (ele, className) {
   if (!ele || !className || this.hasClassName(ele, className)) return;
-  ele.className += (ele.className ? " " : "") + className;
+  ele.className += (ele.className ? ' ' : '') + className;
 };
 
 Spry.Widget.MenuBar.prototype.removeClassName = function (ele, className) {
   if (!ele || !className || !this.hasClassName(ele, className)) return;
   ele.className = ele.className.replace(
-    new RegExp(`\\s*\\b${className}\\b`, "g"),
-    ""
+    new RegExp(`\\s*\\b${className}\\b`, 'g'),
+    '',
   );
 };
 
@@ -139,7 +138,7 @@ Spry.Widget.MenuBar.prototype.addEventListener = function (
   element,
   eventType,
   handler,
-  capture
+  capture,
 ) {
   try {
     if (element.addEventListener) {
@@ -153,9 +152,9 @@ Spry.Widget.MenuBar.prototype.addEventListener = function (
 // createIframeLayer for Menu Bar
 // creates an IFRAME underneath a menu so that it will show above form controls and ActiveX
 Spry.Widget.MenuBar.prototype.createIframeLayer = function (menu) {
-  const layer = document.createElement("iframe");
-  layer.tabIndex = "-1";
-  layer.src = "javascript:false;";
+  const layer = document.createElement('iframe');
+  layer.tabIndex = '-1';
+  layer.src = 'javascript:false;';
   menu.parentNode.appendChild(layer);
 
   layer.style.left = `${menu.offsetLeft}px`;
@@ -167,7 +166,7 @@ Spry.Widget.MenuBar.prototype.createIframeLayer = function (menu) {
 // removeIframeLayer for Menu Bar
 // removes an IFRAME underneath a menu to reveal any form controls and ActiveX
 Spry.Widget.MenuBar.prototype.removeIframeLayer = function (menu) {
-  const layers = menu.parentNode.getElementsByTagName("iframe");
+  const layers = menu.parentNode.getElementsByTagName('iframe');
   while (layers.length > 0) {
     layers[0].parentNode.removeChild(layers[0]);
   }
@@ -176,20 +175,20 @@ Spry.Widget.MenuBar.prototype.removeIframeLayer = function (menu) {
 // clearMenus for Menu Bar
 // root is the top level unordered list (<ul> tag)
 Spry.Widget.MenuBar.prototype.clearMenus = function (root) {
-  const menus = root.getElementsByTagName("ul");
+  const menus = root.getElementsByTagName('ul');
   for (let i = 0; i < menus.length; i++) {
     this.hideSubmenu(menus[i]);
   }
-  this.removeClassName(this.element, "MenuBarActive");
+  this.removeClassName(this.element, 'MenuBarActive');
 };
 
 // bubbledTextEvent for Menu Bar
 // identify bubbled up text events in Safari so we can ignore them
 Spry.Widget.MenuBar.prototype.bubbledTextEvent = function () {
   return (
-    navigator.vendor == "Apple Computer, Inc." &&
-    (event.target == event.relatedTarget.parentNode ||
-      (event.eventPhase == 3 && event.target.parentNode == event.relatedTarget))
+    navigator.vendor == 'Apple Computer, Inc.'
+    && (event.target == event.relatedTarget.parentNode
+      || (event.eventPhase == 3 && event.target.parentNode == event.relatedTarget))
   );
 };
 
@@ -202,38 +201,38 @@ Spry.Widget.MenuBar.prototype.showSubmenu = function (menu) {
   }
 
   if (menu) {
-    this.addClassName(menu, "MenuBarSubmenuVisible");
+    this.addClassName(menu, 'MenuBarSubmenuVisible');
     if (
-      typeof document.all !== "undefined" &&
-      typeof window.opera === "undefined" &&
-      navigator.vendor != "KDE"
+      typeof document.all !== 'undefined'
+      && typeof window.opera === 'undefined'
+      && navigator.vendor != 'KDE'
     ) {
       if (
-        !this.hasClassName(this.element, "MenuBarHorizontal") ||
-        menu.parentNode.parentNode != this.element
+        !this.hasClassName(this.element, 'MenuBarHorizontal')
+        || menu.parentNode.parentNode != this.element
       ) {
         menu.style.top = `${menu.parentNode.offsetTop}px`;
       }
     }
-    if (typeof document.uniqueID !== "undefined") {
+    if (typeof document.uniqueID !== 'undefined') {
       this.createIframeLayer(menu);
     }
   }
-  this.addClassName(this.element, "MenuBarActive");
+  this.addClassName(this.element, 'MenuBarActive');
 };
 
 // hideSubmenu for Menu Bar
 // remove the proper CSS class on this menu to hide it
 Spry.Widget.MenuBar.prototype.hideSubmenu = function (menu) {
   if (menu) {
-    this.removeClassName(menu, "MenuBarSubmenuVisible");
+    this.removeClassName(menu, 'MenuBarSubmenuVisible');
     if (
-      typeof document.all !== "undefined" &&
-      typeof window.opera === "undefined" &&
-      navigator.vendor != "KDE"
+      typeof document.all !== 'undefined'
+      && typeof window.opera === 'undefined'
+      && navigator.vendor != 'KDE'
     ) {
-      menu.style.top = "";
-      menu.style.left = "";
+      menu.style.top = '';
+      menu.style.left = '';
     }
     this.removeIframeLayer(menu);
   }
@@ -245,13 +244,13 @@ Spry.Widget.MenuBar.prototype.hideSubmenu = function (menu) {
 Spry.Widget.MenuBar.prototype.initialize = function (listitem, element, isie) {
   let opentime;
   let closetime;
-  const link = listitem.getElementsByTagName("a")[0];
-  const submenus = listitem.getElementsByTagName("ul");
+  const link = listitem.getElementsByTagName('a')[0];
+  const submenus = listitem.getElementsByTagName('ul');
   const menu = submenus.length > 0 ? submenus[0] : null;
 
   let hasSubMenu = false;
   if (menu) {
-    this.addClassName(link, "MenuBarItemSubmenu");
+    this.addClassName(link, 'MenuBarItemSubmenu');
     hasSubMenu = true;
   }
 
@@ -275,7 +274,7 @@ Spry.Widget.MenuBar.prototype.initialize = function (listitem, element, isie) {
 
   this.addEventListener(
     listitem,
-    "mouseover",
+    'mouseover',
     (e) => {
       if (self.bubbledTextEvent()) {
         // ignore bubbled text events
@@ -288,28 +287,27 @@ Spry.Widget.MenuBar.prototype.initialize = function (listitem, element, isie) {
       // show menu highlighting
       self.addClassName(
         link,
-        hasSubMenu ? "MenuBarItemSubmenuHover" : "MenuBarItemHover"
+        hasSubMenu ? 'MenuBarItemSubmenuHover' : 'MenuBarItemHover',
       );
-      if (menu && !self.hasClassName(menu, "MenuBarSubmenuVisible")) {
+      if (menu && !self.hasClassName(menu, 'MenuBarSubmenuVisible')) {
         opentime = window.setTimeout(() => {
           self.showSubmenu(menu);
         }, 250);
       }
     },
-    false
+    false,
   );
 
   this.addEventListener(
     listitem,
-    "mouseout",
+    'mouseout',
     (e) => {
       if (self.bubbledTextEvent()) {
         // ignore bubbled text events
         return;
       }
 
-      const related =
-        typeof e.relatedTarget !== "undefined" ? e.relatedTarget : e.toElement;
+      const related = typeof e.relatedTarget !== 'undefined' ? e.relatedTarget : e.toElement;
       if (!listitem.contains(related)) {
         clearTimeout(opentime);
         self.currMenu = listitem;
@@ -317,7 +315,7 @@ Spry.Widget.MenuBar.prototype.initialize = function (listitem, element, isie) {
         // remove menu highlighting
         self.removeClassName(
           link,
-          hasSubMenu ? "MenuBarItemSubmenuHover" : "MenuBarItemHover"
+          hasSubMenu ? 'MenuBarItemSubmenuHover' : 'MenuBarItemHover',
         );
         if (menu) {
           closetime = window.setTimeout(() => {
@@ -326,6 +324,6 @@ Spry.Widget.MenuBar.prototype.initialize = function (listitem, element, isie) {
         }
       }
     },
-    false
+    false,
   );
 };
