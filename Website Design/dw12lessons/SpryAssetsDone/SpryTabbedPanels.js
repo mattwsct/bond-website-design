@@ -34,10 +34,10 @@ if (!Spry.Widget) Spry.Widget = {};
 Spry.Widget.TabbedPanels = function (element, opts) {
   this.element = this.getElement(element);
   this.defaultTab = 0; // Show the first panel by default.
-  this.tabSelectedClass = 'TabbedPanelsTabSelected';
-  this.tabHoverClass = 'TabbedPanelsTabHover';
-  this.tabFocusedClass = 'TabbedPanelsTabFocused';
-  this.panelVisibleClass = 'TabbedPanelsContentVisible';
+  this.tabSelectedClass = "TabbedPanelsTabSelected";
+  this.tabHoverClass = "TabbedPanelsTabHover";
+  this.tabFocusedClass = "TabbedPanelsTabFocused";
+  this.panelVisibleClass = "TabbedPanelsContentVisible";
   this.focusElement = null;
   this.hasFocus = false;
   this.currentTabIndex = 0;
@@ -50,7 +50,7 @@ Spry.Widget.TabbedPanels = function (element, opts) {
   // If the defaultTab is expressed as a number/index, convert
   // it to an element.
 
-  if (typeof this.defaultTab === 'number') {
+  if (typeof this.defaultTab === "number") {
     if (this.defaultTab < 0) this.defaultTab = 0;
     else {
       const count = this.getTabbedPanelCount();
@@ -70,7 +70,7 @@ Spry.Widget.TabbedPanels = function (element, opts) {
 };
 
 Spry.Widget.TabbedPanels.prototype.getElement = function (ele) {
-  if (ele && typeof ele === 'string') return document.getElementById(ele);
+  if (ele && typeof ele === "string") return document.getElementById(ele);
   return ele;
 };
 
@@ -86,31 +86,33 @@ Spry.Widget.TabbedPanels.prototype.getElementChildren = function (element) {
 
 Spry.Widget.TabbedPanels.prototype.addClassName = function (ele, className) {
   if (
-    !ele
-    || !className
-    || (ele.className
-      && ele.className.search(new RegExp(`\\b${className}\\b`)) != -1)
-  ) return;
-  ele.className += (ele.className ? ' ' : '') + className;
+    !ele ||
+    !className ||
+    (ele.className &&
+      ele.className.search(new RegExp(`\\b${className}\\b`)) != -1)
+  )
+    return;
+  ele.className += (ele.className ? " " : "") + className;
 };
 
 Spry.Widget.TabbedPanels.prototype.removeClassName = function (ele, className) {
   if (
-    !ele
-    || !className
-    || (ele.className
-      && ele.className.search(new RegExp(`\\b${className}\\b`)) == -1)
-  ) return;
+    !ele ||
+    !className ||
+    (ele.className &&
+      ele.className.search(new RegExp(`\\b${className}\\b`)) == -1)
+  )
+    return;
   ele.className = ele.className.replace(
-    new RegExp(`\\s*\\b${className}\\b`, 'g'),
-    '',
+    new RegExp(`\\s*\\b${className}\\b`, "g"),
+    ""
   );
 };
 
 Spry.Widget.TabbedPanels.setOptions = function (
   obj,
   optionsObj,
-  ignoreUndefinedProps,
+  ignoreUndefinedProps
 ) {
   if (!optionsObj) return;
   for (const optionName in optionsObj) {
@@ -177,11 +179,13 @@ Spry.Widget.TabbedPanels.addEventListener = function (
   element,
   eventType,
   handler,
-  capture,
+  capture
 ) {
   try {
-    if (element.addEventListener) element.addEventListener(eventType, handler, capture);
-    else if (element.attachEvent) element.attachEvent(`on${eventType}`, handler);
+    if (element.addEventListener)
+      element.addEventListener(eventType, handler, capture);
+    else if (element.attachEvent)
+      element.attachEvent(`on${eventType}`, handler);
   } catch (e) {}
 };
 
@@ -229,16 +233,18 @@ Spry.Widget.TabbedPanels.KEY_RIGHT = 39;
 Spry.Widget.TabbedPanels.prototype.onTabKeyDown = function (e, tab) {
   const key = e.keyCode;
   if (
-    !this.hasFocus
-    || (key != this.previousPanelKeyCode && key != this.nextPanelKeyCode)
-  ) return true;
+    !this.hasFocus ||
+    (key != this.previousPanelKeyCode && key != this.nextPanelKeyCode)
+  )
+    return true;
 
   const tabs = this.getTabs();
   for (let i = 0; i < tabs.length; i++) {
     if (tabs[i] == tab) {
       let el = false;
       if (key == this.previousPanelKeyCode && i > 0) el = tabs[i - 1];
-      else if (key == this.nextPanelKeyCode && i < tabs.length - 1) el = tabs[i + 1];
+      else if (key == this.nextPanelKeyCode && i < tabs.length - 1)
+        el = tabs[i + 1];
 
       if (el) {
         this.showPanel(el);
@@ -272,26 +278,26 @@ Spry.Widget.TabbedPanels.prototype.preorderTraversal = function (root, func) {
 
 Spry.Widget.TabbedPanels.prototype.addPanelEventListeners = function (
   tab,
-  panel,
+  panel
 ) {
   const self = this;
   Spry.Widget.TabbedPanels.addEventListener(
     tab,
-    'click',
+    "click",
     (e) => self.onTabClick(e, tab),
-    false,
+    false
   );
   Spry.Widget.TabbedPanels.addEventListener(
     tab,
-    'mouseover',
+    "mouseover",
     (e) => self.onTabMouseOver(e, tab),
-    false,
+    false
   );
   Spry.Widget.TabbedPanels.addEventListener(
     tab,
-    'mouseout',
+    "mouseout",
     (e) => self.onTabMouseOut(e, tab),
-    false,
+    false
   );
 
   if (this.enableKeyboardNavigation) {
@@ -307,12 +313,13 @@ Spry.Widget.TabbedPanels.prototype.addPanelEventListeners = function (
 
     this.preorderTraversal(tab, (node) => {
       if (node.nodeType == 1 /* NODE.ELEMENT_NODE */) {
-        const tabIndexAttr = tab.attributes.getNamedItem('tabindex');
+        const tabIndexAttr = tab.attributes.getNamedItem("tabindex");
         if (tabIndexAttr) {
           tabIndexEle = node;
           return true;
         }
-        if (!tabAnchorEle && node.nodeName.toLowerCase() == 'a') tabAnchorEle = node;
+        if (!tabAnchorEle && node.nodeName.toLowerCase() == "a")
+          tabAnchorEle = node;
       }
       return false;
     });
@@ -323,21 +330,21 @@ Spry.Widget.TabbedPanels.prototype.addPanelEventListeners = function (
     if (this.focusElement) {
       Spry.Widget.TabbedPanels.addEventListener(
         this.focusElement,
-        'focus',
+        "focus",
         (e) => self.onTabFocus(e, tab),
-        false,
+        false
       );
       Spry.Widget.TabbedPanels.addEventListener(
         this.focusElement,
-        'blur',
+        "blur",
         (e) => self.onTabBlur(e, tab),
-        false,
+        false
       );
       Spry.Widget.TabbedPanels.addEventListener(
         this.focusElement,
-        'keydown',
+        "keydown",
         (e) => self.onTabKeyDown(e, tab),
-        false,
+        false
       );
     }
   }
@@ -346,7 +353,7 @@ Spry.Widget.TabbedPanels.prototype.addPanelEventListeners = function (
 Spry.Widget.TabbedPanels.prototype.showPanel = function (elementOrIndex) {
   let tpIndex = -1;
 
-  if (typeof elementOrIndex === 'number') tpIndex = elementOrIndex;
+  if (typeof elementOrIndex === "number") tpIndex = elementOrIndex;
   // Must be the element for the tab or content panel.
   else tpIndex = this.getTabIndex(elementOrIndex);
 
@@ -362,14 +369,14 @@ Spry.Widget.TabbedPanels.prototype.showPanel = function (elementOrIndex) {
       if (tabs[i]) this.removeClassName(tabs[i], this.tabSelectedClass);
       if (panels[i]) {
         this.removeClassName(panels[i], this.panelVisibleClass);
-        panels[i].style.display = 'none';
+        panels[i].style.display = "none";
       }
     }
   }
 
   this.addClassName(tabs[tpIndex], this.tabSelectedClass);
   this.addClassName(panels[tpIndex], this.panelVisibleClass);
-  panels[tpIndex].style.display = 'block';
+  panels[tpIndex].style.display = "block";
 
   this.currentTabIndex = tpIndex;
 };
@@ -379,7 +386,8 @@ Spry.Widget.TabbedPanels.prototype.attachBehaviors = function (element) {
   const panels = this.getContentPanels();
   const panelCount = this.getTabbedPanelCount();
 
-  for (let i = 0; i < panelCount; i++) this.addPanelEventListeners(tabs[i], panels[i]);
+  for (let i = 0; i < panelCount; i++)
+    this.addPanelEventListeners(tabs[i], panels[i]);
 
   this.showPanel(this.defaultTab);
 };

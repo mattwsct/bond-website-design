@@ -2,9 +2,9 @@
 // Flash Player Version Detection
 // Detect Client Browser type
 // Copyright 2005-2007 Adobe Systems Incorporated.  All rights reserved.
-const isIE = navigator.appVersion.indexOf('MSIE') != -1;
-const isWin = navigator.appVersion.toLowerCase().indexOf('win') != -1;
-const isOpera = navigator.userAgent.indexOf('Opera') != -1;
+const isIE = navigator.appVersion.indexOf("MSIE") != -1;
+const isWin = navigator.appVersion.toLowerCase().indexOf("win") != -1;
+const isOpera = navigator.userAgent.indexOf("Opera") != -1;
 
 function ControlVersion() {
   let version;
@@ -15,51 +15,51 @@ function ControlVersion() {
 
   try {
     // version will be set for 7.X or greater players
-    axo = new ActiveXObject('ShockwaveFlash.ShockwaveFlash.7');
-    version = axo.GetVariable('$version');
+    axo = new ActiveXObject("ShockwaveFlash.ShockwaveFlash.7");
+    version = axo.GetVariable("$version");
   } catch (e) {}
 
   if (!version) {
     try {
       // version will be set for 6.X players only
-      axo = new ActiveXObject('ShockwaveFlash.ShockwaveFlash.6');
+      axo = new ActiveXObject("ShockwaveFlash.ShockwaveFlash.6");
 
       // installed player is some revision of 6.0
       // GetVariable("$version") crashes for versions 6.0.22 through 6.0.29,
       // so we have to be careful.
 
       // default to the first public version
-      version = 'WIN 6,0,21,0';
+      version = "WIN 6,0,21,0";
 
       // throws if AllowScripAccess does not exist (introduced in 6.0r47)
-      axo.AllowScriptAccess = 'always';
+      axo.AllowScriptAccess = "always";
 
       // safe to call for 6.0r47 or greater
-      version = axo.GetVariable('$version');
+      version = axo.GetVariable("$version");
     } catch (e) {}
   }
 
   if (!version) {
     try {
       // version will be set for 4.X or 5.X player
-      axo = new ActiveXObject('ShockwaveFlash.ShockwaveFlash.3');
-      version = axo.GetVariable('$version');
+      axo = new ActiveXObject("ShockwaveFlash.ShockwaveFlash.3");
+      version = axo.GetVariable("$version");
     } catch (e) {}
   }
 
   if (!version) {
     try {
       // version will be set for 3.X player
-      axo = new ActiveXObject('ShockwaveFlash.ShockwaveFlash.3');
-      version = 'WIN 3,0,18,0';
+      axo = new ActiveXObject("ShockwaveFlash.ShockwaveFlash.3");
+      version = "WIN 3,0,18,0";
     } catch (e) {}
   }
 
   if (!version) {
     try {
       // version will be set for 2.X player
-      axo = new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
-      version = 'WIN 2,0,0,11';
+      axo = new ActiveXObject("ShockwaveFlash.ShockwaveFlash");
+      version = "WIN 2,0,0,11";
     } catch (e) {
       version = -1;
     }
@@ -75,27 +75,28 @@ function GetSwfVer() {
 
   if (navigator.plugins != null && navigator.plugins.length > 0) {
     if (
-      navigator.plugins['Shockwave Flash 2.0']
-      || navigator.plugins['Shockwave Flash']
+      navigator.plugins["Shockwave Flash 2.0"] ||
+      navigator.plugins["Shockwave Flash"]
     ) {
-      const swVer2 = navigator.plugins['Shockwave Flash 2.0'] ? ' 2.0' : '';
-      const flashDescription = navigator.plugins[`Shockwave Flash${swVer2}`].description;
-      const descArray = flashDescription.split(' ');
-      const tempArrayMajor = descArray[2].split('.');
+      const swVer2 = navigator.plugins["Shockwave Flash 2.0"] ? " 2.0" : "";
+      const flashDescription =
+        navigator.plugins[`Shockwave Flash${swVer2}`].description;
+      const descArray = flashDescription.split(" ");
+      const tempArrayMajor = descArray[2].split(".");
       const versionMajor = tempArrayMajor[0];
       const versionMinor = tempArrayMajor[1];
       let versionRevision = descArray[3];
-      if (versionRevision == '') {
+      if (versionRevision == "") {
         versionRevision = descArray[4];
       }
-      if (versionRevision[0] == 'd') {
+      if (versionRevision[0] == "d") {
         versionRevision = versionRevision.substring(1);
-      } else if (versionRevision[0] == 'r') {
+      } else if (versionRevision[0] == "r") {
         versionRevision = versionRevision.substring(1);
-        if (versionRevision.indexOf('d') > 0) {
+        if (versionRevision.indexOf("d") > 0) {
           versionRevision = versionRevision.substring(
             0,
-            versionRevision.indexOf('d'),
+            versionRevision.indexOf("d")
           );
         }
       }
@@ -103,11 +104,14 @@ function GetSwfVer() {
     }
   }
   // MSN/WebTV 2.6 supports Flash 4
-  else if (navigator.userAgent.toLowerCase().indexOf('webtv/2.6') != -1) flashVer = 4;
+  else if (navigator.userAgent.toLowerCase().indexOf("webtv/2.6") != -1)
+    flashVer = 4;
   // WebTV 2.5 supports Flash 3
-  else if (navigator.userAgent.toLowerCase().indexOf('webtv/2.5') != -1) flashVer = 3;
+  else if (navigator.userAgent.toLowerCase().indexOf("webtv/2.5") != -1)
+    flashVer = 3;
   // older WebTV supports Flash 2
-  else if (navigator.userAgent.toLowerCase().indexOf('webtv') != -1) flashVer = 2;
+  else if (navigator.userAgent.toLowerCase().indexOf("webtv") != -1)
+    flashVer = 2;
   else if (isIE && isWin && !isOpera) {
     flashVer = ControlVersion();
   }
@@ -123,11 +127,11 @@ function DetectFlashVer(reqMajorVer, reqMinorVer, reqRevision) {
   if (versionStr != 0) {
     if (isIE && isWin && !isOpera) {
       // Given "WIN 2,0,0,11"
-      tempArray = versionStr.split(' '); // ["WIN", "2,0,0,11"]
+      tempArray = versionStr.split(" "); // ["WIN", "2,0,0,11"]
       tempString = tempArray[1]; // "2,0,0,11"
-      versionArray = tempString.split(','); // ['2', '0', '0', '11']
+      versionArray = tempString.split(","); // ['2', '0', '0', '11']
     } else {
-      versionArray = versionStr.split('.');
+      versionArray = versionStr.split(".");
     }
     const versionMajor = versionArray[0];
     const versionMinor = versionArray[1];
@@ -148,28 +152,28 @@ function DetectFlashVer(reqMajorVer, reqMinorVer, reqRevision) {
 }
 
 function AC_AddExtension(src, ext) {
-  if (src.indexOf('?') != -1) return src.replace(/\?/, `${ext}?`);
+  if (src.indexOf("?") != -1) return src.replace(/\?/, `${ext}?`);
   return src + ext;
 }
 
 function AC_Generateobj(objAttrs, params, embedAttrs) {
-  let str = '';
+  let str = "";
   if (isIE && isWin && !isOpera) {
-    str += '<object ';
+    str += "<object ";
     for (var i in objAttrs) {
       str += `${i}="${objAttrs[i]}" `;
     }
-    str += '>';
+    str += ">";
     for (var i in params) {
       str += `<param name="${i}" value="${params[i]}" /> `;
     }
-    str += '</object>';
+    str += "</object>";
   } else {
-    str += '<embed ';
+    str += "<embed ";
     for (var i in embedAttrs) {
       str += `${i}="${embedAttrs[i]}" `;
     }
-    str += '>';
+    str += ">";
   }
 
   document.write(str);
@@ -178,10 +182,10 @@ function AC_Generateobj(objAttrs, params, embedAttrs) {
 function AC_FL_RunContent() {
   const ret = AC_GetArgs(
     arguments,
-    '.swf',
-    'movie',
-    'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000',
-    'application/x-shockwave-flash',
+    ".swf",
+    "movie",
+    "clsid:d27cdb6e-ae6d-11cf-96b8-444553540000",
+    "application/x-shockwave-flash"
   );
   AC_Generateobj(ret.objAttrs, ret.params, ret.embedAttrs);
 }
@@ -189,10 +193,10 @@ function AC_FL_RunContent() {
 function AC_SW_RunContent() {
   const ret = AC_GetArgs(
     arguments,
-    '.dcr',
-    'src',
-    'clsid:166B1BCA-3F9C-11CF-8075-444553540000',
-    null,
+    ".dcr",
+    "src",
+    "clsid:166B1BCA-3F9C-11CF-8075-444553540000",
+    null
   );
   AC_Generateobj(ret.objAttrs, ret.params, ret.embedAttrs);
 }
@@ -206,69 +210,69 @@ function AC_GetArgs(args, ext, srcParamName, classid, mimeType) {
     const currArg = args[i].toLowerCase();
 
     switch (currArg) {
-      case 'classid':
+      case "classid":
         break;
-      case 'pluginspage':
+      case "pluginspage":
         ret.embedAttrs[args[i]] = args[i + 1];
         break;
-      case 'src':
-      case 'movie':
+      case "src":
+      case "movie":
         args[i + 1] = AC_AddExtension(args[i + 1], ext);
         ret.embedAttrs.src = args[i + 1];
         ret.params[srcParamName] = args[i + 1];
         break;
-      case 'onafterupdate':
-      case 'onbeforeupdate':
-      case 'onblur':
-      case 'oncellchange':
-      case 'onclick':
-      case 'ondblclick':
-      case 'ondrag':
-      case 'ondragend':
-      case 'ondragenter':
-      case 'ondragleave':
-      case 'ondragover':
-      case 'ondrop':
-      case 'onfinish':
-      case 'onfocus':
-      case 'onhelp':
-      case 'onmousedown':
-      case 'onmouseup':
-      case 'onmouseover':
-      case 'onmousemove':
-      case 'onmouseout':
-      case 'onkeypress':
-      case 'onkeydown':
-      case 'onkeyup':
-      case 'onload':
-      case 'onlosecapture':
-      case 'onpropertychange':
-      case 'onreadystatechange':
-      case 'onrowsdelete':
-      case 'onrowenter':
-      case 'onrowexit':
-      case 'onrowsinserted':
-      case 'onstart':
-      case 'onscroll':
-      case 'onbeforeeditfocus':
-      case 'onactivate':
-      case 'onbeforedeactivate':
-      case 'ondeactivate':
-      case 'type':
-      case 'codebase':
-      case 'id':
+      case "onafterupdate":
+      case "onbeforeupdate":
+      case "onblur":
+      case "oncellchange":
+      case "onclick":
+      case "ondblclick":
+      case "ondrag":
+      case "ondragend":
+      case "ondragenter":
+      case "ondragleave":
+      case "ondragover":
+      case "ondrop":
+      case "onfinish":
+      case "onfocus":
+      case "onhelp":
+      case "onmousedown":
+      case "onmouseup":
+      case "onmouseover":
+      case "onmousemove":
+      case "onmouseout":
+      case "onkeypress":
+      case "onkeydown":
+      case "onkeyup":
+      case "onload":
+      case "onlosecapture":
+      case "onpropertychange":
+      case "onreadystatechange":
+      case "onrowsdelete":
+      case "onrowenter":
+      case "onrowexit":
+      case "onrowsinserted":
+      case "onstart":
+      case "onscroll":
+      case "onbeforeeditfocus":
+      case "onactivate":
+      case "onbeforedeactivate":
+      case "ondeactivate":
+      case "type":
+      case "codebase":
+      case "id":
         ret.objAttrs[args[i]] = args[i + 1];
         break;
-      case 'width':
-      case 'height':
-      case 'align':
-      case 'vspace':
-      case 'hspace':
-      case 'class':
-      case 'title':
-      case 'accesskey':
-      case 'name':
-      case 'tabindex':
+      case "width":
+      case "height":
+      case "align":
+      case "vspace":
+      case "hspace":
+      case "class":
+      case "title":
+      case "accesskey":
+      case "name":
+      case "tabindex":
         ret.embedAttrs[args[i]] = ret.objAttrs[args[i]] = args[i + 1];
         break;
       default:

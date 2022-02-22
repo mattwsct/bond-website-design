@@ -34,10 +34,10 @@ if (!Spry.Widget) Spry.Widget = {};
 Spry.Widget.CollapsiblePanel = function (element, opts) {
   this.element = this.getElement(element);
   this.focusElement = null;
-  this.hoverClass = 'CollapsiblePanelTabHover';
-  this.openClass = 'CollapsiblePanelOpen';
-  this.closedClass = 'CollapsiblePanelClosed';
-  this.focusedClass = 'CollapsiblePanelFocused';
+  this.hoverClass = "CollapsiblePanelTabHover";
+  this.openClass = "CollapsiblePanelOpen";
+  this.closedClass = "CollapsiblePanelClosed";
+  this.focusedClass = "CollapsiblePanelFocused";
   this.enableAnimation = true;
   this.enableKeyboardNavigation = true;
   this.animator = null;
@@ -53,49 +53,52 @@ Spry.Widget.CollapsiblePanel = function (element, opts) {
 };
 
 Spry.Widget.CollapsiblePanel.prototype.getElement = function (ele) {
-  if (ele && typeof ele === 'string') return document.getElementById(ele);
+  if (ele && typeof ele === "string") return document.getElementById(ele);
   return ele;
 };
 
 Spry.Widget.CollapsiblePanel.prototype.addClassName = function (
   ele,
-  className,
+  className
 ) {
   if (
-    !ele
-    || !className
-    || (ele.className
-      && ele.className.search(new RegExp(`\\b${className}\\b`)) != -1)
-  ) return;
-  ele.className += (ele.className ? ' ' : '') + className;
+    !ele ||
+    !className ||
+    (ele.className &&
+      ele.className.search(new RegExp(`\\b${className}\\b`)) != -1)
+  )
+    return;
+  ele.className += (ele.className ? " " : "") + className;
 };
 
 Spry.Widget.CollapsiblePanel.prototype.removeClassName = function (
   ele,
-  className,
+  className
 ) {
   if (
-    !ele
-    || !className
-    || (ele.className
-      && ele.className.search(new RegExp(`\\b${className}\\b`)) == -1)
-  ) return;
+    !ele ||
+    !className ||
+    (ele.className &&
+      ele.className.search(new RegExp(`\\b${className}\\b`)) == -1)
+  )
+    return;
   ele.className = ele.className.replace(
-    new RegExp(`\\s*\\b${className}\\b`, 'g'),
-    '',
+    new RegExp(`\\s*\\b${className}\\b`, "g"),
+    ""
   );
 };
 
 Spry.Widget.CollapsiblePanel.prototype.hasClassName = function (
   ele,
-  className,
+  className
 ) {
   if (
-    !ele
-    || !className
-    || !ele.className
-    || ele.className.search(new RegExp(`\\b${className}\\b`)) == -1
-  ) return false;
+    !ele ||
+    !className ||
+    !ele.className ||
+    ele.className.search(new RegExp(`\\b${className}\\b`)) == -1
+  )
+    return false;
   return true;
 };
 
@@ -106,7 +109,7 @@ Spry.Widget.CollapsiblePanel.prototype.setDisplay = function (ele, display) {
 Spry.Widget.CollapsiblePanel.setOptions = function (
   obj,
   optionsObj,
-  ignoreUndefinedProps,
+  ignoreUndefinedProps
 ) {
   if (!optionsObj) return;
   for (const optionName in optionsObj) {
@@ -135,7 +138,7 @@ Spry.Widget.CollapsiblePanel.prototype.open = function () {
       transition: this.transition,
     });
     this.animator.start();
-  } else this.setDisplay(this.getContent(), 'block');
+  } else this.setDisplay(this.getContent(), "block");
 
   this.removeClassName(this.element, this.closedClass);
   this.addClassName(this.element, this.openClass);
@@ -148,10 +151,10 @@ Spry.Widget.CollapsiblePanel.prototype.close = function () {
     this.animator = new Spry.Widget.CollapsiblePanel.PanelAnimator(
       this,
       false,
-      { duration: this.duration, fps: this.fps, transition: this.transition },
+      { duration: this.duration, fps: this.fps, transition: this.transition }
     );
     this.animator.start();
-  } else this.setDisplay(this.getContent(), 'none');
+  } else this.setDisplay(this.getContent(), "none");
 
   this.removeClassName(this.element, this.openClass);
   this.addClassName(this.element, this.closedClass);
@@ -184,9 +187,10 @@ Spry.Widget.CollapsiblePanel.KEY_DOWN = 40;
 Spry.Widget.CollapsiblePanel.prototype.onKeyDown = function (e) {
   const key = e.keyCode;
   if (
-    !this.hasFocus
-    || (key != this.openPanelKeyCode && key != this.closePanelKeyCode)
-  ) return true;
+    !this.hasFocus ||
+    (key != this.openPanelKeyCode && key != this.closePanelKeyCode)
+  )
+    return true;
 
   if (this.isOpen() && key == this.closePanelKeyCode) this.close();
   else if (key == this.openPanelKeyCode) this.open();
@@ -209,21 +213,21 @@ Spry.Widget.CollapsiblePanel.prototype.attachPanelHandlers = function () {
   const self = this;
   Spry.Widget.CollapsiblePanel.addEventListener(
     tab,
-    'click',
+    "click",
     (e) => self.onTabClick(e),
-    false,
+    false
   );
   Spry.Widget.CollapsiblePanel.addEventListener(
     tab,
-    'mouseover',
+    "mouseover",
     (e) => self.onTabMouseOver(e),
-    false,
+    false
   );
   Spry.Widget.CollapsiblePanel.addEventListener(
     tab,
-    'mouseout',
+    "mouseout",
     (e) => self.onTabMouseOut(e),
-    false,
+    false
   );
 
   if (this.enableKeyboardNavigation) {
@@ -239,12 +243,13 @@ Spry.Widget.CollapsiblePanel.prototype.attachPanelHandlers = function () {
 
     this.preorderTraversal(tab, (node) => {
       if (node.nodeType == 1 /* NODE.ELEMENT_NODE */) {
-        const tabIndexAttr = tab.attributes.getNamedItem('tabindex');
+        const tabIndexAttr = tab.attributes.getNamedItem("tabindex");
         if (tabIndexAttr) {
           tabIndexEle = node;
           return true;
         }
-        if (!tabAnchorEle && node.nodeName.toLowerCase() == 'a') tabAnchorEle = node;
+        if (!tabAnchorEle && node.nodeName.toLowerCase() == "a")
+          tabAnchorEle = node;
       }
       return false;
     });
@@ -255,21 +260,21 @@ Spry.Widget.CollapsiblePanel.prototype.attachPanelHandlers = function () {
     if (this.focusElement) {
       Spry.Widget.CollapsiblePanel.addEventListener(
         this.focusElement,
-        'focus',
+        "focus",
         (e) => self.onFocus(e),
-        false,
+        false
       );
       Spry.Widget.CollapsiblePanel.addEventListener(
         this.focusElement,
-        'blur',
+        "blur",
         (e) => self.onBlur(e),
-        false,
+        false
       );
       Spry.Widget.CollapsiblePanel.addEventListener(
         this.focusElement,
-        'keydown',
+        "keydown",
         (e) => self.onKeyDown(e),
-        false,
+        false
       );
     }
   }
@@ -279,17 +284,19 @@ Spry.Widget.CollapsiblePanel.addEventListener = function (
   element,
   eventType,
   handler,
-  capture,
+  capture
 ) {
   try {
-    if (element.addEventListener) element.addEventListener(eventType, handler, capture);
-    else if (element.attachEvent) element.attachEvent(`on${eventType}`, handler);
+    if (element.addEventListener)
+      element.addEventListener(eventType, handler, capture);
+    else if (element.attachEvent)
+      element.attachEvent(`on${eventType}`, handler);
   } catch (e) {}
 };
 
 Spry.Widget.CollapsiblePanel.prototype.preorderTraversal = function (
   root,
-  func,
+  func
 ) {
   let stopTraversal = false;
   if (root) {
@@ -317,12 +324,12 @@ Spry.Widget.CollapsiblePanel.prototype.attachBehaviors = function () {
   if (this.contentIsOpen || this.hasClassName(panel, this.openClass)) {
     this.addClassName(panel, this.openClass);
     this.removeClassName(panel, this.closedClass);
-    this.setDisplay(content, 'block');
+    this.setDisplay(content, "block");
     this.contentIsOpen = true;
   } else {
     this.removeClassName(panel, this.openClass);
     this.addClassName(panel, this.closedClass);
-    this.setDisplay(content, 'none');
+    this.setDisplay(content, "none");
     this.contentIsOpen = false;
   }
 
@@ -365,7 +372,8 @@ Spry.Widget.CollapsiblePanel.PanelAnimator = function (panel, doOpen, opts) {
   this.duration = 500;
   this.startTime = 0;
 
-  this.transition = Spry.Widget.CollapsiblePanel.PanelAnimator.defaultTransition;
+  this.transition =
+    Spry.Widget.CollapsiblePanel.PanelAnimator.defaultTransition;
 
   this.onComplete = null;
 
@@ -380,22 +388,22 @@ Spry.Widget.CollapsiblePanel.PanelAnimator = function (panel, doOpen, opts) {
   const c = this.content;
 
   const curHeight = c.offsetHeight ? c.offsetHeight : 0;
-  this.fromHeight = doOpen && c.style.display == 'none' ? 0 : curHeight;
+  this.fromHeight = doOpen && c.style.display == "none" ? 0 : curHeight;
 
   if (!doOpen) this.toHeight = 0;
   else {
-    if (c.style.display == 'none') {
+    if (c.style.display == "none") {
       // The content area is not displayed so in order to calculate the extent
       // of the content inside it, we have to set its display to block.
 
-      c.style.visibility = 'hidden';
-      c.style.display = 'block';
+      c.style.visibility = "hidden";
+      c.style.display = "block";
     }
 
     // Clear the height property so we can calculate
     // the full height of the content we are going to show.
 
-    c.style.height = '';
+    c.style.height = "";
     this.toHeight = c.offsetHeight;
   }
 
@@ -403,16 +411,16 @@ Spry.Widget.CollapsiblePanel.PanelAnimator = function (panel, doOpen, opts) {
   this.overflow = c.style.overflow;
 
   c.style.height = `${this.fromHeight}px`;
-  c.style.visibility = 'visible';
-  c.style.overflow = 'hidden';
-  c.style.display = 'block';
+  c.style.visibility = "visible";
+  c.style.overflow = "hidden";
+  c.style.display = "block";
 };
 
 Spry.Widget.CollapsiblePanel.PanelAnimator.defaultTransition = function (
   time,
   begin,
   finish,
-  duration,
+  duration
 ) {
   time /= duration;
   return begin + (2 - time) * time * finish;
@@ -438,32 +446,33 @@ Spry.Widget.CollapsiblePanel.PanelAnimator.prototype.stop = function () {
   this.timer = null;
 };
 
-Spry.Widget.CollapsiblePanel.PanelAnimator.prototype.stepAnimation = function () {
-  const curTime = new Date().getTime();
-  const elapsedTime = curTime - this.startTime;
+Spry.Widget.CollapsiblePanel.PanelAnimator.prototype.stepAnimation =
+  function () {
+    const curTime = new Date().getTime();
+    const elapsedTime = curTime - this.startTime;
 
-  if (elapsedTime >= this.duration) {
-    if (!this.doOpen) this.content.style.display = 'none';
-    this.content.style.overflow = this.overflow;
-    this.content.style.height = `${this.toHeight}px`;
-    if (this.onComplete) this.onComplete();
-    return;
-  }
+    if (elapsedTime >= this.duration) {
+      if (!this.doOpen) this.content.style.display = "none";
+      this.content.style.overflow = this.overflow;
+      this.content.style.height = `${this.toHeight}px`;
+      if (this.onComplete) this.onComplete();
+      return;
+    }
 
-  const ht = this.transition(
-    elapsedTime,
-    this.fromHeight,
-    this.distance,
-    this.duration,
-  );
+    const ht = this.transition(
+      elapsedTime,
+      this.fromHeight,
+      this.distance,
+      this.duration
+    );
 
-  this.content.style.height = `${ht < 0 ? 0 : ht}px`;
+    this.content.style.height = `${ht < 0 ? 0 : ht}px`;
 
-  const self = this;
-  this.timer = setTimeout(() => {
-    self.stepAnimation();
-  }, this.interval);
-};
+    const self = this;
+    this.timer = setTimeout(() => {
+      self.stepAnimation();
+    }, this.interval);
+  };
 
 Spry.Widget.CollapsiblePanelGroup = function (element, opts) {
   this.element = this.getElement(element);
@@ -472,13 +481,16 @@ Spry.Widget.CollapsiblePanelGroup = function (element, opts) {
   this.attachBehaviors();
 };
 
-Spry.Widget.CollapsiblePanelGroup.prototype.setOptions = Spry.Widget.CollapsiblePanel.prototype.setOptions;
-Spry.Widget.CollapsiblePanelGroup.prototype.getElement = Spry.Widget.CollapsiblePanel.prototype.getElement;
-Spry.Widget.CollapsiblePanelGroup.prototype.getElementChildren = Spry.Widget.CollapsiblePanel.prototype.getElementChildren;
+Spry.Widget.CollapsiblePanelGroup.prototype.setOptions =
+  Spry.Widget.CollapsiblePanel.prototype.setOptions;
+Spry.Widget.CollapsiblePanelGroup.prototype.getElement =
+  Spry.Widget.CollapsiblePanel.prototype.getElement;
+Spry.Widget.CollapsiblePanelGroup.prototype.getElementChildren =
+  Spry.Widget.CollapsiblePanel.prototype.getElementChildren;
 
 Spry.Widget.CollapsiblePanelGroup.prototype.setElementWidget = function (
   element,
-  widget,
+  widget
 ) {
   if (!element || !widget) return;
   if (!element.spry) element.spry = new Object();
@@ -486,7 +498,7 @@ Spry.Widget.CollapsiblePanelGroup.prototype.setElementWidget = function (
 };
 
 Spry.Widget.CollapsiblePanelGroup.prototype.getElementWidget = function (
-  element,
+  element
 ) {
   return element && element.spry && element.spry.collapsiblePanel
     ? element.spry.collapsiblePanel
@@ -511,7 +523,7 @@ Spry.Widget.CollapsiblePanelGroup.prototype.attachBehaviors = function () {
     const cpanel = cpanels[i];
     this.setElementWidget(
       cpanel,
-      new Spry.Widget.CollapsiblePanel(cpanel, this.opts),
+      new Spry.Widget.CollapsiblePanel(cpanel, this.opts)
     );
   }
 };
