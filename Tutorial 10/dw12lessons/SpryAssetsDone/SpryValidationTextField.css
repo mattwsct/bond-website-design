@@ -29,8 +29,8 @@
 .textfieldMinCharsState .textfieldMinCharsMsg,
 .textfieldMaxCharsState .textfieldMaxCharsMsg {
   display: inline;
-  color: #cc3333;
-  border: 1px solid #cc3333;
+  color: #c33;
+  border: 1px solid #c33;
 }
 
 /* The next three group selectors control the way the core element (INPUT) looks like when the widget is in one of the states: * focus, required / invalid / minValue / maxValue / minChars / maxChars , valid 
@@ -64,7 +64,7 @@ input.textfieldMaxCharsState,
 /* When the widget has received focus, the INPUT has a yellow background applied on it. */
 .textfieldFocusState input,
 input.textfieldFocusState {
-  background-color: #ffffcc;
+  background-color: #ffc;
 }
 
 /* This class applies only for a short period of time and changes the way the text in the textbox looks like.
@@ -78,5 +78,5 @@ input.textfieldFlashText {
 /* When the widget has the hint message on, the hint text can be styled differently than the user typed text. */
 .textfieldHintState input,
 input.textfieldHintState {
-  /*color: red !important;*/
+  /* color: red !important; */
 }

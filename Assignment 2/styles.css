@@ -1,4 +1,5 @@
 @charset "utf-8";
+
 #Container {
   position: absolute;
   left: 10%;
@@ -8,10 +9,11 @@
   z-index: 1;
   right: 10%;
 }
+
 #Header {
   position: absolute;
-  left: 0px;
-  top: 0px;
+  left: 0;
+  top: 0;
   width: 980px;
   height: 180px;
   z-index: 1;
@@ -19,9 +21,10 @@
   text-align: right;
   padding: 10px;
 }
+
 #NavBar {
   position: absolute;
-  left: 0px;
+  left: 0;
   top: 200px;
   width: 980px;
   height: 30px;
@@ -33,9 +36,10 @@
   font-family: Tahoma, Geneva, sans-serif;
   font-weight: bold;
 }
+
 #Main {
   position: absolute;
-  left: 0px;
+  left: 0;
   top: 250px;
   width: 980px;
   height: 500px;
@@ -46,9 +50,10 @@
   color: #034569;
   overflow: auto;
 }
+
 #Footer {
   position: absolute;
-  left: 0px;
+  left: 0;
   top: 750px;
   width: 980px;
   height: 45px;
@@ -63,9 +68,11 @@
   text-align: left;
   padding-top: 5px;
 }
+
 body {
   background-color: #086ca2;
 }
+
 body,
 td,
 th {

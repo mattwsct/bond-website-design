@@ -27,11 +27,11 @@
  * want to style the TabbedPanels container.
  */
 .TabbedPanels {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   float: left;
   clear: none;
-  width: 100%; /* IE Hack to force proper layout when preceded by a paragraph. (hasLayout Bug)*/
+  width: 100%; /* IE Hack to force proper layout when preceded by a paragraph. (hasLayout Bug) */
 }
 
 /* This is the selector for the TabGroup. The TabGroup container houses
@@ -44,8 +44,8 @@
  * want to style the TabGroup container.
  */
 .TabbedPanelsTabGroup {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
 }
 
 /* This is the selector for the TabbedPanelsTab. This container houses
@@ -69,7 +69,7 @@
   top: 1px;
   float: left;
   padding: 4px 10px;
-  margin: 0px 1px 0px 0px;
+  margin: 0 1px 0 0;
   font: bold 0.7em sans-serif;
   background-color: #88b036;
   list-style: none;
@@ -77,8 +77,8 @@
   border-bottom: solid 1px #999;
   border-top: solid 1px #999;
   border-right: solid 1px #999;
-  -moz-user-select: none;
-  -khtml-user-select: none;
+  user-select: none;
+  user-select: none;
   cursor: pointer;
 }
 
@@ -192,7 +192,7 @@
  */
 .VTabbedPanels .TabbedPanelsTab {
   float: none;
-  margin: 0px;
+  margin: 0;
   border-top: none;
   border-left: none;
   border-right: none;
@@ -214,7 +214,7 @@
 .VTabbedPanels .TabbedPanelsContentGroup {
   clear: none;
   float: left;
-  padding: 0px;
+  padding: 0;
   width: 30em;
   height: 20em;
 }

@@ -25,26 +25,33 @@ h2 {
   font-family: "Courier New", Courier, monospace;
   line-height: 85%;
 }
+
 p {
   line-height: 140%;
 }
+
 ul {
   line-height: 140%;
 }
+
 ul li strong {
   color: #900;
 }
+
 a:link {
   color: #090;
 }
+
 a:hover {
   color: #900;
   text-decoration: none;
   border-bottom-color: #666;
 }
+
 a:visited {
   color: #666;
 }
+
 a:active {
   color: #fc3;
 }

@@ -1,60 +1,68 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 12px;
-  background-color: #ffffff;
-  margin: 0px;
+  background-color: #fff;
+  margin: 0;
   background-image: url(../assets/ImageAssets/bg.gif);
   background-repeat: repeat-x;
 }
+
 .pagetitle {
   font-family: Palatino, "Times New Roman", Times, serif;
   font-size: 24px;
-  color: #ffffff;
-  background-color: #000000;
+  color: #fff;
+  background-color: #000;
   font-weight: normal;
   padding: 20px 5px 5px 15px;
 }
+
 .header2_main {
   font-family: Palatino, "Times New Roman", Times, serif;
   font-size: 16px;
-  color: #666666;
+  color: #666;
 }
+
 #special {
-  color: #ff0000;
-  background-color: #ffff00;
+  color: #f00;
+  background-color: #ff0;
   padding: 5px;
   filter: alpha(opacity=40);
 }
+
 .bodytext_main {
   background-color: #ecece3;
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 10px;
-  color: #660000;
+  color: #600;
   line-height: 15px;
 }
+
 .footer {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 10px;
   line-height: 14px;
-  color: #333333;
+  color: #333;
   letter-spacing: 2pt;
   text-align: center;
 }
+
 .sidebarTitle {
   font-family: Palatino, "Times New Roman", Times, serif;
   font-size: 12px;
   font-weight: normal;
-  color: #ffffff;
-  background-color: #cc6600;
+  color: #fff;
+  background-color: #c60;
   padding: 3px;
 }
+
 .mainTable {
   width: 780px;
   margin-right: auto;
   margin-left: auto;
-  background-color: #ffffff;
-  border: 1px solid #cccccc;
+  background-color: #fff;
+  border: 1px solid #ccc;
 }
+
 .footermenu {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 10px;
@@ -62,113 +70,128 @@ body {
 }
 
 a:link {
-  color: #990000;
+  color: #900;
 }
+
 a:visited {
-  color: #333333;
+  color: #333;
 }
+
 a:hover {
-  color: #cc6600;
+  color: #c60;
   text-decoration: none;
 }
+
 a:active {
-  color: #cc6600;
+  color: #c60;
 }
 
 .topmenu a:link {
-  color: #ffffff;
+  color: #fff;
 }
+
 .topmenu a:visited {
-  color: #cc6600;
+  color: #c60;
 }
+
 .topmenu a:hover {
-  color: #ffcc00;
+  color: #fc0;
   text-decoration: none;
 }
+
 .topmenu a:active {
-  color: #ffcc00;
+  color: #fc0;
 }
 
 .orangeTint {
-  color: #ff9933;
+  color: #f93;
 }
 
 .header_main {
   font-family: Palatino, "Times New Roman", Times, serif;
   font-size: 22px;
-  color: #666666;
+  color: #666;
   font-weight: normal;
   margin: 10px;
-  padding: 10px 10px 10px 0px;
+  padding: 10px 10px 10px 0;
 }
+
 .sidebarBody {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 10px;
   line-height: 13px;
-  color: #996600;
-  background-color: #ffffcc;
+  color: #960;
+  background-color: #ffc;
   border-bottom-width: thin;
   border-left-width: thin;
   border-bottom-style: solid;
   border-left-style: solid;
-  border-bottom-color: #eeeecc;
-  border-left-color: #eeeecc;
+  border-bottom-color: #eec;
+  border-left-color: #eec;
 }
+
 .topmenu {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 10px;
-  color: #ffffff;
-  background-color: #666666;
+  color: #fff;
+  background-color: #666;
 }
+
 .topmenu_selected {
   font-weight: bold;
-  color: #cc6600;
+  color: #c60;
   text-decoration: none;
-  background-color: #ffffff;
+  background-color: #fff;
 }
+
 .bodytext_sub {
-  background-color: #ffffff;
+  background-color: #fff;
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 10px;
-  color: #333333;
+  color: #333;
   line-height: 15px;
 }
+
 .header_sub {
   font-family: Palatino, "Times New Roman", Times, serif;
   font-size: 22px;
-  color: #990000;
+  color: #900;
   font-weight: normal;
   margin: 10px;
-  padding: 10px 10px 10px 0px;
+  padding: 10px 10px 10px 0;
 }
+
 .header2_sub {
   font-family: Palatino, "Times New Roman", Times, serif;
   font-size: 16px;
-  color: #990000;
+  color: #900;
 }
+
 .registerBody {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 10px;
   line-height: 13px;
-  color: #333333;
+  color: #333;
   background-color: #e7e7e7;
   border-bottom-width: thin;
   border-left-width: thin;
   border-bottom-style: solid;
   border-left-style: solid;
-  border-bottom-color: #eeeecc;
-  border-left-color: #eeeecc;
+  border-bottom-color: #eec;
+  border-left-color: #eec;
 }
+
 .registerTitle {
   font-family: Palatino, "Times New Roman", Times, serif;
   font-size: 12px;
   font-weight: normal;
-  color: #ffffff;
-  background-color: #6699cc;
+  color: #fff;
+  background-color: #69c;
   padding: 3px;
 }
+
 input {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 10px;
-  color: #000000;
+  color: #000;
 }

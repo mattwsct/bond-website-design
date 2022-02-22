@@ -1,4 +1,5 @@
 @charset "utf-8";
+
 #container {
   position: absolute;
   left: 10%;
@@ -9,6 +10,7 @@
   background-color: #057d9f;
   right: 10%;
 }
+
 #header {
   position: absolute;
   left: 4px;
@@ -18,9 +20,10 @@
   z-index: 1;
   background-color: #ff8100;
   padding: 10px;
-  margin: 0px;
+  margin: 0;
   color: #0d759f;
 }
+
 #sidebar {
   position: absolute;
   left: 4px;
@@ -33,6 +36,7 @@
   padding: 10px;
   font-weight: bold;
 }
+
 #main {
   position: absolute;
   left: 180px;
@@ -45,6 +49,7 @@
   color: #fff;
   overflow: auto;
 }
+
 #footer {
   position: absolute;
   left: 4px;
@@ -57,23 +62,29 @@
   color: #0d759f;
   font-size: 14px;
 }
+
 body {
   background-color: #057d9f;
 }
+
 body,
 td,
 th {
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
+
 a:link {
   color: #fff;
 }
+
 a:visited {
   color: #fff;
 }
+
 a:hover {
   color: #fff;
 }
+
 a:active {
   color: #fff;
 }
